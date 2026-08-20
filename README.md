@@ -5,14 +5,17 @@
 自動 commit + push 上來。
 
 - **報告產生**:Claude 排程(06:00 台北)——唯一的產生來源
+  - 盤前分析寫到 `premarket/YYYYMMDD.html`
+  - ETF 追蹤寫到 `reports/YYYYMMDD.html`
 - **推上 GitHub**:本機 launchd(06:15 台北)——只做 commit + push,不碰內容
 - **公開網址**:https://romanlee821116.github.io/daily-stock-analysis-report/
 
 ## 結構
 
 ```
-index.html            總覽(列出所有日期)——由 tools/build-index.sh 依檔名重建
-reports/YYYYMMDD.html 每日報告
+index.html            入口(左側 side tab + 右側報告)——由 tools/build-index.sh 依檔名重建
+premarket/YYYYMMDD.html  每日盤前分析
+reports/YYYYMMDD.html    ETF 每日追蹤報告
 tools/build-index.sh  只列檔案重建 index,不抓資料、不做分析
 tools/autopush.sh     commit + push(由 launchd 呼叫)
 tools/setup-autopush.sh  一次性安裝腳本
