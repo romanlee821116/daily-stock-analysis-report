@@ -18,42 +18,5 @@ tools/autopush.sh     commit + push(由 launchd 呼叫)
 tools/setup-autopush.sh  一次性安裝腳本
 ```
 
-## 一次性設定
-
-```bash
-bash tools/setup-autopush.sh "你的名字" "你在 romanlee821116 帳號用的 email"
-```
-
-它會設好這個 repo 專用的 commit 身分(不動全域設定,所以另一個 GitHub 帳號不受影響)、
-裝好 06:15 的排程,並立刻試跑一次。
-
-開啟公開網址:Settings → Pages → Source 選 **Deploy from a branch**,
-Branch 選 `main`、資料夾選 **/ (root)**。
-
-## 兩個 GitHub 帳號
-
-commit 身分已用 `git config`(非 `--global`)綁在這個 repo。憑證若抓錯帳號,
-改用 SSH 別名最保險:
-
-```bash
-# ~/.ssh/config
-Host github-roman
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/你的私鑰
-  IdentitiesOnly yes
-```
-
-```bash
-git remote set-url origin git@github-roman:romanlee821116/daily-stock-analysis-report.git
-```
-
-## 停用自動推送
-
-```bash
-launchctl unload ~/Library/LaunchAgents/com.roman.etf-report-autopush.plist
-```
-
----
 
 報告為持股異動的事實彙整與分類統計,不構成投資建議。
