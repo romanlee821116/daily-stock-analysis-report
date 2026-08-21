@@ -1,0 +1,5 @@
+# 本機排程的執行紀錄,每天都變,不進版控
+.autopush.log
+
+# macOS
+.DS_Store

@@ -8,7 +8,7 @@
 #   bash tools/setup-autopush.sh "你的名字" "你在 romanlee821116 這個帳號用的 email"
 #
 # 想改用 SSH(兩個 GitHub 帳號時最保險),先手動跑:
-#   git remote set-url origin git@github-roman:romanlee821116/daily-stock-analysis-report.git
+#   git remote set-url origin git@github-personal:romanlee821116/daily-stock-analysis-report.git
 # 並在 ~/.ssh/config 設好 github-roman 這個 Host 別名,再跑這支腳本。
 
 set -euo pipefail
@@ -33,8 +33,12 @@ git config user.name  "$NAME"
 git config user.email "$EMAIL"
 echo "==> commit 身分已設為 $NAME <$EMAIL>(僅此 repo)"
 
-# 2. 寫一支 push 腳本
-cat > tools/autopush.sh <<'INNER'
+# 2. push 腳本:已存在就不動它(現行版本含 rebase 重試,不要被這裡的簡化版蓋掉)
+if [ -f tools/autopush.sh ]; then
+  chmod +x tools/autopush.sh
+  echo "==> tools/autopush.sh 已存在,保留不覆蓋"
+else
+  cat > tools/autopush.sh <<'INNER'
 #!/bin/bash
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -52,10 +56,11 @@ else
   exit 1
 fi
 INNER
-chmod +x tools/autopush.sh
-echo "==> 已寫入 tools/autopush.sh"
+  chmod +x tools/autopush.sh
+  echo "==> 已寫入 tools/autopush.sh"
+fi
 
-# 3. launchd:週一到週五 06:15
+# 3. launchd:週一到週五 06:15(ETF 報告後)、08:00(盤前晨報後)、13:00(盤中補檔)
 mkdir -p "$HOME/Library/LaunchAgents"
 cat > "$PLIST" <<PL
 <?xml version="1.0" encoding="UTF-8"?>
@@ -75,13 +80,23 @@ cat > "$PLIST" <<PL
     <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>6</integer><key>Minute</key><integer>15</integer></dict>
     <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>6</integer><key>Minute</key><integer>15</integer></dict>
     <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>6</integer><key>Minute</key><integer>15</integer></dict>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>13</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>13</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>13</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>13</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>13</integer><key>Minute</key><integer>0</integer></dict>
   </array>
 </dict></plist>
 PL
 
 launchctl unload "$PLIST" 2>/dev/null || true
 launchctl load "$PLIST"
-echo "==> 排程已安裝:週一到週五 06:15 自動 commit + push"
+echo "==> 排程已安裝:週一到週五 06:15 / 08:00 / 13:00 自動 commit + push"
 echo "    紀錄檔:$LOG"
 echo "    要停用:launchctl unload $PLIST"
 
@@ -92,12 +107,12 @@ bash tools/autopush.sh || {
   echo "試跑失敗。最常見原因是 git 憑證抓錯帳號(你有兩個 GitHub 帳號)。"
   echo "建議改成 SSH 別名:"
   echo "  1) ~/.ssh/config 加:"
-  echo "       Host github-roman"
+  echo "       Host github-personal"
   echo "         HostName github.com"
   echo "         User git"
   echo "         IdentityFile ~/.ssh/你的私鑰"
   echo "         IdentitiesOnly yes"
-  echo "  2) git remote set-url origin git@github-roman:romanlee821116/daily-stock-analysis-report.git"
+  echo "  2) git remote set-url origin git@github-personal:romanlee821116/daily-stock-analysis-report.git"
   echo "  3) 再跑 bash tools/autopush.sh"
   exit 1
 }
