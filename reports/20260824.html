@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260824 主動式ETF 資金流分析報告</title>
+<style>
+:root{
+  --bg:#fcfcfb; --fg:#1f1f1e; --muted:#6b6b66; --line:#e5e4df; --card:#ffffff;
+  --buy:#2a78d6; --sell:#e34948; --buy-soft:rgba(42,120,214,.12); --sell-soft:rgba(227,73,72,.12);
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#1a1a19; --fg:#eceae4; --muted:#9a9a92; --line:#33332f; --card:#222220;
+    --buy:#3987e5; --sell:#e66767; --buy-soft:rgba(57,135,229,.16); --sell-soft:rgba(230,103,103,.16); }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Helvetica Neue",sans-serif;
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:26px;line-height:1.3;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 30px}
+h2{font-size:18px;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:26px 0 10px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+p{margin:10px 0}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.lead{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--buy);
+  border-radius:6px;padding:16px 18px;margin:0 0 22px;font-size:15.5px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:18px 0 8px}
+.kpi div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.kpi .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em;text-transform:none}
+.kpi .v{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:3px}
+.kpi .n{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--buy)} .dn{color:var(--sell)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0 6px}
+th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.03em;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:var(--buy-soft)}
+/* diverging bars */
+.chart{margin:14px 0 6px}
+.row{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;padding:2.5px 0}
+.row .lbl{font-size:12.5px;color:var(--fg);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:20px}
+.track:before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)}
+.bar{position:absolute;top:3px;height:14px;border-radius:2px}
+.bar.b{background:var(--buy);left:50%}
+.bar.s{background:var(--sell);right:50%}
+.val{position:absolute;top:1px;font-size:11.5px;font-variant-numeric:tabular-nums;line-height:18px;white-space:nowrap}
+.val.b{color:var(--buy)} .val.s{color:var(--sell)}
+.zero{color:var(--muted);font-size:11.5px;position:absolute;left:calc(50% + 6px);top:1px;line-height:18px}
+.legend{font-size:11.5px;color:var(--muted);margin:6px 0 0;display:flex;gap:16px}
+.legend span:before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.legend .lb:before{background:var(--buy)} .legend .ls:before{background:var(--sell)}
+.note{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:13px 15px;margin:14px 0;font-size:13.5px}
+.note strong{color:var(--fg)}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:var(--buy-soft);color:var(--buy);margin-left:5px}
+.tag.s{background:var(--sell-soft);color:var(--sell)}
+ul{margin:10px 0;padding-left:20px} li{margin:5px 0}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>20260824 主動式ETF 資金流分析報告</h1>
+<p class="sub">執行日 2026-08-24（一） · 台股主動式 ETF 22 檔 · 總規模 <span class="num">8,509.3</span> 億 · 資料日 2026-08-21（4 檔落後至 08-20）</p>
+
+<div class="lead">
+<strong>全面面償還式的淡日：</strong>22 檔中 <span class="num">9</span> 檔零異動，全體淨額僅 <span class="num up">+2.27</span> 億，
+但方向非常一致——半導體設備材料（致茂、鴻勁）被大幅砍倉 <span class="num dn">-7.64</span> 億，
+資金輪向散熱電源、光通訊與 LED 供應鏈。
+</div>
+
+<div class="kpi">
+  <div><div class="k">全體淨買賣超</div><div class="v up num">+2.27 億</div><div class="n">買 +26.62 / 賣 -24.35</div></div>
+  <div><div class="k">最大流入主題</div><div class="v up num">+3.99 億</div><div class="n">散熱與電源</div></div>
+  <div><div class="k">最大流出主題</div><div class="v dn num">-7.64 億</div><div class="n">半導體設備材料</div></div>
+  <div><div class="k">最強共識買盤</div><div class="v up num">+3.92 億</div><div class="n">3443 創意 · 3 檔全買 · 規模共識 +23.78%</div></div>
+  <div><div class="k">最強共識賣壓</div><div class="v dn num">-6.84 億</div><div class="n">2360 致茂 · 4 檔全賣 · 規模共識 -36.94%</div></div>
+  <div><div class="k">無異動檔數</div><div class="v num">9 / 22</div><div class="n">占總規模 15.7%</div></div>
+</div>
+
+<h2>1. 產業主題資金流</h2>
+<div class="chart" id="c-theme"></div>
+<p class="legend"><span class="lb">買超</span><span class="ls">賣超</span></p>
+
+<table>
+<thead><tr><th>主題</th><th class="n">淨額(億)</th><th class="n">買超(億)</th><th class="n">賣超(億)</th><th class="n">買方檔數</th><th class="n">賣方檔數</th></tr></thead>
+<tbody id="t-theme"></tbody>
+</table>
+
+<div class="note">
+<strong>解讀：</strong>半導體設備材料的 -7.64 億幾乎全部來自致茂單一檔（-6.84 億）加鴻勁（-1.28 億），屬「半導體設備龍頭集中出貨」而非整體主題退場。相對地，流入方非常分散：健策、奇鋐（散熱）、聯亞、環宇-KY（光通訊／射頻）、一詮（LED 導線架）。工控與重電、電信、消費電子零組件三類本日零異動。
+</div>
+
+<h2>2. 個股淨買超前 10</h2>
+<div class="chart" id="c-buy"></div>
+<table>
+<thead><tr><th>個股</th><th class="n">淨額(億)</th><th class="n">買檔</th><th class="n">賣檔</th><th class="n">規模共識%</th><th>主題</th></tr></thead>
+<tbody id="t-buy"></tbody>
+</table>
+
+<h2>3. 個股淨賣超前 10</h2>
+<div class="chart" id="c-sell"></div>
+<table>
+<thead><tr><th>個股</th><th class="n">淨額(億)</th><th class="n">買檔</th><th class="n">賣檔</th><th class="n">規模共識%</th><th>主題</th></tr></thead>
+<tbody id="t-sell"></tbody>
+</table>
+
+<h2>4. 多檔共識訊號（同方向 ≥ 3 檔）</h2>
+<table>
+<thead><tr><th>個股</th><th>方向</th><th class="n">淨額(億)</th><th>參與的 ETF</th></tr></thead>
+<tbody>
+<tr><td>2360 致茂</td><td><span class="tag s">4 檔全賣</span></td><td class="n dn">-6.84</td><td>00981A、00993A、00994A、00408A</td></tr>
+<tr><td>3443 創意</td><td><span class="tag">3 檔全買</span></td><td class="n up">+3.92</td><td>00403A、00406A、00993A</td></tr>
+<tr><td>3711 日月光投控</td><td><span class="tag s">3 檔全賣</span></td><td class="n dn">-0.46</td><td>00993A、00994A、00408A</td></tr>
+<tr><td>2327 國巨*</td><td><span class="tag s">3 賣</span><span class="tag">1 買</span></td><td class="n up">+0.19</td><td>賣：00993A、00994A、00408A ／ 買：00406A</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>致茂是本日最明確的共識賣壓：</strong>4 檔同步砍倉、零買方，且包含規模最大的 00981A（實質清倉），規模共識 -36.94%。惟 00994A 與 00408A 同屬第一金集團、操作完全同步，因此「4 檔」的實質決策人數接近 3 家。<br><br>
+<strong>國巨* 是「檔數共識與金額共識相反」的典型案例：</strong>3 檔賣、只 1 檔買，但買方 00406A 一筆 +0.37 億大於三檔賣方合計 -0.18 億，金額仍為淨流入 +0.19 億。依 SOP 以金額為主。<br><br>
+<strong>另一組方向衝突：2368 金像電</strong> 2 檔買（00406A、00993A）對 1 檔賣（00981A），金額淨額僅 -0.02 億（幾乎持平），但<strong>規模共識 -31.58%</strong>——因為賣方 00981A 規模 2,975 億遠大於兩檔買方。檔數、金額、規模共識三個指標可能彼此矛盾，遇到時以金額為主。
+</div>
+
+<h2>5. 00981A 專章（規模 2,975 億，占 34.96%）</h2>
+<p>本日操作極度小幅：<strong>只有 2 筆減碼、零加碼、零新進、零剔除</strong>。淨賣超 <span class="num dn">-6.57</span> 億，換手率僅 <span class="num">0.22%</span>——以這個規模而言近乎不動。</p>
+
+<h3>減碼明細（皆列，不足 6 筆）</h3>
+<table>
+<thead><tr><th>代號</th><th>名稱</th><th class="n">股數變化</th><th class="n">金額(億)</th><th class="n">權重</th><th>註解</th></tr></thead>
+<tbody>
+<tr><td>2360</td><td>致茂</td><td class="n">-293,000</td><td class="n dn">-6.15</td><td class="n">0.22→0.00%</td><td>原持 294,000 股僅留 1,000 股，<strong>實質清倉</strong></td></tr>
+<tr><td>2368</td><td>金像電</td><td class="n">-43,000</td><td class="n dn">-0.41</td><td class="n">0.71→0.67%</td><td>小幅調節</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<strong>權重與股數背離的解讀：</strong>金像電減碼 43,000 股（約 -0.41 億），但權重僅從 0.71% 降到 0.67%，降幅遠小於股數降幅所應反映的幅度——表示金像電當日股價相對強勢，部分抵銷了減碼的權重效果。這屬「調節」而非「看壞」。反之，00406A 同日<strong>加碼</strong>金像電 35,000 股，權重 1.38→1.42%；兩檔方向相反但金額相近，整體淨額幾乎持平。<br><br>
+00981A 的致茂清倉是本日全市場單筆最大的賣壓（-6.15 億，占全體賣超的 25%），也是「半導體設備材料」成為本日最大流出主題的單一主因。
+</div>
+
+<h2>6. 其他值得注意的操作</h2>
+<h3>換手率異常高</h3>
+<table>
+<thead><tr><th>ETF</th><th class="n">規模(億)</th><th class="n">換手率%</th><th class="n">異動筆數</th><th>型態</th></tr></thead>
+<tbody>
+<tr><td>00993A 安聯台灣</td><td class="n">100.4</td><td class="n">4.64</td><td class="n">38</td><td>全面小幅重新配置（每筆 &lt; 0.6 億）</td></tr>
+<tr><td>00406A 中信台灣收益</td><td class="n">187.3</td><td class="n">4.37</td><td class="n">11</td><td>單邊純買，零賣出</td></tr>
+<tr><td>00408A 第一金優股息</td><td class="n">16.2</td><td class="n">3.96</td><td class="n">6</td><td>規模小，比率高但絕對金額極小</td></tr>
+<tr><td>00407A 凱基台灣</td><td class="n">276.6</td><td class="n">2.88</td><td class="n">5</td><td>決斷的主題輪動</td></tr>
+<tr><td>00994A 第一金台股優勢</td><td class="n">52.1</td><td class="n">2.84</td><td class="n">5</td><td>與 00408A 同步</td></tr>
+</tbody>
+</table>
+
+<h3>方向極端或與群體相反的檔</h3>
+<ul>
+<li><strong>00406A</strong>：本日唯一單邊純買的 ETF，+8.18 億、零賣出，全面加碼散熱（健策、奇鋐）、連接器（川湖、貿聯）、PCB。單檔就貢獻了全體買超的 31%。另有 3 筆非股票部位（臺指選擇權等），依 SOP 不計入金額統計。</li>
+<li><strong>00407A</strong>：本日最有方向感的中型檔——砍 IC 設計（力旺 -2.20 億、達發剔除）與聯電 -1.88 億，換入光通訊（新建聯亞 +2.63 億）與航運（萬海 +1.03 億）。</li>
+<li><strong>00993A</strong>：38 筆異動但淨額僅 -0.11 億，典型的整批微調（可能是規模變動後的等比例再平衡），不宜視為方向性操作。</li>
+<li><strong>00404A</strong>：本日唯一有剔除動作的檔（信邦、上海商銀），金額小但方向明確。</li>
+</ul>
+
+<h3>新建部位的共同選擇</h3>
+<ul>
+<li><strong>3081 聯亞</strong>：00407A（+2.63 億）與 00406A（+0.73 億）同日新建；但 00993A（資料日 8/20）反方向減碼 -0.33 億。</li>
+<li><strong>2486 一詮</strong>：00982A（+2.31 億）與 00410A（+0.19 億）同日新建，兩檔皆為首次持有。</li>
+<li><strong>9941 裕融</strong>：00994A 與 00408A（同集團）同步新建。</li>
+</ul>
+
+<h2>7. 方法與注意事項</h2>
+<ul>
+<li><strong>資料日不一致</strong>：18 檔為 20260821；<strong>4 檔落後一日（20260820）</strong>—— 00993A、00984A、00994A、00408A。每檔依自己的 as_of 建筆，匯總時不去重調。</li>
+<li><strong>加權方式</strong>：以實際成交金額彙總，金額本身已反映規模差異。規模共識% ＝（買方規模總和 − 賣方規模總和）÷ 8,509.3 億 × 100。</li>
+<li><strong>權重變化含股價效應</strong>：權重上升 ≠ 加碼。本日反向證據多組：00406A 加碼欣興（4.76→4.65%）、奇鋐（4.76→4.61%）、台光電（5.94→5.65%）三檔皆為<strong>加碼但權重下降</strong>；00993A 加碼緯穎 1,000 股但權重 3.45→3.44%。方向判讀一律以<strong>股數與金額</strong>為準。</li>
+<li><strong>檔數共識可能與金額共識相反</strong>：本日兩例——國巨*（3 賣 1 買，金額仍淨流入 +0.19 億）、金像電（2 買 1 賣，金額近持平但規模共識 -31.58%）。以金額為主。</li>
+<li><strong>非股票部位</strong>：00406A 有 3 筆（臺指選擇權等），<code>ntd</code> 缺值，不計入任何金額統計。</li>
+<li><strong>本日無異動的 9 檔</strong>：00992A、00400A、00980A、00999A、00985A、00984A、00996A、00401A、00987A。</li>
+<li><strong>規模資料</strong>：本次沒發現明顯失真，依 SOP 第 2 節數值計算。建議每月校一次。</li>
+</ul>
+
+<h3>本日新出現且尚未建檔的個股（15 檔，請手動補到 SOP 分類表）</h3>
+<table>
+<thead><tr><th>代號</th><th>名稱</th><th>本次歸類</th><th>依據</th></tr></thead>
+<tbody>
+<tr><td>2481</td><td>強茂</td><td>被動元件</td><td>二極體等分離式元件</td></tr>
+<tr><td>2486</td><td>一詮</td><td>面板光學LED</td><td>LED 導線架</td></tr>
+<tr><td>2615</td><td>萬海</td><td>傳產與其他</td><td>海運</td></tr>
+<tr><td>2845</td><td>遠東銀</td><td>金融</td><td>銀行</td></tr>
+<tr><td>3023</td><td>信邦</td><td>連接器/機構件</td><td>連接線材</td></tr>
+<tr><td>3044</td><td>健鼎</td><td>PCB/CCL/載板</td><td>PCB</td></tr>
+<tr><td>3529</td><td>力旺</td><td>IC設計/ASIC</td><td>矽智財 IP</td></tr>
+<tr><td>4746</td><td>台耀</td><td>傳產與其他</td><td>原藥</td></tr>
+<tr><td>4991</td><td>環宇-KY</td><td>網通/光通訊</td><td>砷化鎵射頻元件</td></tr>
+<tr><td>5876</td><td>上海商銀</td><td>金融</td><td>銀行</td></tr>
+<tr><td>6438</td><td>迅得</td><td>PCB/CCL/載板</td><td>PCB 自動化設備</td></tr>
+<tr><td>6472</td><td>保瑞</td><td>傳產與其他</td><td>學名藥 CDMO</td></tr>
+<tr><td>6526</td><td>達發</td><td>IC設計/ASIC</td><td>IC 設計</td></tr>
+<tr><td>9941</td><td>裕融</td><td>金融</td><td>租賃金融</td></tr>
+<tr><td>1210</td><td>大成</td><td>傳產與其他</td><td>食品</td></tr>
+</tbody>
+</table>
+
+<footer>
+資料來源：etfedge.xyz daily JSON（22 檔各自 as_of）。金額單位一律為新台幣億元。<br>
+本報告為自動排程產出，僅為持股異動之事實整理與統計，不構成任何投資建議。
+</footer>
+
+</div>
+
+<script>
+const THEMES=[
+["散熱與電源",3.99,4.17,-0.17,2,0],
+["網通/光通訊",3.64,4.99,-1.35,4,2],
+["面板光學LED",2.51,2.51,0.00,2,0],
+["IC設計/ASIC",2.33,5.97,-3.64,4,3],
+["傳產與其他",2.14,2.34,-0.20,4,1],
+["連接器/機構件",1.60,1.91,-0.31,2,1],
+["PCB/CCL/載板",1.00,3.29,-2.29,3,3],
+["記憶體",0.28,0.28,0.00,1,0],
+["AI伺服器ODM",0.08,0.08,0.00,1,0],
+["工控與重電",0.00,0.00,0.00,0,0],
+["電信",0.00,0.00,0.00,0,0],
+["消費電子零組件",0.00,0.00,0.00,0,0],
+["電子通路",-0.02,0.00,-0.02,0,1],
+["金融",-0.29,0.25,-0.54,3,1],
+["封測與測試介面",-2.25,0.00,-2.25,0,4],
+["被動元件",-2.53,0.37,-2.90,1,5],
+["晶圓代工",-2.56,0.00,-2.56,0,3],
+["半導體設備材料",-7.64,0.48,-8.12,1,5]
+];
+const BUY=[
+["3443 創意",3.92,3,0,23.78,"IC設計/ASIC"],
+["3653 健策",3.29,2,0,3.38,"散熱與電源"],
+["3081 聯亞",3.02,2,1,4.27,"網通/光通訊"],
+["2486 一詮",2.51,2,0,6.07,"面板光學LED"],
+["6531 愛普*",1.85,1,0,5.88,"IC設計/ASIC"],
+["6274 台燿",1.79,1,0,20.40,"PCB/CCL/載板"],
+["4991 環宇-KY",1.44,1,0,3.55,"網通/光通訊"],
+["6472 保瑞",1.17,1,0,5.88,"傳產與其他"],
+["2059 川湖",1.07,1,0,2.20,"連接器/機構件"],
+["2615 萬海",1.03,1,0,3.25,"傳產與其他"]
+];
+const SELL=[
+["2360 致茂",-6.84,0,4,-36.94,"半導體設備材料"],
+["3529 力旺",-2.20,0,1,-3.25,"IC設計/ASIC"],
+["2303 聯電",-1.99,0,2,-3.84,"晶圓代工"],
+["3264 欣銓",-1.79,0,2,-7.06,"封測與測試介面"],
+["3026 禾伸堂",-1.79,0,1,-3.55,"被動元件"],
+["2383 台光電",-1.36,2,1,-7.17,"PCB/CCL/載板"],
+["7769 鴻勁",-1.28,0,1,-10.55,"半導體設備材料"],
+["2454 聯發科",-1.22,0,2,-0.80,"IC設計/ASIC"],
+["2345 智邦",-0.95,1,1,-9.37,"網通/光通訊"],
+["2481 強茂",-0.93,0,1,-20.40,"被動元件"]
+];
+const f=n=>(n>0?"+":"")+n.toFixed(2);
+function bars(el,rows,max){
+  el.innerHTML=rows.map(([lbl,v])=>{
+    const w=Math.abs(v)/max*48; // percent of track (half = 50%)
+    if(v===0) return `<div class="row"><div class="lbl">${lbl}</div><div class="track"><span class="zero">0.00</span></div></div>`;
+    const pos=v>0;
+    const bar=`<div class="bar ${pos?'b':'s'}" style="width:${w}%"></div>`;
+    const val=`<span class="val ${pos?'b':'s'}" style="${pos?`left:calc(50% + ${w}% + 6px)`:`right:calc(50% + ${w}% + 6px)`}">${f(v)}</span>`;
+    return `<div class="row"><div class="lbl">${lbl}</div><div class="track">${bar}${val}</div></div>`;
+  }).join("");
+}
+bars(document.getElementById("c-theme"),THEMES.map(r=>[r[0],r[1]]),8.12);
+bars(document.getElementById("c-buy"),BUY.map(r=>[r[0],r[1]]),4.0);
+bars(document.getElementById("c-sell"),SELL.map(r=>[r[0],r[1]]),7.0);
+
+const cls=v=>v>0?"up":(v<0?"dn":"");
+document.getElementById("t-theme").innerHTML=THEMES.map(r=>
+ `<tr><td>${r[0]}</td><td class="n ${cls(r[1])}">${f(r[1])}</td><td class="n">${r[2].toFixed(2)}</td><td class="n">${r[3].toFixed(2)}</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td></tr>`).join("");
+const stockRow=r=>`<tr><td>${r[0]}</td><td class="n ${cls(r[1])}">${f(r[1])}</td><td class="n">${r[2]}</td><td class="n">${r[3]}</td><td class="n ${cls(r[4])}">${f(r[4])}</td><td>${r[5]}</td></tr>`;
+document.getElementById("t-buy").innerHTML=BUY.map(stockRow).join("");
+document.getElementById("t-sell").innerHTML=SELL.map(stockRow).join("");
+</script>
+</body>
+</html>
