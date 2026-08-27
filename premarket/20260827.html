@@ -82,17 +82,59 @@ li{margin:5px 0;}
 <div class="wrap">
 
 <h1>台股開盤前晨報</h1>
-<p class="sub">2026 年 8 月 27 日（週四）· 台北時間 08:20 產出 · 前一交易日 8/26（三）· 上一個美股交易日 8/26（台北 8/27 04:00 收）· 最後一盤夜盤 8/26 15:00 – 8/27 05:00</p>
+<p class="sub">2026 年 8 月 27 日（週四）· 台北時間 08:20 初版產出、10:05 補記 · 前一交易日 8/26（三）· 上一個美股交易日 8/26（台北 8/27 04:00 收）· 最後一盤夜盤 8/26 15:00 – 8/27 05:00</p>
+
+<div class="card warn">
+<h3>⚠ 10:05 盤中補記：原始定調過於保守，以下說明原委</h3>
+<p>本報告 08:20 初版產出時，Claude in Chrome 連線中斷，導致籌碼三項、SOX、VIX、殖利率、匯率、<strong>以及最關鍵的 NVDA 財報後盤後股價</strong>全數無法取得，定調依規則往保守收一格為「震盪」。約 08:50 Chrome 恢復後補齊全部數據，結論必須修正：</p>
+<table>
+<tr><th>項目</th><th>08:20 初版</th><th>10:05 補查後</th><th>影響</th></tr>
+<tr><td><strong>NVDA 財報後盤後</strong></td><td>查不到</td><td class="up"><strong>219.53（+4.71%）</strong></td><td><strong>決定性利多，初版完全漏掉</strong></td></tr>
+<tr><td>籌碼三項</td><td>查不到 → 收一格</td><td>全部取得，且<strong>偏多</strong></td><td><strong>收一格的理由不成立</strong></td></tr>
+<tr><td>費半 SOX</td><td>查不到</td><td class="up">11,611.24（+0.20%）</td><td>小幅正面</td></tr>
+<tr><td>漲跌家數（8/26）</td><td>查不到</td><td class="up">839 漲 vs 202 跌</td><td><strong>廣度極佳，非集中行情</strong></td></tr>
+<tr><td>USD/TWD</td><td>概算 31.0</td><td>實際 <strong>31.728</strong></td><td>ADR 溢價計算全數需修正</td></tr>
+</table>
+<p><strong>為什麼夜盤終盤騙了我：</strong>台指期夜盤在台北 05:00 收盤，終盤 45,993 僅 −10 點。但 NVDA 的主升段發生在 <strong>台北 05:18</strong>（TheFly：「17:18 EDT Nvidia extending post-earnings gains, up 4% at $218.77, after FY28 outlook」）——<strong>夜盤收盤時，市場還沒看到 FY28 營收成長 70% 這個最大利多。</strong>財報剛出時 NVDA 盤後一度下跌約 4%，是法說會中財務長揭露 FY28 展望後才由黑翻紅。夜盤終盤的「平盤」反映的是<em>財報數字</em>，不是<em>財測展望</em>。</p>
+<p class="note"><strong>開盤估驗證（這部分是對的）：</strong>初版估 45,890–46,000，實際開盤 <span class="num">45,890.18</span>——<strong>對區間下緣誤差僅 0.18 點</strong>。8/26 修正#1 的「正價差 × 0.7」公式第一天執行即精準命中。<strong>錯的不是開盤估，是定調與收盤預期</strong>：開盤後指數一路衝高至 46,390.93（+558.31、+1.22%），已遠超初版樂觀情境上緣 46,300。<br><strong>帶進盤後回顧的教訓：夜盤終盤只有在「重大事件已完整消化」時才具代表性。遇財報／央行事件跨越夜盤收盤時點時，必須額外查事件後的盤後報價，否則夜盤會系統性低估或高估。</strong></p>
+</div>
 
 <!-- 1 -->
 <h2>一、開頭結論卡</h2>
 <div class="hero">
-  <div class="tone">定調：震盪</div>
+  <div class="tone">定調：震盪 <span style="font-size:15px;color:var(--tx2);font-weight:400;">（08:20 原始判斷，保留供盤後對帳；10:05 補查後應為<strong style="color:var(--up)">震盪偏多</strong>）</span></div>
   <div class="line"><span class="lbl">一句話</span>輝達財報營收翻倍但毛利率展望重設，夜盤震幅 376 點後終盤幾乎回平盤——市場已把財報消化完畢卻沒給方向，今日是「開高不遠、續攻無力、看量能與廣度」的震盪格局。</div>
   <div class="line"><span class="lbl">加權開盤估</span><span class="num up">45,890 – 46,000</span>（約 <span class="num up">+57 ~ +167</span> 點；前收 <span class="num">45,832.62</span>）</div>
   <div class="line"><span class="lbl">台積電開盤估</span><span class="num">2,410 – 2,425</span>（前收 2,415，平開；關鍵價 2,450 轉強 / 2,400 轉弱）</div>
   <div class="line"><span class="lbl">持股一句話</span>13 檔中僅 <strong>2308 台達電、6412 群電</strong>兩檔電源股有明確開高依據（VRT +3.15%），其餘 11 檔全數落在「平開 ±1%」的無方向區間；<strong>2383 台光電今日為 8/28 除息 25 元前最後交易日</strong>，是唯一有確定性事件的持股。</div>
-  <div class="line"><span class="lbl">⚠ 資料警語</span>籌碼三項（季線乖離、融資餘額、外資期貨未平倉）本次<strong>完全查不到</strong>，過熱程度無法確認，定調已依規則由「震盪偏多」往保守收一格為「震盪」。</div>
+  <div class="line"><span class="lbl">⚠ 資料警語</span><s>籌碼三項本次完全查不到，定調已依規則往保守收一格。</s> <strong>10:05 更正：籌碼三項已於補查中全部取得且偏多（外資現貨買超 366.13 億、季線乖離僅 +2.11% 未過熱、漲跌家數 839:202 廣度極佳），「收一格」的前提不成立，定調應為震盪偏多。</strong></div>
+</div>
+
+<div class="grid" style="margin-top:14px;">
+  <div class="tile">
+    <div class="t">實際開盤（09:00）</div>
+    <div class="v num up">45,890.18</div>
+    <div class="d up num">+57.56（+0.13%）</div>
+    <div class="tag">估區間下緣 45,890 · 誤差 0.18 點</div>
+  </div>
+  <div class="tile">
+    <div class="t">早盤最高</div>
+    <div class="v num up">46,390.93</div>
+    <div class="d up num">+558.31（+1.22%）</div>
+    <div class="tag">已超越初版樂觀情境上緣</div>
+  </div>
+  <div class="tile">
+    <div class="t">台積電開盤</div>
+    <div class="v num up">2,430</div>
+    <div class="d up num">+15（+0.62%）</div>
+    <div class="tag">估 2,410–2,425 · 略高於上緣</div>
+  </div>
+  <div class="tile">
+    <div class="t">NVDA 盤後（決定性）</div>
+    <div class="v num up">219.53</div>
+    <div class="d up num">+9.87（+4.71%）</div>
+    <div class="tag">台北 07:59 · 初版漏掉</div>
+  </div>
 </div>
 
 <!-- 2 -->
@@ -116,7 +158,7 @@ li{margin:5px 0;}
 <tr><td><strong>#1 正價差打七折</strong></td><td><strong>已套用。</strong>今日正價差 +160.38 點（未達 200，故用 0.7 折不降至 0.5）：45,832.62 + 160.38 × 0.7 = <span class="num">45,944.89</span>，區間取 45,890–46,000。若直接用夜盤終盤 45,993 推開盤就是重蹈昨日覆轍。</td></tr>
 <tr><td><strong>#2 個股估以大盤基底為準</strong></td><td><strong>已套用並通過檢查點。</strong>大盤開盤推估漲幅基底 <span class="num">+0.245%</span>；13 檔開盤估漲幅中位數約 <span class="num">+0.3%</span>，未超過基底 +0.5pp 的上限。</td></tr>
 <tr><td><strong>#3「連動失效」不等於「不給方向」</strong></td><td><strong>部分套用。</strong>2383、3037 改用本土族群資金流判斷（兩檔 8/26 分別 +5.36%、+5.94% 為組合前段）。但三項前提指標（上游漲停、塑膠工業中位數、量增）今日<strong>查不到</strong>，故只給「開平偏強」不給強力偏多。</td></tr>
-<tr><td><strong>#4 ADR 折溢價權重打三折</strong></td><td><strong>已套用。</strong>3711 日月光的 ASX ADR +0.49%、折價由 −2.92% 收斂至 −2.44%（僅 0.47pp，屬<em>溫和收斂</em>而非急速），不作為方向依據，只記「下行風險略降」。</td></tr>
+<tr><td><strong>#4 ADR 折溢價權重打三折</strong></td><td><strong>已套用。</strong>3711 日月光的 ASX ADR +0.49%、折價由 −0.64% 收斂至 −0.15%（僅 0.49pp，屬<em>溫和收斂</em>而非急速，且已幾乎回到平價），不作為方向依據，只記「下行風險略降」。<span class="tag">10:05 已用實際匯率 31.728 重算</span></td></tr>
 <tr><td><strong>#5 事件前縮手假設</strong></td><td><strong>已作廢，因事件已開獎。</strong>輝達財報今晨已公布，不再有「財報前縮手」的問題；改以「利多實現後易震盪」處理。</td></tr>
 <tr><td><strong>8/24 修正#1 停用 MRVL 推 3661</strong></td><td><strong>維持停用。</strong>今日 MRVL +1.97%，但不用它推世芯。</td></tr>
 </table>
@@ -151,9 +193,9 @@ li{margin:5px 0;}
   </div>
   <div class="tile">
     <div class="t">費半 SOX</div>
-    <div class="v flat">查不到</div>
-    <div class="d flat">成分股推估：小跌～持平</div>
-    <div class="tag">⚠ 無點位 · Chrome 不可用</div>
+    <div class="v num up">11,611.24</div>
+    <div class="d up num">+23.20（+0.20%）</div>
+    <div class="tag">CNBC 官方 · 10:05 Chrome 補</div>
   </div>
   <div class="tile">
     <div class="t">TSM ADR</div>
@@ -163,48 +205,42 @@ li{margin:5px 0;}
   </div>
   <div class="tile">
     <div class="t">TSM ADR 溢價</div>
-    <div class="v num">+7.23%</div>
+    <div class="v num up">+9.75%</div>
     <div class="d flat">變化幅度≈0</div>
-    <div class="tag">⚠ 匯率概算 31.0 · 僅供參考</div>
+    <div class="tag">已用實際匯率 31.728 重算</div>
   </div>
   <div class="tile">
-    <div class="t">NVDA (正常盤)</div>
-    <div class="v num">209.66</div>
-    <div class="d dn num">−1.59%（連 8 黑）</div>
-    <div class="tag">財報在盤後 · 盤後價查不到</div>
-  </div>
-  <div class="tile">
-    <div class="t">S&amp;P 500 / 那斯達克</div>
-    <div class="v flat">查不到</div>
-    <div class="d flat">道瓊約 −0.21%（概略值）</div>
-    <div class="tag">⚠ 非官方收盤稿</div>
+    <div class="t">NVDA 正常盤 / 盤後</div>
+    <div class="v num up">219.53</div>
+    <div class="d"><span class="dn num">收盤 −1.59%</span> → <span class="up num">盤後 +4.71%</span></div>
+    <div class="tag">財報後由黑翻紅 · 10:05 補</div>
   </div>
   <div class="tile">
     <div class="t">VIX</div>
-    <div class="v flat">查不到</div>
-    <div class="d flat">—</div>
-    <div class="tag">⚠ 已嘗試 Chrome · 中斷</div>
+    <div class="v num dn">15.21</div>
+    <div class="d dn num">−0.24（−1.55%）</div>
+    <div class="tag">CNBC 官方 · 低波動</div>
   </div>
   <div class="tile">
     <div class="t">美 10 年殖利率</div>
-    <div class="v flat">查不到</div>
-    <div class="d flat">—</div>
-    <div class="tag">⚠ 已嘗試 Chrome · 中斷</div>
+    <div class="v num">4.656%</div>
+    <div class="d dn num">−0.8bp（前收 4.664%）</div>
+    <div class="tag">CNBC / Tradeweb · 10:05 補</div>
+  </div>
+  <div class="tile">
+    <div class="t">USD/TWD</div>
+    <div class="v num">31.728</div>
+    <div class="d up num">+0.118（+0.37%）</div>
+    <div class="tag">Yahoo 外匯 08/27 09:57</div>
   </div>
   <div class="tile">
     <div class="t">WTI 原油</div>
     <div class="v flat">查不到</div>
-    <div class="d flat">—</div>
-    <div class="tag">⚠ 已嘗試 Chrome · 中斷</div>
-  </div>
-  <div class="tile">
-    <div class="t">USD/TWD</div>
-    <div class="v flat">查不到</div>
-    <div class="d flat">概算採 31.0</div>
-    <div class="tag">⚠ 影響 ADR 溢價計算</div>
+    <div class="d flat">新聞提及油價本週續跌</div>
+    <div class="tag">⚠ 唯一仍缺項 · 優先序最低</div>
   </div>
 </div>
-<p class="note">看板誠實聲明：12 格中有 6 格標為「查不到」。這是本次晨報最大的品質缺口，原因是 Claude in Chrome 連線在抓完前三組數據後中斷兩次，而 WebSearch 索引僅更新到 8/25、Yahoo ADR 頁快取停在 08/18（已作廢不採用）。下方所有判斷只建立在<strong>確實取得的三組官方數據</strong>上：期交所夜盤行情表、Yahoo Finance 美股 8/26 收盤全表、以及同一頁的 ADR 報價。</p>
+<p class="note"><strong>看板更新聲明（10:05）：</strong>初版 12 格中有 6 格「查不到」，現已補齊至僅剩 WTI 一項。補查來源：CNBC 官方報價頁（SOX／VIX／US10Y）、Yahoo 外匯頁（USD/TWD）、stockanalysis.com（NVDA 盤後）。<strong>交叉驗證通過</strong>：CNBC 顯示 SOX 前收 11,588.038、VIX 前收 15.45，與 Notion 8/26 晨報記錄的 11,588.04、15.45 完全一致，確認取得的是 8/26 官方收盤而非舊快取。<br><strong>⚠ 匯率教訓：</strong>初版以 31.0 概算，實際為 31.728，誤差 2.3%。ADR 溢價因此由 +7.23% 修正為 <strong>+9.75%</strong>，日月光折價由 −2.44% 修正為 <strong>−0.15%</strong>（幾乎平價）。<strong>概算匯率會讓折溢價水位失真到無法使用的程度，往後匯率查不到時應直接標「溢價無法計算」，不要用概算值填。</strong></p>
 
 <!-- 4 -->
 <h2>四、夜盤怎麼走的</h2>
@@ -230,24 +266,35 @@ li{margin:5px 0;}
 <div class="card">
 <h3>昨夜驅動因素</h3>
 <ul>
-<li><strong>輝達 FY27Q2 財報（台北 8/27 清晨公布）</strong>：營收接近 1,000 億美元、年增約一倍，優於市場預估的 920 億；執行長宣稱進入「黃金時代」。但同一份財報<strong>重設了毛利率展望（reset margin outlook）</strong>，這是多空混雜的關鍵。輝達正常盤收 209.66（−1.59%），為<strong>連續第 8 個交易日收黑</strong>。</li>
+<li><strong>輝達 FY27Q2 財報（台北 8/27 清晨公布）— 10:05 補齊完整數字</strong>：營收 <strong>962.21 億美元</strong>（年增 106%、季增 18%），優於市場預估的 921.7 億；調整後 EPS <strong>2.22 美元</strong>（預估 2.10）；<strong>資料中心營收 890 億</strong>（年增 117%、占比逾 92%），其中超大規模雲端客戶貢獻 487.1 億。<strong>連續第 15 季擊敗市場預期。</strong>
+  <ul>
+    <li><strong>Q3 財測 1,080 億美元</strong>（預估 1,041.9 億），首度跨入單季千億美元時代，且<em>尚未納入中國資料中心晶片收入</em>。</li>
+    <li><strong>最大驚喜：FY28 營收成長預估約 70%</strong>，遠高於市場共識的 45%，且此為「供應受限下」的保守估計。黃仁勳表示若供應不受限「還會高得多」。</li>
+    <li><strong>AWS 追加 200 萬顆 GPU</strong>，雙方策略合作大幅擴大；雲端業 backlog 已逾 2 兆美元。</li>
+    <li>毛利率連兩季守穩 75%，但因記憶體成本上升將先下滑後穩定（即初版看到的「reset margin outlook」）。</li>
+    <li>另傳出洽購 Hugging Face（逾 130 億美元），並承諾 FY27 再投入 180 億美元股權投資。</li>
+  </ul>
+  <p style="margin-top:8px;"><strong>股價路徑（這是初版誤判的核心）：</strong>正常盤收 209.66（−1.59%、連 8 黑）→ 財報數字公布後盤後<strong>一度下跌約 4%</strong>（市場嫌不夠好）→ 法說會中財務長揭露 FY28 +70% 展望後<strong>由黑翻紅</strong> → 盤後收 <strong>219.53（+4.71%）</strong>。轉折點在台北 05:18，<strong>台指期夜盤已於 05:00 收盤</strong>。</p>
+</li>
+<li><strong>美股大盤實為收低</strong>：美國 7 月 PCE 年增 3.7% 高於預期，加深升息疑慮，道瓊、S&amp;P 500、那斯達克三大指數<strong>全數收低</strong>，僅費半 SOX 微幅上揚 +0.20% 至 11,611.24。9 月升息機率由數據公布前的約 36% 升至 44%。<strong>注意這個反差：指數收低但費半收紅，看台股要看費半與族群對照股，不要看那斯達克的漲跌號誌。</strong></li>
 <li><strong>資金明顯從 GPU 主體輪動到 AI 基礎建設周邊</strong>：光通訊 LITE +6.04%、網通 ANET +5.92%、電源 VRT +3.15%、伺服器 DELL +2.73%、COHR +2.16% 全面走強，而 NVDA −1.59%、SMCI −2.78% 走弱。這是本次最重要的族群訊號。</li>
 <li><strong>成熟製程逆勢走弱</strong>：UMC −2.91% 為全表最弱，對台股成熟製程與封測是負面訊號。</li>
 </ul>
 <h3>台廠 ADR 對照表</h3>
 <table>
 <tr><th>ADR</th><th class="n">收盤 (USD)</th><th class="n">漲跌%</th><th class="n">台北收盤 (8/26)</th><th class="n">折溢價</th></tr>
-<tr><td>TSM 台積電</td><td class="n num">417.69</td><td class="n num up">+0.07%</td><td class="n num">2,415</td><td class="n num up">+7.23%</td></tr>
-<tr><td>ASX 日月光</td><td class="n num">37.26</td><td class="n num up">+0.49%</td><td class="n num">592</td><td class="n num dn">−2.44%</td></tr>
+<tr><td>TSM 台積電</td><td class="n num">417.69</td><td class="n num up">+0.07%</td><td class="n num">2,415</td><td class="n num up">+9.75%</td></tr>
+<tr><td>ASX 日月光</td><td class="n num">37.26</td><td class="n num up">+0.49%</td><td class="n num">592</td><td class="n num dn">−0.15%</td></tr>
 <tr><td>UMC 聯電</td><td class="n num">19.03</td><td class="n num dn">−2.91%</td><td class="n flat">未持有</td><td class="n flat">—</td></tr>
 <tr><td>CHT 中華電信</td><td class="n num">42.91</td><td class="n num dn">−0.60%</td><td class="n flat">未持有</td><td class="n flat">—</td></tr>
 </table>
 <div class="note">
-<p><strong>ADR 溢價算式（可驗算）</strong></p>
-<p>TSM 隱含 2330 台幣價 ＝ 417.69 × 31.0 ÷ 5 ＝ <span class="num">2,589.68</span> 元<br>
-對 2330 前收 2,415 的溢價 ＝ 2,589.68 ÷ 2,415 − 1 ＝ <span class="num up">+7.23%</span></p>
-<p>ASX 隱含 3711 台幣價 ＝ 37.26 × 31.0 ÷ 2 ＝ <span class="num">577.53</span> 元<br>
-對 3711 前收 592 的折溢價 ＝ 577.53 ÷ 592 − 1 ＝ <span class="num dn">−2.44%</span>（前日以同一組匯率計為 −2.92%，<strong>收斂 0.47pp</strong>）</p>
+<p><strong>ADR 溢價算式（可驗算，10:05 已改用實際匯率 31.728 重算）</strong></p>
+<p>TSM 隱含 2330 台幣價 ＝ 417.69 × 31.728 ÷ 5 ＝ <span class="num">2,650.49</span> 元<br>
+對 2330 前收 2,415 的溢價 ＝ 2,650.49 ÷ 2,415 − 1 ＝ <span class="num up">+9.75%</span></p>
+<p>ASX 隱含 3711 台幣價 ＝ 37.26 × 31.728 ÷ 2 ＝ <span class="num">591.09</span> 元<br>
+對 3711 前收 592 的折溢價 ＝ 591.09 ÷ 592 − 1 ＝ <span class="num dn">−0.15%</span>（前日以同一組匯率計為 −0.64%，<strong>收斂 0.49pp、已幾乎回到平價</strong>）</p>
+<p class="warn" style="padding:12px;margin:10px 0;"><strong>⚠ 匯率教訓（本次最實際的一課）：</strong>初版以 31.0 概算，實際為 <strong>31.728</strong>。僅 2.3% 的匯率誤差，就讓 TSM 溢價從 +7.23% 變成 +9.75%（差 2.5pp）、日月光折價從 −2.44% 變成 −0.15%（差 2.3pp，性質從「明顯折價」變成「幾乎平價」）。<strong>折溢價水位對匯率極度敏感，往後匯率查不到時應直接標「溢價無法計算」，絕不可用概算值填——那會產生看似精確、實則完全錯誤的訊號。</strong></p>
 <p><strong>⚠ 三點警告：</strong>①USD/TWD 即時匯率本次查不到，31.0 為概算值，<strong>溢價水位本身不可當絕對指標</strong>。②真正有意義的訊號是「TSM ADR 漲跌幅 +0.07%、幾乎為零」，而 2330 昨日收 +0.63%，兩者同步，<strong>溢價變化幅度趨近於零、未提供額外方向</strong>。③ASX 折價收斂 0.47pp 屬<strong>溫和收斂</strong>而非急速，依 8/26 修正#4 權重已打三折，只記「下行風險略降」，不作方向依據。</p>
 </div>
 </div>
@@ -289,21 +336,33 @@ li{margin:5px 0;}
 <div class="card">
 <table>
 <tr><th>項目</th><th>數值</th><th>資料時點</th><th>判讀</th></tr>
-<tr><td>季線乖離</td><td class="flat">查不到</td><td>—</td><td>⚠ 已嘗試 Chrome（Goodinfo 大盤頁），連線中斷</td></tr>
-<tr><td>融資餘額增減</td><td class="flat">查不到</td><td>—</td><td>⚠ 同上</td></tr>
-<tr><td>融券餘額</td><td class="flat">查不到</td><td>—</td><td>⚠ 同上</td></tr>
-<tr><td>外資期貨未平倉</td><td class="flat">查不到</td><td>—</td><td>⚠ 已嘗試 Chrome（期交所三大法人頁），連線中斷</td></tr>
-<tr><td>投信期貨未平倉</td><td class="flat">查不到</td><td>—</td><td>⚠ 同上</td></tr>
-<tr><td>外資現貨買賣超</td><td class="flat">查不到</td><td>—</td><td>⚠ 注意：即使取得也通常是<strong>前一交易日</strong>的數字</td></tr>
-<tr><td>漲跌家數</td><td class="flat">查不到</td><td>—</td><td>⚠ 廣度無法評估，這對「集中 vs 輪動」的判斷是重大缺口</td></tr>
-<tr><td>近 1 日漲跌幅</td><td class="num up">+1.47%（+663.16 點）</td><td>8/26 收盤</td><td>單日大漲，短線已先反映一段</td></tr>
-<tr><td>台指期正價差</td><td class="num up">+160.38 點</td><td>8/27 05:00 夜盤終盤 vs 8/26 現貨收盤</td><td><strong>溫和</strong>（未達 200 點）。依規則不打額外收斂折扣，但也代表<strong>期貨沒有提供額外上衝動能</strong>，開盤估上緣不憑感覺往上加。</td></tr>
+<tr><td>季線乖離</td><td class="num up">+2.11%</td><td>8/26（季均線 44,885.85）</td><td><strong>溫和，未過熱。</strong>10 日乖離 +1.03%、月線 +2.74%、5 日 +1.43%，全數在 3% 以內</td></tr>
+<tr><td>融資餘額</td><td class="num up">5,548.03 億</td><td>8/26</td><td>+78.65 億、+1.44%、<strong>連 2 增</strong>。散戶追價，唯一的警訊項</td></tr>
+<tr><td>融券餘額</td><td class="num up">206,809 張</td><td>8/26</td><td>+6,305 張、+3.14%。空方同步增加，多空皆在加碼</td></tr>
+<tr><td>外資期貨未平倉</td><td class="num dn">−83,654 口</td><td>8/26 臺股期貨</td><td>仍為大額淨空，但較 8/25 的 −85,380 口<strong>回補 1,726 口</strong>，空單略減</td></tr>
+<tr><td>投信期貨未平倉</td><td class="num up">+78,043 口</td><td>8/26 臺股期貨</td><td><strong>大額淨多</strong>，與外資完全對做</td></tr>
+<tr><td>外資現貨買賣超</td><td class="num up">+366.13 億</td><td><strong>8/26 當日</strong>（非落後一日）</td><td><strong>連 2 賣 → 轉買，且金額大。</strong>投信 +33.66 億、自營 +179.34 億，三大法人合計 <strong>+579.13 億</strong></td></tr>
+<tr><td>漲跌家數</td><td class="num up">839 漲 / 202 跌</td><td>8/26（漲停 30、跌停 0、平盤 79）</td><td><strong>比值 4.15，廣度極佳。</strong>推翻「指數集中在權值股」的疑慮——這是全面性上漲</td></tr>
+<tr><td>成交金額</td><td class="num">8,430.92 億</td><td>8/26</td><td>量增配合價漲，非低量辕升</td></tr>
+<tr><td>近 1 日漲跌幅</td><td class="num up">+1.47%（+663.16 點）</td><td>8/26 收盤</td><td>連 2 漲累計 +1,070.3 點、+2.39%</td></tr>
+<tr><td>台指期正價差</td><td class="num up">+160.38 點</td><td>8/27 05:00 夜盤終盤 vs 8/26 現貨收盤</td><td><strong>溫和</strong>（未達 200 點）。但見上方補記：夜盤收盤早於 NVDA 主要利多出現時點，此正價差<strong>低估了實際多方力道</strong></td></tr>
 </table>
 
 <h3>兩項判斷（分開陳述，不混為一談）</h3>
-<p><strong>過熱程度：無法確認。</strong>季線乖離與融資餘額全數缺失，無法判斷技術面是否有追高風險。8/26 單日 +1.47% 是唯一可見的線索，屬短線偏熱但不極端。<strong>依規則，過熱程度無法確認 ⇒ 定調往保守收一格</strong>（震盪偏多 → 震盪）。</p>
-<p><strong>籌碼結構偏多或偏空：無法判斷。</strong>外資期貨未平倉、外資現貨買賣超、融資餘額全數缺失。特別要注意的是，8/26 的 Notion 記錄顯示前一日外資曾「期現雙空」（現貨連 2 賣、臺股期貨未平倉 −85,380 口），<strong>但那已是 8/25 的狀態，8/26 大漲 663 點後是否已翻轉完全未知</strong>。不得以舊數字冒充今日籌碼。</p>
-<p class="note">誠實說明：本區塊 9 項中有 7 項查不到，是本次晨報最嚴重的缺口。已用 Claude in Chrome 嘗試（Goodinfo 大盤綜合頁、期交所三大法人頁均在計畫中），但 Chrome 在抓完美股與夜盤數據後連線中斷，重試兩次均回「Selected Chrome extension disconnected」，依規則放棄並標「查不到」。</p>
+<p><strong>過熱程度：溫和，未過熱。</strong>季線乖離僅 +2.11%、10 日乖離 +1.03%、月線 +2.74%，全數在 3% 以內，技術面沒有追高風險。8/26 雖單日大漲 +1.47%、連 2 漲累計 +2.39%，但配合 8,430.92 億的量增與 839:202 的廣度，屬健康上漲而非軋空。<strong>唯一警訊是融資餘額連 2 增（+78.65 億、+1.44%）</strong>，代表散戶開始追價，這是需要持續監看的項目，但單看這一項不足以判定過熱。</p>
+<p><strong>籌碼結構：偏多，但外資期現分歧。</strong>偏多證據：①外資現貨連 2 賣後<strong>轉買 366.13 億</strong>且為 8/26 當日數字；②三大法人合計買超 579.13 億；③漲跌家數 839:202 廣度極佳；④外資期貨空單回補 1,726 口；⑤投信期貨淨多 78,043 口。偏空／矛盾證據：①外資臺股期貨仍為 −83,654 口的<strong>大額淨空</strong>，與其現貨大買形成明顯對做；②融資連 2 增、融券同步 +3.14%，多空雙方都在加碼，波動易放大。<strong>綜合判定：籌碼偏多，但外資「現貨買、期貨空」的分歧結構意味著它們在避險而非全面看多，指數上攻時容易出現急拉後的回檔。</strong></p>
+<p class="note"><strong>10:05 更正說明：</strong>本區塊初版 9 項中有 7 項標「查不到」，並據此把定調往保守收一格。Chrome 恢復後於 Goodinfo 大盤綜合頁與期交所三大法人頁一次補齊全部項目。<strong>依規則「若籌碼三項已完整取得，就不要再寫『因資料缺失往保守收一格』——定調要是實質判斷」，收一格的前提已不成立，定調應為震盪偏多。</strong>初版的「震盪」保留於 Notion 供盤後對帳，不予竄改。</p>
+
+<h3>8/26 上市類股指數強弱（補執行 8/26 修正#6）</h3>
+<table>
+<tr><th>前五強</th><th class="n">漲幅</th><th>後五弱</th><th class="n">漲幅</th></tr>
+<tr><td>塑膠類</td><td class="n num up">+7.6%</td><td>航運類</td><td class="n num dn">−4.0%</td></tr>
+<tr><td>塑膠化工類</td><td class="n num up">+5.5%</td><td>油電燃氣類</td><td class="n num dn">−0.7%</td></tr>
+<tr><td>光電類</td><td class="n num up">+4.7%</td><td>金融保險類</td><td class="n num dn">−0.3%</td></tr>
+<tr><td>生技醫療類</td><td class="n num up">+4.0%</td><td>紡織纖維類</td><td class="n num dn">−0.3%</td></tr>
+<tr><td>電子零組件類 / 化學生技醫療類</td><td class="n num up">+3.4%</td><td>水泥類 / 貿易百貨類</td><td class="n num dn">−0.2%</td></tr>
+</table>
+<p class="note">與持股直接相關者：<strong>電腦及週邊設備類 +3.3%</strong>（技嘉、緯創）、<strong>電子零組件類 +3.4%</strong>（國巨所屬，且昨夜美股 TheFly 亦點名 electronic components 為領漲群組之一）、<strong>半導體類僅 +1.2%</strong>（台積電、聯發科、日月光、京元電所屬，<strong>相對落後</strong>）、光電類 +4.7%（CPO／光通訊）。<br><strong>關鍵觀察：8/26 領漲主線仍是塑膠類 +7.6% 與光電類 +4.7%，與 8/26 盤後回顧記錄的「南亞漲停、大立光漲停」完全一致，這條本土主線已連續兩日有效。</strong>而 Roman 的持股集中在半導體類（僅 +1.2%）與電腦週邊（+3.3%），<strong>組合並不在最強主線上</strong>——這正是 8/21 修正#1 反覆警告的結構問題。</p>
 </div>
 
 <!-- 8 -->
@@ -468,7 +527,7 @@ li{margin:5px 0;}
   <dl>
     <dt>前一交易日收盤</dt><dd class="num">592 元（8/26，新鮮）</dd>
     <dt>開盤預估</dt><dd><span class="flat">平開</span> <span class="num">590 – 597</span>（約 −0.3% ~ +0.8%）</dd>
-    <dt>推估依據</dt><dd>有自家 ADR，優先使用：ASX 37.26（+0.49%），折價由 −2.92% 收斂至 −2.44%（<strong>僅 0.47pp，屬溫和收斂</strong>）。但依 8/26 修正#4，<strong>ADR 折溢價權重已打三折、不單獨作為方向依據</strong>——8/26 就是反例（折價收斂 2.43pp 被列為最明確正向，結果該檔僅 +0.17%、13 檔中第 3 弱）。</dd>
+    <dt>推估依據</dt><dd>有自家 ADR，優先使用：ASX 37.26（+0.49%），折價由 −0.64% 收斂至 −0.15%（<strong>僅 0.49pp，屬溫和收斂，且已幾乎回到平價</strong>；10:05 已用實際匯率 31.728 重算，初版誤植為 −2.92%→−2.44%）。但依 8/26 修正#4，<strong>ADR 折溢價權重已打三折、不單獨作為方向依據</strong>——8/26 就是反例（折價收斂 2.43pp 被列為最明確正向，結果該檔僅 +0.17%、13 檔中第 3 弱）。</dd>
     <dt>消息面</dt><dd>無重大個股消息。</dd>
     <dt>對持股的意涵</dt><dd><strong>⚠ 成本 587 就在開盤估區間下緣 590 的正下方。</strong>只要開低 0.85% 就會觸及成本線。8/26 盤中最低曾到 575（破成本），<strong>今日盤中再度破 587 的機率不低</strong>；但收盤實現虧損的機率較低（前兩次盤中破成本後都收在成本之上）。</dd>
     <dt>翻多觸發價 / 偏弱情境價</dt><dd>翻多：站穩 600 整數關；偏弱：失守 587 成本線，再失 575 則前波低點失守。</dd>
@@ -587,22 +646,29 @@ li{margin:5px 0;}
 <li><strong>台廠 ADR（TSM／ASX／UMC／CHT）</strong>：同上，Yahoo Finance 8/26 官方收盤。<strong>注意：Yahoo 股市的 /adr 專頁本次快取停在 08/18 04:00（過期 6 個交易日），已整頁作廢不採用</strong>，改用 Chrome 抓 Yahoo Finance 美股頁的官方值。</li>
 <li><strong>加權前日收盤、持股 13 檔收盤價</strong>：Notion「每日預估追蹤」與「我的持股」資料庫，收盤日 2026-08-26（＝前一交易日，資料新鮮，無需重查回填）。</li>
 <li><strong>輝達財報內容</strong>：Yahoo Finance 相關新聞標題（The Guardian、MT Newswires、Motley Fool），台北 8/27 清晨發布。<strong>僅取得標題層級資訊，未取得完整財報數字與盤後股價。</strong></li>
-<li><strong>USD/TWD 31.0</strong>：<strong>概算值，非查得值</strong>。所有 ADR 折溢價計算均受此影響。</li>
+<li><strong>USD/TWD 31.728</strong>：Yahoo 外匯頁，2026/08/27 09:57 實查。<s>初版曾以 31.0 概算</s>，已於 10:05 全面重算 ADR 折溢價。</li>
+<li><strong>籌碼三項、漲跌家數、上市類股指數</strong>：Goodinfo「上市加權指數／大盤市況總覽」，資料日期 8/26，<strong>經 Chrome 於 2026/08/27 約 09:55 實查</strong>。</li>
+<li><strong>外資／投信／自營商期貨未平倉</strong>：期交所「三大法人／區分各期貨契約／依日期」，日期 2026/08/26，<strong>經 Chrome 於 2026/08/27 約 09:56 實查</strong>。</li>
+<li><strong>SOX／VIX／US10Y</strong>：CNBC 官方報價頁，8/26 收盤，<strong>經 Chrome 於 2026/08/27 約 10:00 實查</strong>。交叉驗證：CNBC 顯示之前收（SOX 11,588.038、VIX 15.45）與 Notion 8/26 晨報記錄完全一致。</li>
+<li><strong>NVDA 盤後與財報細節</strong>：stockanalysis.com 與財訊快報／中央社／Newtalk 等多家報導交叉比對，<strong>經 Chrome 於 2026/08/27 約 10:00 實查</strong>。營收 962.21 億、EPS 2.22、Q3 財測 1,080 億、FY28 +70% 四項數字經三家以上媒體一致確認。</li>
+<li><strong>實際開盤數據（45,890.18、早盤高 46,390.93、台積電開 2,430）</strong>：中央社、Yahoo 早盤、民視財經等多家 8/27 早盤報導，<strong>非本報告盤前推估，屬事後校準用途</strong>。</li>
 </ul>
 
 <h3>本次未能取得的項目（完整列表）</h3>
 <table>
 <tr><th>項目</th><th>是否已嘗試 Chrome</th><th>結果</th></tr>
-<tr><td>費半 SOX 官方收盤點位</td><td>是（計畫開 CNBC .SOX）</td><td>Chrome 於此步驟中斷</td></tr>
-<tr><td>道瓊／S&amp;P 500／那斯達克官方收盤</td><td>是</td><td>Chrome 中斷；僅由 Yahoo 頁面標籤取得道瓊約 −0.21%（概略值）</td></tr>
-<tr><td>VIX、美 10 年殖利率、WTI、USD/TWD</td><td>是</td><td>Chrome 中斷</td></tr>
-<tr><td>NVDA 財報後盤後股價</td><td>是</td><td>Chrome 中斷；WebFetch 抓 Yahoo NVDA 頁回傳 08/22 快取，已作廢</td></tr>
-<tr><td>籌碼三項（季線乖離、融資餘額、外資期貨未平倉）</td><td>是（計畫開 Goodinfo 大盤頁、期交所三大法人頁）</td><td>Chrome 中斷；<strong>已依規則將定調往保守收一格</strong></td></tr>
-<tr><td>漲跌家數、台股類股指數中位數排序</td><td>是</td><td>Chrome 中斷；因此 8/26 修正#6 本次無法執行</td></tr>
-<tr><td>小型台指／電子期／金融期／半導體 30 期／台積電個股期夜盤</td><td>是</td><td>期交所頁面需逐一切換契約，Chrome 中斷後無法完成</td></tr>
-<tr><td>被動元件對照股 VSH／APH／TEL、封測對照股 AMKR</td><td>否（優先序較低，時間不足）</td><td>直接影響 2327、2449 的推估可信度</td></tr>
+<tr><td>費半 SOX 官方收盤點位</td><td>是</td><td class="up"><strong>10:05 已補齊</strong>：11,611.238（+23.20、+0.20%），CNBC 官方</td></tr>
+<tr><td>VIX</td><td>是</td><td class="up"><strong>10:05 已補齊</strong>：15.21（−0.24、−1.55%），CNBC 官方</td></tr>
+<tr><td>美 10 年殖利率</td><td>是</td><td class="up"><strong>10:05 已補齊</strong>：4.656%（−0.8bp），CNBC／Tradeweb</td></tr>
+<tr><td>USD/TWD</td><td>是</td><td class="up"><strong>10:05 已補齊</strong>：31.728（+0.37%），Yahoo 外匯 09:57</td></tr>
+<tr><td>NVDA 財報後盤後股價</td><td>是</td><td class="up"><strong>10:05 已補齊</strong>：219.53（+4.71%），stockanalysis.com</td></tr>
+<tr><td>籌碼三項＋漲跌家數＋類股排序</td><td>是</td><td class="up"><strong>10:05 已全數補齊</strong>：Goodinfo 大盤綜合頁＋期交所三大法人頁</td></tr>
+<tr><td>道瓊／S&amp;P 500／那斯達克官方收盤點位</td><td>是</td><td class="flat">僅取得方向（三大指數全數收低，受 7 月 PCE 年增 3.7% 高於預期影響），<strong>未取得精確點位</strong></td></tr>
+<tr><td>WTI 原油</td><td>是</td><td class="flat"><strong>仍缺</strong>。僅知新聞提及油價本週續跌。優先序最低，補查時已開盤故停止</td></tr>
+<tr><td>小型台指／電子期／金融期／半導體 30 期／台積電個股期夜盤</td><td>是</td><td class="flat"><strong>仍缺</strong>。期交所頁面需逐一切換契約，補查時優先給籌碼三項</td></tr>
+<tr><td>被動元件對照股 VSH／APH／TEL、封測對照股 AMKR</td><td>否</td><td class="flat"><strong>仍缺</strong>。直接影響 2327、2449 的推估可信度</td></tr>
 </table>
-<p><strong>Chrome 可用性說明：</strong>Claude in Chrome 本次<strong>初期可用</strong>（成功抓取美股 22 檔全表、期交所夜盤官方行情表），但在第三次呼叫時回傳「Selected Chrome extension disconnected」，重試兩次均失敗，依規則放棄。<strong>這不是權限未授權，是連線中斷。</strong>建議 Roman 檢查 Chrome 擴充功能是否在背景被休眠，並將 Claude in Chrome 加入永久允許清單，可同時避免權限與連線兩類問題。</p>
+<p class="warn" style="padding:14px;"><strong>Chrome 可用性說明（本次最重要的流程教訓）：</strong>Claude in Chrome 本次<strong>初期可用</strong>（成功抓取美股 22 檔全表、期交所夜盤官方行情表），但在第三次呼叫時回傳「Selected Chrome extension disconnected」，重試兩次均失敗，依規則放棄並產出初版。<strong>約 30 分鐘後 Chrome 自行恢復</strong>，一次補齊幾乎全部缺口。<br><br><strong>這代表「disconnected」是暫時性的，不是永久失效。</strong>往後排程遇到此錯誤時的正確處理應為：①先產出初版並寫入 Notion（本次做對了，Notion 在 08:20 已完成寫入）；②<strong>不要就此結束，應在 5–10 分鐘後重試一次</strong>，因為連線可能自行恢復；③本次因為在 08:20 就放棄，導致最關鍵的 NVDA 盤後 +4.71% 完全漏掉，定調錯誤。這比「資料缺失」本身嚴重得多。<br><br>建議 Roman 檢查 Chrome 擴充功能是否在背景被瀏覽器休眠（Chrome 的記憶體節省功能會凍結背景分頁），並將 Claude in Chrome 加入永久允許清單與「一律不休眠」的網站清單。</p>
 
 <h3>資料來源</h3>
 <ul>
