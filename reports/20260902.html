@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260902 主動式ETF 資金流分析報告</title>
+<style>
+:root{
+  --bg:#fcfcfb; --fg:#1a1a19; --muted:#6b6b66; --line:#e5e4e0; --card:#ffffff;
+  --buy:#2a78d6; --sell:#e34948; --buy-soft:#dceaf9; --sell-soft:#fbe0df;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#1a1a19; --fg:#eceae5; --muted:#9a9993; --line:#33322f; --card:#232320;
+    --buy:#3987e5; --sell:#e66767; --buy-soft:#1e3350; --sell-soft:#3a2422; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+h1{font-size:28px;line-height:1.3;margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:20px;margin:48px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:28px 0 10px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 24px}
+.lede{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--fg);
+  border-radius:6px;padding:16px 18px;margin:0 0 28px;font-size:16px}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.buy{color:var(--buy)} .sell{color:var(--sell)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 4px}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:none;color:var(--muted);font-weight:600;white-space:nowrap}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:rgba(128,128,128,.06)}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:18px 0 8px}
+.kv div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.kv .k{font-size:11.5px;color:var(--muted);margin-bottom:3px}
+.kv .v{font-size:19px;font-weight:650;font-variant-numeric:tabular-nums}
+.kv .v small{font-size:12.5px;font-weight:500;color:var(--muted)}
+/* diverging bars */
+.chart{margin:14px 0 6px}
+.row{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:10px;padding:2px 0}
+.row .lbl{font-size:13px;text-align:right;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{position:relative;height:22px}
+.track::before{content:"";position:absolute;left:var(--zero);top:-2px;bottom:-2px;width:1px;background:var(--line)}
+.bar{position:absolute;top:3px;height:16px;border-radius:2px}
+.bar.b{background:var(--buy)} .bar.s{background:var(--sell)}
+.val{position:absolute;top:2px;font-size:12px;font-variant-numeric:tabular-nums;line-height:18px;white-space:nowrap}
+.note{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+ul{padding-left:20px;margin:10px 0} li{margin:6px 0;font-size:14.5px}
+.tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:1px}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+@media(max-width:640px){.row{grid-template-columns:96px 1fr}.wrap{padding:28px 16px 60px}h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>20260902 主動式ETF 資金流分析報告</h1>
+<p class="sub">執行日 2026-09-02（週三）｜資料日：18 檔 20260901、4 檔 20260831（00993A、00984A、00994A、00408A）｜追蹤 22 檔台股主動式 ETF，總規模 8,509.3 億</p>
+
+<div class="lede">
+22 檔合計<strong class="sell">淨賣超 2.60 億</strong>，看似持平，但內部是一場乾淨的行業輪動：資金從<strong class="sell">記憶體、被動元件、封測</strong>大規模搬到<strong class="buy">PCB/CCL/載板（+15.26 億）</strong>。而這個「幾乎持平」完全是單一檔造成的——<strong>00403A 單日淨賣 22.93 億，拿掉它，其餘 21 檔合計淨買超 20.33 億</strong>。
+</div>
+
+<h2>1. 關鍵指標</h2>
+<div class="kv">
+  <div><div class="k">全體淨額</div><div class="v sell">−2.60 <small>億</small></div></div>
+  <div><div class="k">全體買超</div><div class="v buy">+47.94 <small>億</small></div></div>
+  <div><div class="k">全體賣超</div><div class="v sell">−50.54 <small>億</small></div></div>
+  <div><div class="k">最大流入主題</div><div class="v buy" style="font-size:16px">PCB/CCL/載板 +15.26</div></div>
+  <div><div class="k">最大流出主題</div><div class="v sell" style="font-size:16px">記憶體 −13.10</div></div>
+  <div><div class="k">最強共識買盤</div><div class="v buy" style="font-size:16px">6669 緯穎 +4.31（4檔）</div></div>
+  <div><div class="k">最強共識賣壓</div><div class="v sell" style="font-size:16px">3711 日月光 −6.88（4檔）</div></div>
+  <div><div class="k">無異動檔數</div><div class="v">3 <small>/ 22 檔</small></div></div>
+</div>
+
+<h2>2. 產業主題資金流</h2>
+<div class="chart" id="c-theme"></div>
+<table>
+<thead><tr><th>主題</th><th class="r">淨額(億)</th><th class="r">買超(億)</th><th class="r">賣超(億)</th><th class="r">買方檔數</th><th class="r">賣方檔數</th></tr></thead>
+<tbody id="t-theme"></tbody>
+</table>
+<p class="note"><strong>PCB/CCL/載板是今日唯一真正的共識方向</strong>：不只金額最大（淨 +15.26 億），而且是 5 檔不同 ETF、5 檔不同標的（南電、臻鼎-KY、台光電、欣興、金像電）分頭買進，不是單一檔的孤軍。<br>
+<strong>記憶體與被動元件的流出幾乎全來自 00403A 一檔</strong>：華邦電 −8.80、旺宏 −1.84、國巨* −10.14，三筆就佔了這兩個主題流出的 100%。這不是幾十檔共同看壞，而是一家投信的大部位調整，判讀時要打折扣。<br>
+<strong>封測與測試介面看似持平（−0.06 億），其實是內部激烈換股</strong>：買超 7.32 億（京元電子、穎崴）對上賣超 −7.38 億（日月光投控），買方 2 檔、賣方 5 檔，同一主題內部方向完全分裂。</p>
+
+<h2>3. 個股淨買賣超前 10</h2>
+<h3>淨買超前 10</h3>
+<div class="chart" id="c-buy"></div>
+<table>
+<thead><tr><th class="r">#</th><th>個股</th><th class="r">淨額(億)</th><th class="r">買/賣檔數</th><th class="r">規模共識</th><th>主題</th></tr></thead>
+<tbody id="t-buy"></tbody>
+</table>
+<p class="note">前 10 名有 4 檔屬 PCB/CCL/載板（南電、臻鼎-KY、台光電、欣興），主題集中度極高。</p>
+
+<h3>淨賣超前 10</h3>
+<div class="chart" id="c-sell"></div>
+<table>
+<thead><tr><th class="r">#</th><th>個股</th><th class="r">淨額(億)</th><th class="r">買/賣檔數</th><th class="r">規模共識</th><th>主題</th></tr></thead>
+<tbody id="t-sell"></tbody>
+</table>
+<p class="note">前 10 大賣超中，只有台積電有 ETF 站在買方（00406A +1.46 億），其餘 9 檔買方檔數皆為 0。但台積電的規模共識仍是 −18.2%——賣方 00403A 規模是買方 00406A 的 9.3 倍。</p>
+
+<h2>4. 多檔共識訊號（同方向 ≥ 3 檔）</h2>
+<h3>共識買方</h3>
+<table>
+<thead><tr><th>個股</th><th class="r">淨額(億)</th><th class="r">檔數</th><th>參與買進的 ETF</th><th class="r">規模共識</th></tr></thead>
+<tbody>
+<tr><td>6669 緯穎</td><td class="r buy">+4.31</td><td class="r">4</td><td>00406A +0.47、00985A +0.23、00401A +1.60、00410A +2.01</td><td class="r buy">+4.0%</td></tr>
+<tr><td>3665 貿聯-KY</td><td class="r buy">+2.31</td><td class="r">3</td><td>00400A +1.39、00406A +0.69、00985A +0.23</td><td class="r buy">+6.9%</td></tr>
+</tbody></table>
+<p class="note"><strong>緯穎是今日方向最一致的個股</strong>：4 檔齊買、零賣壓。但要注意這四檔都是中小型 ETF（規模合計僅 338 億），所以規模共識只有 +4.0%——<strong>檔數共識強、規模共識弱</strong>。真正的大錢（00981A、00403A、00991A）當日都沒碰它。</p>
+
+<h3>共識賣方</h3>
+<table>
+<thead><tr><th>個股</th><th class="r">淨額(億)</th><th class="r">檔數</th><th>參與賣出的 ETF</th><th class="r">規模共識</th></tr></thead>
+<tbody>
+<tr><td>3711 日月光投控</td><td class="r sell">−6.88</td><td class="r">4</td><td>00403A −6.10、00999A 剔除、00994A −0.53、00408A 剔除</td><td class="r sell">−22.6%</td></tr>
+<tr><td>2345 智邦</td><td class="r sell">−2.63</td><td class="r">3</td><td>00982A −2.21、00994A −0.37、00408A −0.06</td><td class="r sell">−6.7%</td></tr>
+</tbody></table>
+<p class="note"><strong>日月光投控是今日方向最一致、且規模最重的賣壓</strong>：4 檔齊賣、零買盤，其中 00999A 與 00408A 直接清到零。規模共識 −22.6%，遠強於緯穎買方的 +4.0%——<strong>今日最有分量的訊號在賣方，不在買方。</strong><br>
+但要打個折：00994A 與 00408A 同屬第一金投信，方向幾乎完全重疊（同步減環球晶、致茂、南電、智邦、日月光；同步加聯亞、台灣大）。<strong>把它們算成兩個獨立意見會高估共識廣度</strong>，實質上日月光是「3 家投信」而非「4 檔 ETF」的共識。</p>
+
+<h2>5. 00981A 統一台股增長 專章</h2>
+<p><strong>當日操作</strong>：加碼 2 檔、減碼 1 檔，無新進無剔除。買超 +6.41 億、賣超 −2.01 億，<strong class="buy">淨買超 +4.40 億</strong>，換手率僅 0.283%。以它 2,975 億的規模（佔全體 34.96%）來說，這是安靜的一天——與昨日單檔主導全市場 57% 流出的情況完全相反。</p>
+<table>
+<thead><tr><th>類型</th><th>個股</th><th class="r">股數變化</th><th class="r">金額(億)</th><th class="r">權重</th><th>主題</th></tr></thead>
+<tbody>
+<tr><td>加</td><td>6515 穎崴</td><td class="r">+53,000</td><td class="r buy">+3.66</td><td class="r">0.00 → 0.13%</td><td>封測與測試介面</td></tr>
+<tr><td>加</td><td>4958 臻鼎-KY</td><td class="r">+513,000</td><td class="r buy">+2.74</td><td class="r">0.29 → 0.40%</td><td>PCB/CCL/載板</td></tr>
+<tr><td>減</td><td>4979 華星光</td><td class="r">−335,000</td><td class="r sell">−2.01</td><td class="r">0.68 → 0.58%</td><td>網通/光通訊</td></tr>
+</tbody></table>
+<p class="note"><strong>減碼前 6 大</strong>：今日僅 1 筆減碼（4979 華星光），無法列滿 6 筆。</p>
+<p class="note"><strong>權重與股數背離的解讀</strong>：<br>
+<strong>6515 穎崴</strong>——股數從 1,000 股加到 54,000 股（+5,300%），權重從 0.00% 跳到 0.13%。這是實質建倉而非微調。<strong>值得點名的是同一天 00407A 把穎崴整筆剔除出場</strong>（−8,000 股 / −0.50 億，權重 0.19→0.00%），兩家看法完全相反，且金額共識站在 00981A 這邊（全體淨 +3.16 億）。<br>
+<strong>4979 華星光</strong>——股數減 10.56%，權重卻從 0.68% 降到 0.58%（降幅 14.7%）。<strong>權重降幅大於股數降幅，表示股價同時也在跌</strong>。這是「真減碼」而非單純的股價效應，判讀方向仍以股數與金額為準。</p>
+
+<h2>6. 其他值得注意的操作</h2>
+<ul>
+<li><strong>00410A 永豐科技趨勢：換手率 13.20%，全體最高</strong>，是次高 00985A（8.02%）的 1.6 倍。只做兩筆買進，但規模僅 16.1 億、持股 29 檔，單日動作幅度相對極大。緯穎權重已達 5.27%、全新 5.45%，集中度偏高。</li>
+<li><strong>00985A 野村台灣 50：12 筆異動、換手率 8.02%，是最典型的整批換股</strong>。確實地把電子通路（文曄 0.89%→0.05%，近乎出清）、測試設備（鴻勁 1.74%→0.99%）、傳產（台塑 1.66%→1.01%）換成半導體材料（環球晶 0.09%→1.63%）、工控（研華 0.95%→2.10%）與晶圓代工（聯電 0.21%→1.00%）。這不是降碼，是明確的產業切換。</li>
+<li><strong>00406A 中信台灣收益：全市唯一「零賣出」且金額顯著的 ETF</strong>。8 筆全部是加碼或新進，淨買超 +10.58 億為全體最大，換手率 5.65%。新進昇達科一步到位 0.67% 權重，同時加碼信驊、金像電、台積電、南電、台達電、貿聯、緯穎——買盤分散且方向與 00403A 完全相反。</li>
+<li><strong>6488 環球晶是「檔數共識與金額共識相反」的教科書案例</strong>：00985A 大買 +1.63 億，但 00994A（−0.46）與 00408A（−0.14）同時減碼。<strong>檔數 1 買 vs 2 賣看似偏空，金額卻淨流入 +1.04 億</strong>。依 SOP 一律以金額為主，環球晶當日應讀成買方。2360 致茂同理（1 買 2 賣，金額淨 +0.50 億）。</li>
+<li><strong>2330 台積電則是反過來的案例</strong>：檔數 1 買 1 賣看似中性，但 00403A（1,736 億）減碼 −4.88 億對上 00406A（187.3 億）加碼 +1.46 億，規模差 9.3 倍，金額大幅淨流出 −3.42 億、規模共識 −18.2%。<strong>檔數持平不等於方向中性。</strong></li>
+<li><strong>00999A 野村臺灣高息：一口氣剔除 4 檔</strong>（勤誠、日月光投控、宏全、大中），是全體剔除最多的一檔，較像季度型的持股清理而非單日看法。</li>
+<li><strong>00994A 與 00408A 方向幾乎完全重疊</strong>（同屬第一金投信）：同步減環球晶、致茂、南電、智邦、日月光；同步加聯亞、台灣大。計算共識檔數時應視為同一個意見來源。</li>
+<li><strong>3037 欣興出現同日對作</strong>：00400A +2.79、00985A +0.49 買進，但 00995A 減碼 −0.49（權重 4.93%→3.64%，降幅顯著）。全體仍淨買超 +2.79 億。</li>
+<li><strong>00992A 群益台灣科技創新只做一件事</strong>：加碼南電 4.03 億，權重 1.84%→2.72%。單筆就貢獻全體南電淨買超 +4.92 億的 82%。</li>
+<li><strong>3 檔零異動</strong>：00405A（302.3 億）、00980A（201.3 億）、00993A（100.4 億），合計 604.0 億、佔總規模 7.1%。另有 00984A（+0.00 億）與 00991A（一進一出各 0.01 億）雖有動作但金額低於 0.02 億，實質等同無動作。</li>
+</ul>
+
+<h2>7. 方法與注意事項</h2>
+<ol>
+<li><strong>資料日不一致</strong>：18 檔為 20260901；<strong>00993A、00984A、00994A、00408A</strong> 四檔為 20260831（落後一個交易日）。這 4 檔上一筆 Notion 紀錄是 08-28，本次為新資料，已正常寫入。Notion 資料庫依每檔自己的 as_of 建筆，本報告標題與檔名則依執行日 20260902。</li>
+<li><strong>加權方式</strong>：以實際成交金額彙總，金額本身已反映規模差異。主題彙總的買/賣方檔數已去重（同一 ETF 在同一主題內只算一次，以其在該主題的淨額定方向）。</li>
+<li><strong>權重變化含股價效應</strong>：權重上升 ≠ 加碼，反之亦然。今日最清楚的範例是 <strong>00404A 加碼 3135 凌航 +13,733 股，權重反而從 1.58% 降到 1.53%</strong>——股價跌幅大於加碼幅度。判讀方向一律以股數與金額為準。</li>
+<li><strong>檔數共識可能與金額共識相反</strong>：今日有三個反向案例——6488 環球晶（1 買 2 賣，金額淨 +1.04 億）、2360 致茂（1 買 2 賣，金額淨 +0.50 億）、2330 台積電（1 買 1 賣，金額淨 −3.42 億）。<strong>一律以金額為主。</strong></li>
+<li><strong>非股票部位排除</strong>：22 檔今日皆無 <code>non_equity</code> 部位（台指期貨／選擇權），無需排除調整。</li>
+<li><strong>本日出現、SOP 第 3 節分類表尚未建檔的個股（14 檔）</strong>——已依主要業務暫歸最接近的現有類別，請手動補進分類表：
+<table>
+<thead><tr><th>代號</th><th>名稱</th><th>暫歸類別</th></tr></thead>
+<tbody>
+<tr><td>4979</td><td>華星光</td><td>網通/光通訊</td></tr>
+<tr><td>2404</td><td>漢唐</td><td>半導體設備材料</td></tr>
+<tr><td>6182</td><td>合晶</td><td>半導體設備材料</td></tr>
+<tr><td>6640</td><td>均華</td><td>半導體設備材料</td></tr>
+<tr><td>3045</td><td>台灣大</td><td>電信</td></tr>
+<tr><td>9941</td><td>裕融</td><td>金融</td></tr>
+<tr><td>6435</td><td>大中</td><td>電子通路</td></tr>
+<tr><td>3135</td><td>凌航</td><td>電子通路</td></tr>
+<tr><td>1717</td><td>長興</td><td>傳產與其他</td></tr>
+<tr><td>1795</td><td>美時</td><td>傳產與其他</td></tr>
+<tr><td>4746</td><td>台耀</td><td>傳產與其他</td></tr>
+<tr><td>2727</td><td>王品</td><td>傳產與其他</td></tr>
+<tr><td>8436</td><td>大江</td><td>傳產與其他</td></tr>
+<tr><td>9939</td><td>宏全</td><td>傳產與其他</td></tr>
+</tbody></table>
+<p class="note">註：6435 大中與 3135 凌航前次曾暫歸不同類別（IC設計/ASIC、傳產與其他），本次依主要業務改歸電子通路。建檔時請以一致標準確認。</p>
+</li>
+<li><strong>規模資料</strong>：沿用 SOP 第 2 節的靜態規模表（總計 8,509.3 億），本次未發現明顯失真。但規模會隨時間變化，建議定期核對更新。</li>
+</ol>
+
+<h2>附錄：22 檔當日一覽</h2>
+<table>
+<thead><tr><th>代號</th><th>名稱</th><th class="r">規模(億)</th><th class="r">資料日</th><th class="r">買超</th><th class="r">賣超</th><th class="r">淨額</th><th class="r">換手率</th></tr></thead>
+<tbody id="t-all"></tbody>
+</table>
+
+<footer>
+資料來源：etfedge.xyz daily JSON（每檔 as_of 如上）。金額以實際成交金額換算為億元。本報告僅為資料整理，不構成投資建議。<br>
+產出時間：2026-09-02 ｜ 對應 Notion 資料庫「ETF每日異動追蹤」22 筆紀錄。
+</footer>
+</div>
+
+<script>
+const THEMES=[["PCB/CCL/載板",15.26,16.07,-0.82,5,3],["AI伺服器ODM",3.55,4.31,-0.76,4,1],["連接器/機構件",2.31,2.31,0,3,0],["IC設計/ASIC",2.17,2.17,0,2,0],["工控與重電",1.19,1.19,0,1,0],["網通/光通訊",0.71,5.35,-4.64,3,4],["面板光學LED",0.20,0.61,-0.40,1,0],["電信",0.01,0.01,0,2,0],["消費電子零組件",0.00,0,0,0,0],["封測與測試介面",-0.06,7.32,-7.38,2,5],["傳產與其他",-0.07,2.66,-2.73,3,3],["半導體設備材料",-0.11,2.51,-2.63,2,5],["金融",-0.13,0.12,-0.25,1,1],["散熱與電源",-0.74,0.93,-1.67,1,2],["電子通路",-1.09,0.02,-1.12,1,3],["晶圓代工",-2.57,2.31,-4.88,3,1],["被動元件",-10.14,0,-10.14,0,1],["記憶體",-13.10,0,-13.10,0,3]];
+const TOPBUY=[["8046 南電",4.92,"2 / 2","+6.5%","PCB/CCL/載板"],["6669 緯穎",4.31,"4 / 0","+4.0%","AI伺服器ODM"],["2449 京元電子",3.60,"2 / 0","+21.0%","封測與測試介面"],["6515 穎崴",3.16,"1 / 1","+31.7%","封測與測試介面"],["4958 臻鼎-KY",2.96,"2 / 0","+35.6%","PCB/CCL/載板"],["2383 台光電",2.93,"2 / 0","+4.7%","PCB/CCL/載板"],["3450 聯鈞",2.88,"1 / 0","+20.4%","網通/光通訊"],["3037 欣興",2.79,"2 / 1","+4.1%","PCB/CCL/載板"],["1303 南亞",2.35,"1 / 0","+20.4%","傳產與其他"],["3665 貿聯-KY",2.31,"3 / 0","+6.9%","連接器/機構件"]];
+const TOPSELL=[["2327 國巨*",-10.14,"0 / 1","−20.4%","被動元件"],["2344 華邦電",-8.80,"0 / 1","−20.4%","記憶體"],["3711 日月光投控",-6.88,"0 / 4","−22.6%","封測與測試介面"],["2330 台積電",-3.42,"1 / 1","−18.2%","晶圓代工"],["2345 智邦",-2.63,"0 / 3","−6.7%","網通/光通訊"],["2408 南亞科",-2.23,"0 / 1","−3.3%","記憶體"],["4979 華星光",-2.01,"0 / 1","−35.0%","網通/光通訊"],["2337 旺宏",-1.84,"0 / 1","−20.4%","記憶體"],["6446 藥華藥",-1.63,"0 / 1","−3.3%","傳產與其他"],["7769 鴻勁",-1.58,"0 / 2","−4.7%","半導體設備材料"]];
+const ALL=[["00981A","統一台股增長",2975.0,"20260901",6.41,-2.01,4.40,0.283],["00403A","統一台股升級50",1736.0,"20260901",8.82,-31.76,-22.93,2.337],["00991A","復華台灣未來50",898.0,"20260901",0.01,-0.01,0.00,0.003],["00982A","群益台灣強棒",500.6,"20260901",0.11,-2.21,-2.09,0.463],["00992A","群益台灣科技創新",436.9,"20260901",4.03,0,4.03,0.922],["00405A","富邦台灣龍耀",302.3,"20260901",0,0,0.00,0.000],["00400A","國泰台股動能高息",298.2,"20260901",6.83,-2.35,4.47,3.078],["00407A","凱基台灣",276.6,"20260901",0.06,-4.36,-4.29,1.598],["00980A","野村臺灣優選",201.3,"20260901",0,0,0.00,0.000],["00406A","中信台灣收益",187.3,"20260901",10.58,0,10.58,5.646],["00999A","野村臺灣高息",122.4,"20260901",0.65,-2.15,-1.50,2.284],["00985A","野村台灣 50",102.7,"20260901",5.66,-2.58,3.08,8.021],["00993A","安聯台灣",100.4,"20260831",0,0,0.00,0.000],["00984A","安聯台灣高息",100.3,"20260831",0,0,0.00,0.001],["00994A","第一金台股優勢",52.1,"20260831",0.11,-1.81,-1.71,3.688],["00995A","中信台灣卓越",50.5,"20260901",0.47,-0.63,-0.16,2.162],["00996A","兆豐台灣豐收",43.5,"20260901",0,-0.17,-0.17,0.381],["00404A","聯博台灣動能收益50",33.6,"20260901",0.02,0,0.02,0.071],["00401A","摩根台灣鑫收",32.4,"20260901",1.60,0,1.60,4.929],["00987A","台新臺灣優勢成長",26.9,"20260901",0.26,0,0.26,0.954],["00408A","第一金優股息",16.2,"20260831",0.19,-0.50,-0.31,4.224],["00410A","永豐科技趨勢",16.1,"20260901",2.13,0,2.13,13.204]];
+
+const f2=n=>(n<0?"−":n>0?"+":"")+Math.abs(n).toFixed(2);
+const f2p=n=>(n<0?"−":"")+Math.abs(n).toFixed(2);
+
+function bars(el, rows){
+  const posMax=Math.max(0,...rows.map(r=>r[1])), negMax=Math.max(0,...rows.map(r=>-r[1]));
+  const span=posMax+negMax||1;
+  const zero=(negMax/span*100);
+  let h='';
+  for(const [lbl,v] of rows){
+    const w=Math.abs(v)/span*100;
+    const isB=v>=0;
+    const left=isB?zero:zero-w;
+    const lab=isB
+      ? `<span class="val buy" style="left:calc(${zero}% + ${w}% + 6px)">${f2(v)}</span>`
+      : `<span class="val sell" style="right:calc(${100-zero}% + ${w}% + 6px)">${f2(v)}</span>`;
+    h+=`<div class="row"><div class="lbl">${lbl}</div><div class="track" style="--zero:${zero}%">`
+      +(Math.abs(v)>0.005?`<div class="bar ${isB?'b':'s'}" style="left:${left}%;width:${w}%"></div>`:'')
+      +lab+`</div></div>`;
+  }
+  el.innerHTML=h;
+}
+
+bars(document.getElementById('c-theme'), THEMES.map(t=>[t[0],t[1]]));
+document.getElementById('t-theme').innerHTML=THEMES.map(t=>
+ `<tr><td>${t[0]}</td><td class="r ${t[1]>0?'buy':t[1]<0?'sell':''}"><strong>${f2(t[1])}</strong></td><td class="r">${t[2].toFixed(2)}</td><td class="r">${f2p(t[3])}</td><td class="r">${t[4]}</td><td class="r">${t[5]}</td></tr>`).join('');
+
+bars(document.getElementById('c-buy'), TOPBUY.map(t=>[t[0],t[1]]));
+document.getElementById('t-buy').innerHTML=TOPBUY.map((t,i)=>
+ `<tr><td class="r">${i+1}</td><td>${t[0]}</td><td class="r buy"><strong>${f2(t[1])}</strong></td><td class="r">${t[2]}</td><td class="r">${t[3]}</td><td>${t[4]}</td></tr>`).join('');
+
+bars(document.getElementById('c-sell'), TOPSELL.map(t=>[t[0],t[1]]));
+document.getElementById('t-sell').innerHTML=TOPSELL.map((t,i)=>
+ `<tr><td class="r">${i+1}</td><td>${t[0]}</td><td class="r sell"><strong>${f2(t[1])}</strong></td><td class="r">${t[2]}</td><td class="r">${t[3]}</td><td>${t[4]}</td></tr>`).join('');
+
+document.getElementById('t-all').innerHTML=ALL.map(r=>
+ `<tr><td>${r[0]}</td><td>${r[1]}</td><td class="r">${r[2].toFixed(1)}</td><td class="r">${r[3]}</td><td class="r buy">${r[4]?"+"+r[4].toFixed(2):"—"}</td><td class="r sell">${r[5]?f2p(r[5]):"—"}</td><td class="r ${r[6]>0?'buy':r[6]<0?'sell':''}"><strong>${r[6]?f2(r[6]):"0.00"}</strong></td><td class="r">${r[7].toFixed(2)}%</td></tr>`).join('');
+</script>
+</body>
+</html>
