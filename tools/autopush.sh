@@ -1,5 +1,5 @@
 #!/bin/bash
-# 由 launchd 每個交易日 06:15 呼叫。只做「重建 index → commit → push」,不產生任何報告內容。
+# 由 launchd 每個交易日 06:15 / 08:30 / 13:00 呼叫。只做「重建 index → commit → push」,不產生任何報告內容。
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
