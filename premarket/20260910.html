@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>台股開盤前晨報 2026/09/10（四）</title>
+<style>
+:root{--bg:#f4f4f1;--card:#fcfcfb;--tx:#0b0b0b;--tx2:#52514e;--bd:#e2e1dc;--up:#d03b3b;--dn:#0ca30c;
+--b1:#f7d4d4;--b2:#f0b0b0;--b3:#e78a8a;--b4:#dc6363;--b5:#d03b3b;--b6:#a82f2f;--warn:#fff6e5;--warnbd:#e8c98a}
+@media (prefers-color-scheme:dark){:root{--bg:#131312;--card:#1a1a19;--tx:#fff;--tx2:#c3c2b7;--bd:#33332f;--up:#e66767;--dn:#3cbf3c;--warn:#2a2418;--warnbd:#5c4b28}}
+*{box-sizing:border-box}
+body{margin:0;padding:20px 14px 60px;background:var(--bg);color:var(--tx);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+line-height:1.72;font-size:15px;font-variant-numeric:tabular-nums}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.5px}
+h2{font-size:19px;margin:38px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--bd)}
+h3{font-size:16px;margin:22px 0 9px}
+.sub{color:var(--tx2);font-size:13px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:13px;padding:17px 19px;margin:14px 0}
+.up{color:var(--up);font-weight:600}
+.dn{color:var(--dn);font-weight:600}
+.hero{background:var(--card);border:2px solid var(--up);border-radius:14px;padding:20px 22px;margin:16px 0}
+.hero .tone{font-size:22px;font-weight:700;margin-bottom:10px;color:var(--up)}
+.hero p{margin:7px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:11px;margin:14px 0}
+.tile{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:13px 14px}
+.tile .lb{font-size:12px;color:var(--tx2);margin-bottom:5px}
+.tile .vl{font-size:20px;font-weight:700;letter-spacing:-.5px}
+.tile .ch{font-size:13px;margin-top:3px}
+.tag{display:inline-block;font-size:10.5px;padding:1px 6px;border:1px solid var(--bd);border-radius:5px;color:var(--tx2);margin-top:6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+th,td{padding:8px 9px;border-bottom:1px solid var(--bd);text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--tx2);font-weight:600;font-size:12.5px;white-space:nowrap}
+.bar-row{display:flex;align-items:center;gap:9px;margin:5px 0}
+.bar-lb{width:150px;font-size:12.5px;flex-shrink:0}
+.bar-tr{flex:1;background:var(--bd);border-radius:4px;height:17px;position:relative}
+.bar{height:17px;border-radius:0 4px 4px 0;min-width:2px}
+.bar-vl{width:60px;font-size:12.5px;text-align:right;flex-shrink:0}
+.warn{background:var(--warn);border:1px solid var(--warnbd);border-radius:10px;padding:12px 15px;margin:12px 0;font-size:14px}
+.callout{background:var(--card);border-left:4px solid var(--up);border-radius:0 10px 10px 0;padding:13px 16px;margin:13px 0}
+.hold{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:15px 17px;margin:12px 0}
+.hold-h{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--bd);padding-bottom:8px;margin-bottom:9px}
+.hold-n{font-size:16.5px;font-weight:700}
+.hold-g{font-size:12px;color:var(--tx2)}
+.hold dl{margin:0;display:grid;grid-template-columns:98px 1fr;gap:5px 11px;font-size:13.5px}
+.hold dt{color:var(--tx2);font-size:12.5px}
+.hold dd{margin:0}
+.dir-s{color:var(--up);font-weight:700}
+.dir-w{color:var(--dn);font-weight:700}
+.dir-p{color:var(--tx2);font-weight:700}
+.sc{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px;margin:13px 0}
+.sc-i{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 15px}
+.sc-i .p{font-size:23px;font-weight:700}
+.sc-i .r{font-size:15px;margin:5px 0;font-weight:600}
+ul,ol{padding-left:20px;margin:9px 0}
+li{margin:5px 0}
+.foot{font-size:12.5px;color:var(--tx2);margin-top:36px;border-top:1px solid var(--bd);padding-top:18px}
+.small{font-size:12.5px;color:var(--tx2)}
+@media(max-width:640px){
+body{padding:14px 10px 44px;font-size:14px}
+h1{font-size:20px}h2{font-size:17px}
+.bar-lb{width:96px;font-size:11px}
+.bar-vl{width:52px;font-size:11px}
+.hold dl{grid-template-columns:1fr;gap:2px 0}
+.hold dt{margin-top:7px}
+table{font-size:12px}th,td{padding:6px 5px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>台股開盤前晨報</h1>
+<div class="sub">2026 年 9 月 10 日（週四）　台北時間 08:05 撰寫　台指期 08:45 開盤・台股 09:00 開盤<br>資料涵蓋：09/09 台股收盤、09/09 美股收盤、09/09～09/10 台指期夜盤（05:00 終盤）</div>
+
+<h2>1. 開頭結論卡</h2>
+
+<div class="hero">
+<div class="tone">定調：震盪偏空</div>
+<p><strong>加權開盤預估：46,990～47,100</strong>　（前收 47,183.36，約 <span class="dn">−193 ~ −83 點、−0.41% ~ −0.18%</span>），中心值 <strong>47,045</strong>（<span class="dn">−138 點、−0.29%</span>）＝開低。</p>
+<p><strong>台積電開盤預估：2,455～2,475</strong>　（前收 2,465，−0.41% ~ +0.41%），中心值 <strong>2,465</strong> ＝平開。</p>
+<p><strong>持股一句話：</strong>13 檔普遍開低但跌幅分歧極大——賣壓精準打在 <strong>AI 伺服器／散熱電源（占組合 39.05%）</strong>，VRT 重挫 9.61%；半導體端（MRVL +4.26%、ASX +3.54%、AMKR +1.24%）逆勢走強撐住封測與 ASIC。最該盯 <strong>2308 台達電</strong>（訊號最差 × 部位最大）與 <strong>2383 台光電</strong>（成本線 5,320 僅剩 10 元緩衝）。</p>
+</div>
+
+<div class="warn">
+⚠️ <strong>今日的核心矛盾（全篇最重要的一句）：</strong>台指期夜盤大跌 194 點、逆價差一夜由 −5.36 點翻面擴大到 −199.36 點，<strong>但占指數四成的台積電個股期不跌反漲 5 元</strong>，且費半是四大指數中唯一收紅的。這代表夜盤的賣壓<strong>不在台積電、也不在半導體</strong>，而集中在總體層級（油價破 100 美元、美 10 年殖利率創 2023 年 11 月以來新高）與 AI 基礎設施硬體。方向偏空，但不是半導體崩壞式的偏空。
+</div>
+
+<h2>2. 關鍵數據看板</h2>
+
+<div class="grid">
+<div class="tile"><div class="lb">台指期夜盤終盤</div><div class="vl">46,984</div><div class="ch dn">−194（−0.41%）</div><div class="tag">09/10 04:59:59 終盤實測</div></div>
+<div class="tile"><div class="lb">加權指數（前日收）</div><div class="vl">47,183.36</div><div class="ch up">+77.58（+0.16%）</div><div class="tag">09/09 收盤</div></div>
+<div class="tile"><div class="lb">費城半導體 SOX</div><div class="vl">11,931.32</div><div class="ch up">+43.45（+0.37%）</div><div class="tag">09/09 官方收盤・唯一收紅</div></div>
+<div class="tile"><div class="lb">TSM ADR 溢價</div><div class="vl">+11.14%</div><div class="ch dn">收斂 0.70pp</div><div class="tag">ADR 跌出來的</div></div>
+<div class="tile"><div class="lb">S&amp;P 500</div><div class="vl">7,636.36</div><div class="ch dn">−37.16（−0.48%）</div><div class="tag">09/09 官方收盤</div></div>
+<div class="tile"><div class="lb">VIX 恐慌指數</div><div class="vl">16.46</div><div class="ch up">+0.74（+4.71%）</div><div class="tag">CNBC 4:15PM EDT</div></div>
+<div class="tile"><div class="lb">WTI 原油</div><div class="vl">96.05</div><div class="ch up">創 5 月以來最高收盤</div><div class="tag">布蘭特 &gt;101 美元</div></div>
+<div class="tile"><div class="lb">美 10 年期殖利率</div><div class="vl">4.836%</div><div class="ch up">+約 3bp・盤中 4.857%</div><div class="tag">2023/11 以來新高</div></div>
+<div class="tile"><div class="lb">道瓊工業指數</div><div class="vl">52,380.66</div><div class="ch dn">−405.41（−0.77%）</div><div class="tag">連 3 黑</div></div>
+<div class="tile"><div class="lb">那斯達克</div><div class="vl">26,253.34</div><div class="ch dn">−168.07（−0.64%）</div><div class="tag">09/09 官方收盤</div></div>
+<div class="tile"><div class="lb">USD/TWD</div><div class="vl">31.4630</div><div class="ch">昨收 31.4660・幾乎持平</div><div class="tag">Yahoo 09/10 07:42 CST</div></div>
+<div class="tile"><div class="lb">台積電（前日收）</div><div class="vl">2,465</div><div class="ch dn">−5（−0.20%）</div><div class="tag">個股期夜盤逆漲 5 元</div></div>
+</div>
+
+<p class="small">※ 本看板數值全部為實際取得值，無推估值、無「查不到」項目。台指期夜盤、匯率取自 Yahoo 股市（Chrome 補）；美股四大指數取自中央社與民視財經網交叉驗證；VIX 取自 CNBC（Chrome 補）；ADR 取自 Yahoo Finance 官方 4:00PM EDT（Chrome 補）。</p>
+
+<h2>3. 夜盤怎麼走的</h2>
+
+<div class="card">
+<h3>上半場（美股開盤前）：先站高，但站不住</h3>
+<p>夜盤以 <strong>47,214</strong> 開出，高於開盤參考價 47,178 共 36 點，隨即衝出全夜最高 <strong>47,295</strong>（對現貨前收 <span class="up">+112 點</span>）。上半場的多方力量來自 09/09 日盤的餘溫——當天上漲 618 家、下跌 383 家，廣度是三天來最好的一次。</p>
+<h3>下半場（美股開盤後）：單邊殺低，偏空的定價全發生在這裡</h3>
+<p>美股開盤後三大指數走弱，台指期夜盤一路殺低至 <strong>46,747</strong>（對現貨 <span class="dn">−436 點</span>），終盤回穩至 <strong>46,984</strong>。全夜振幅 <strong>548 點</strong>，形狀是「開高走低後尾盤小幅回穩」。<strong>這是 05:00 終盤實測值，不是傍晚快照；盤中最高最低亦為實際取得，未以終盤冒充。</strong></p>
+</div>
+
+<div class="callout">
+<strong>⚠️ 價差結構翻面：今日最關鍵的單一訊號</strong>
+<table>
+<tr><th>對照項</th><th>台指期</th><th>對現貨 47,183.36 的價差</th></tr>
+<tr><td>09/09 日盤收盤（＝夜盤開盤參考價）</td><td>47,178</td><td class="dn">逆價差 −5.36 點（幾乎平水）</td></tr>
+<tr><td>09/10 夜盤 05:00 終盤</td><td>46,984</td><td class="dn">逆價差 −199.36 點</td></tr>
+<tr><td colspan="2"><strong>一夜之間往下翻面</strong></td><td class="dn"><strong>−194 點</strong></td></tr>
+</table>
+<p style="margin-bottom:0">依逆價差分級處理，|199.36| 略低於 200 點門檻，屬中小額逆價差，採約 0.5 折推估：47,183.36 − 99.68 = <strong>47,084</strong>（開盤估上緣）。方向明確偏空，但幅度不至於一次補足全部 199 點。</p>
+</div>
+
+<h3>各契約夜盤報價（漲跌均為「較開盤參考價」，非較現貨前收）</h3>
+<table>
+<tr><th>契約</th><th>終盤</th><th>漲跌</th><th>漲跌%</th><th>盤中高</th><th>盤中低</th><th>成交量</th><th>參考價</th></tr>
+<tr><td>台指期近一 WTX&amp;</td><td>46,984</td><td class="dn">−194</td><td class="dn">−0.41%</td><td>47,295</td><td>46,747</td><td>31,834</td><td>47,178</td></tr>
+<tr><td>小型台指近一 WMT&amp;</td><td>46,983</td><td class="dn">−195</td><td class="dn">−0.41%</td><td>47,293</td><td>46,745</td><td>101,378</td><td>47,178</td></tr>
+<tr><td>台指期近二 WTX@</td><td>47,179</td><td class="dn">−191</td><td class="dn">−0.40%</td><td>47,452</td><td>46,950</td><td>451</td><td>47,370</td></tr>
+<tr><td>電子期近一 WTE&amp;</td><td>2,983.80</td><td class="dn">−2.60</td><td class="dn">−0.09%</td><td>2,990.40</td><td>2,961.85</td><td>54</td><td>2,986.40</td></tr>
+<tr><td>金融期近一 WTF&amp;</td><td>3,514.80</td><td class="up">+7.00</td><td class="up">+0.20%</td><td>3,514.80</td><td>3,510.00</td><td>5</td><td>3,507.80</td></tr>
+<tr><td>台積電個股期</td><td class="small">點位查不到</td><td class="up">+5 元</td><td class="up">+0.203%</td><td class="small">—</td><td class="small">—</td><td class="small">—</td><td class="small">—</td></tr>
+</table>
+<p class="small">報價時間點：台指期／小台為 04:59:5x（05:00 終盤），電子期 03:48、金融期 04:49（該時點後無成交）。資料來源 Yahoo 股市期權頁（Chrome 補），日期戳 2026/09/09 夜盤場次。</p>
+
+<div class="warn">
+⚠️ <strong>電子期與金融期今日作廢，不採用。</strong>兩者跌幅遠小於台指期甚至收紅（電子期 −0.09%、金融期 +0.20%），乍看是「電子金融相對抗跌」的偏多訊號，但成交量分別<strong>僅 54 口與 5 口</strong>（台指期 31,834 口、小台 101,378 口），流動性過低、不具推論力。硬拿來當偏多依據會是嚴重誤判。今日有效的只有台指期與小台，兩者一致指向 −194／−195 點。
+</div>
+
+<h2>4. 美股與 ADR 連動</h2>
+
+<div class="card">
+<h3>驅動因素：三個總體利空，一個族群利多</h3>
+<ul>
+<li><strong>油價破百（利空）</strong>：布蘭特突破每桶 <strong>101 美元</strong>、WTI <strong>96.05 美元</strong>，雙雙創 5 月以來最高收盤價。美伊衝突升級——美國襲擊載運原油的伊朗油輪、伊朗向約旦發射飛彈並對波斯灣所有船隻發出警告、葉門青年運動加入攻擊沙烏地能源設施。歐洲天然氣期貨盤中漲 2.8% 至 77.98 歐元／兆瓦時，為 2023 年 1 月以來最高。</li>
+<li><strong>殖利率創新高（利空）</strong>：美國財政部宣布長天期公債回購增至 60 億美元，但低於交易員預期的 70～80 億，市場失望。美 10 年期殖利率盤中一度升至 <strong>4.857%</strong>，創 2023 年 11 月以來新高，終場上升約 3 個基點至 <strong>4.836%</strong>。</li>
+<li><strong>升息預期升溫（利空）</strong>：油價推升通膨疑慮，市場對 Fed 9/15-16 升息的押注續增。今日美國 8 月 PPI、明日 8 月 CPI。</li>
+<li><strong>費半逆勢收紅（利多）</strong>：SOX <strong>11,931.32（+0.37%）</strong>，四大指數中唯一收紅。半導體與指數脫鉤。</li>
+</ul>
+<div class="warn" style="margin-bottom:0">
+⚠️ <strong>宏觀變數一律雙向寫（依 9/9 修正#4）。</strong>油價與殖利率不是只有利空面：<br>
+・<strong>油價受益方</strong>：09/09 台股油電燃氣類指數 <span class="up">+9.0%</span> 為全市場最強、航運類 <span class="up">+1.6%</span>（陽明 8 月營收 216.11 億、年增 56.17%）。<strong>Roman 的 13 檔全部不在受益方，這條對組合是純利空。</strong><br>
+・<strong>殖利率受益方</strong>：金融保險股理論上受惠利差擴大，但 09/09 金融保險類 <span class="dn">−1.5%</span> 是最弱類股之一，台股並未照此邏輯反應，<strong>不宜硬套</strong>。<br>
+・<strong>層級判斷</strong>：油價與殖利率都是<strong>總體層級</strong>壓抑（不是族群輪動），台股很難靠換股避開；而 VRT 重挫則是<strong>族群層級</strong>，只殺 AI 電源／散熱。這個區分直接決定了今日「指數偏空但持股分歧」的格局。
+</div>
+</div>
+
+<h3>台廠 ADR 對照表（Yahoo Finance 官方 4:00PM EDT）</h3>
+<table>
+<tr><th>ADR</th><th>收盤(USD)</th><th>漲跌</th><th>漲跌%</th><th>日內高</th><th>日內低</th><th>昨收</th></tr>
+<tr><td>TSM 台積電</td><td>435.36</td><td class="dn">−3.64</td><td class="dn">−0.83%</td><td>439.40</td><td>431.87</td><td>439.00</td></tr>
+<tr><td>ASX 日月光</td><td>41.20</td><td class="up">+1.41</td><td class="up">+3.54%</td><td>41.37</td><td>40.10</td><td>39.79</td></tr>
+<tr><td>UMC 聯電</td><td>22.69</td><td class="up">+0.87</td><td class="up">+3.99%</td><td>22.70</td><td>21.97</td><td>21.82</td></tr>
+<tr><td>CHT 中華電信</td><td>44.42</td><td class="up">+0.19</td><td class="up">+0.43%</td><td>44.64</td><td>44.06</td><td>44.23</td></tr>
+</table>
+
+<div class="callout">
+<strong>TSM ADR 溢價：+11.14%，收斂 0.70pp（算式可驗算，python 已驗）</strong>
+<p>刻意採<strong>同一組匯率 31.4630</strong>，避免匯率變動被誤讀成溢價變化：</p>
+<ul>
+<li>今日：435.36 × 31.4630 ÷ 5 = 隱含 <strong>2,739.55</strong>　→　對台北 2,465 為 <strong>+11.14%</strong></li>
+<li>前一組（09/08 ADR）：439.00 × 31.4630 ÷ 5 = 隱含 <strong>2,762.45</strong>　→　對台北 2,470 為 <strong>+11.84%</strong></li>
+<li><strong>溢價變化：收斂 0.70pp</strong></li>
+</ul>
+<p><strong>⚠️ 這個收斂是誰動出來的？是 ADR 跌出來的，不是台北漲出來的。</strong>TSM ADR −0.83%，而台北 09/09 僅 −0.20%——ADR 跌得比台北多，所以溢價收窄。這對今日台積電是<strong>偏空</strong>訊號，性質與 09/09 那次「溢價幾乎沒變、ADR 有補漲空間」完全不同。</p>
+<p style="margin-bottom:0"><strong>⚠️ ADR 相對費半的強弱是今日的關鍵反向訊號：</strong>TSM ADR −0.83% <strong>明顯弱於</strong>費半 +0.37%，台積電昨夜是相對<strong>落後</strong>的一方。這與 09/09 那次「TSM +2.35% 強於費半 +1.30%」完全相反，暗示今日「指數靠台積電撐」的格局不成立——若指數要撐住，得靠其他族群（09/09 已證明是 ABF 載板、光學、電腦及週邊在撐）。<br><br>
+補充：+11.14% 位於 TSM ADR 長期 +10%～+20% 游走區間的<strong>偏下緣</strong>，水位本身不構成額外偏空依據，訊號在「變化」而非「水位」。</p>
+</div>
+
+<h2>5. 族群強弱橫條圖</h2>
+<p class="small">美股 09/09 官方收盤漲跌幅（Yahoo Finance 4:00PM EDT，Chrome 一頁取得）。紅色深淺表示強度，台股慣例紅漲綠跌。</p>
+
+<div class="card">
+<div class="bar-row"><div class="bar-lb">MRVL 邁威爾（ASIC）</div><div class="bar-tr"><div class="bar" style="width:100%;background:var(--b6)"></div></div><div class="bar-vl up">+4.26%</div></div>
+<div class="bar-row"><div class="bar-lb">UMC 聯電（成熟製程）</div><div class="bar-tr"><div class="bar" style="width:94%;background:var(--b6)"></div></div><div class="bar-vl up">+3.99%</div></div>
+<div class="bar-row"><div class="bar-lb">ASX 日月光（封測）</div><div class="bar-tr"><div class="bar" style="width:83%;background:var(--b5)"></div></div><div class="bar-vl up">+3.54%</div></div>
+<div class="bar-row"><div class="bar-lb">MU 美光（記憶體）</div><div class="bar-tr"><div class="bar" style="width:65%;background:var(--b5)"></div></div><div class="bar-vl up">+2.75%</div></div>
+<div class="bar-row"><div class="bar-lb">INTC 英特爾（IDM）</div><div class="bar-tr"><div class="bar" style="width:40%;background:var(--b4)"></div></div><div class="bar-vl up">+1.69%</div></div>
+<div class="bar-row"><div class="bar-lb">QCOM 高通（手機 IC）</div><div class="bar-tr"><div class="bar" style="width:31%;background:var(--b3)"></div></div><div class="bar-vl up">+1.33%</div></div>
+<div class="bar-row"><div class="bar-lb">AMKR 艾克爾（封測）</div><div class="bar-tr"><div class="bar" style="width:29%;background:var(--b3)"></div></div><div class="bar-vl up">+1.24%</div></div>
+<div class="bar-row"><div class="bar-lb">LITE 光聯（光通訊）</div><div class="bar-tr"><div class="bar" style="width:25%;background:var(--b3)"></div></div><div class="bar-vl up">+1.07%</div></div>
+<div class="bar-row"><div class="bar-lb">VSH 威世（被動元件）</div><div class="bar-tr"><div class="bar" style="width:16%;background:var(--b2)"></div></div><div class="bar-vl up">+0.70%</div></div>
+<div class="bar-row"><div class="bar-lb">COHR 相干（光通訊）</div><div class="bar-tr"><div class="bar" style="width:12%;background:var(--b2)"></div></div><div class="bar-vl up">+0.53%</div></div>
+<div class="bar-row"><div class="bar-lb">CHT 中華電</div><div class="bar-tr"><div class="bar" style="width:10%;background:var(--b1)"></div></div><div class="bar-vl up">+0.43%</div></div>
+<div class="bar-row"><div class="bar-lb">DELL 戴爾（AI 伺服器）</div><div class="bar-tr"><div class="bar" style="width:6%;background:var(--b1)"></div></div><div class="bar-vl up">+0.26%</div></div>
+<div class="bar-row"><div class="bar-lb">TEL 泰科（連接器）</div><div class="bar-tr"><div class="bar" style="width:4%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.15%</div></div>
+<div class="bar-row"><div class="bar-lb">AAPL 蘋果</div><div class="bar-tr"><div class="bar" style="width:7%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.28%</div></div>
+<div class="bar-row"><div class="bar-lb">APH 安費諾（連接器）</div><div class="bar-tr"><div class="bar" style="width:12%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.51%</div></div>
+<div class="bar-row"><div class="bar-lb">TSM 台積電 ADR</div><div class="bar-tr"><div class="bar" style="width:19%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.83%</div></div>
+<div class="bar-row"><div class="bar-lb">AMAT 應材（設備）</div><div class="bar-tr"><div class="bar" style="width:19%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.83%</div></div>
+<div class="bar-row"><div class="bar-lb">NVDA 輝達（AI 晶片）</div><div class="bar-tr"><div class="bar" style="width:21%;background:var(--dn)"></div></div><div class="bar-vl dn">−0.91%</div></div>
+<div class="bar-row"><div class="bar-lb">ANET 網通（交換器）</div><div class="bar-tr"><div class="bar" style="width:24%;background:var(--dn)"></div></div><div class="bar-vl dn">−1.04%</div></div>
+<div class="bar-row"><div class="bar-lb">AVGO 博通（AI 晶片）</div><div class="bar-tr"><div class="bar" style="width:26%;background:var(--dn)"></div></div><div class="bar-vl dn">−1.13%</div></div>
+<div class="bar-row"><div class="bar-lb">LRCX 科林（設備）</div><div class="bar-tr"><div class="bar" style="width:33%;background:var(--dn)"></div></div><div class="bar-vl dn">−1.43%</div></div>
+<div class="bar-row"><div class="bar-lb">ASML 艾司摩爾（設備）</div><div class="bar-tr"><div class="bar" style="width:47%;background:var(--dn)"></div></div><div class="bar-vl dn">−2.00%</div></div>
+<div class="bar-row"><div class="bar-lb">KLAC 科磊（設備）</div><div class="bar-tr"><div class="bar" style="width:75%;background:var(--dn)"></div></div><div class="bar-vl dn">−3.21%</div></div>
+<div class="bar-row"><div class="bar-lb">SMCI 美超微（AI 伺服器）</div><div class="bar-tr"><div class="bar" style="width:77%;background:var(--dn)"></div></div><div class="bar-vl dn">−3.30%</div></div>
+</div>
+
+<div class="warn">
+⚠️ <strong>VRT 慧與電源 −9.61%（收 262.89，−27.94 美元）單獨拉出，不併入上方排序</strong><br>
+理由與正確解讀：這是昨夜<strong>單一最劇烈</strong>的族群訊號，但性質是「AI 資料中心基礎設施全面獲利了結＋估值檢視」，<strong>而非基本面轉壞</strong>——Vertiv 反而上調 2026 全年財測至營收 138～142 億美元、稀釋後 EPS 5.82～5.92 美元。這屬<strong>單日估值修正</strong>，不是族群龍頭財報崩壞，故對台達電／群電仍套 0.25 折連動、不改用足額連動；但因跌幅是極端值，下緣必須放寬（見第 8 區塊）。<strong>不可線性外推。</strong>
+</div>
+
+<div class="callout">
+<strong>領跌者是龍頭還是落後股？——今日答案是「兩邊都有，但性質不同」</strong>
+<ul>
+<li><strong>半導體設備四檔全黑</strong>（KLAC −3.21%、ASML −2.00%、LRCX −1.43%、AMAT −0.83%）：這是<strong>龍頭同步下修</strong>，屬族群性估值壓力，台股設備股很難靠輪動避開。</li>
+<li><strong>AI 伺服器內部嚴重分歧</strong>：VRT −9.61%、SMCI −3.30%、ANET −1.04%，<strong>但 DELL +0.26% 收紅</strong>。分歧本身就是訊號——賣壓集中在<strong>電源／散熱／交換器</strong>，而非整條 AI 伺服器鏈。所以緯創（DELL 代工夥伴）的壓力理論上小於台達電。</li>
+<li><strong>被動元件與連接器內部分歧</strong>：VSH +0.70% 收紅，APH −0.51%、TEL −0.15% 小跌。加權後幾乎為零，代表需求端<strong>並未全面轉弱</strong>，不應對國巨做全面偏空外推——這與 09/09 那次「三檔全數收黑」的一致性完全不同。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>⚠️ 依 8/31 修正#6，撐盤與領跌各列至少 2 個（不得只寫偏空清單）</h3>
+<p><strong>今日可能撐盤的族群：</strong></p>
+<ol>
+<li><strong>封測／ASIC</strong>——ASX +3.54%（自家 ADR）、AMKR +1.24%、MRVL +4.26%。代表：日月光、世芯-KY、京元電子。</li>
+<li><strong>成熟製程／IC 載板</strong>——UMC +3.99%、INTC +1.69%。代表：聯電、欣興、南電。</li>
+<li>（次要）<strong>記憶體</strong>——MU +2.75%、SK 海力士傳 Q4 擬砸 40 兆韓元回購、標普指 AI 記憶體需求強勁。代表：南亞科、華邦電。</li>
+</ol>
+<p><strong>今日可能領跌的族群：</strong></p>
+<ol>
+<li><strong>AI 伺服器電源與散熱</strong>——VRT −9.61%。代表：台達電、群電、奇鋐。</li>
+<li><strong>AI 伺服器組裝</strong>——SMCI −3.30%、NVDA −0.91%。代表：緯創、技嘉、緯穎、廣達。</li>
+<li><strong>蘋果鏈</strong>——AAPL −0.28%，發表會後股價反跌，屬<strong>消息出盡</strong>。09/09 先漲的大立光、玉晶光（收 1,110）需防利多出盡。</li>
+<li>（次要）<strong>半導體設備</strong>——四檔全黑。代表：家登、弘塑、辛耘。</li>
+</ol>
+</div>
+
+<h2>6. 籌碼與過熱檢查表</h2>
+
+<div class="warn">
+✅ <strong>籌碼三項本次全部完整取得，無資料缺口。</strong>季線乖離、融資餘額、外資期貨未平倉皆由 Chrome 開 Goodinfo 大盤頁與期交所三大法人頁直接取得。<strong>依規則，今日「不」因資料缺失往保守收一格</strong>——「震盪偏空」是實質判斷，依據是夜盤逆價差一夜翻面 194 點＋油價與殖利率的雙重總體壓力。
+</div>
+
+<h3>過熱程度：⚠️ 不減反增，追高風險升溫</h3>
+<table>
+<tr><th>指標</th><th>09/09 數值</th><th>對照</th><th>判讀</th><th>資料時點</th></tr>
+<tr><td>季線乖離</td><td class="up">+4.40%</td><td>09/08 為 +4.29%</td><td class="dn">⚠️ 擴大 0.11pp，連兩日不再收斂，仍在偏高區</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>5 日線乖離</td><td class="up">+0.81%</td><td>5 日線 46,804.84</td><td>溫和</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>10 日線乖離</td><td class="up">+1.34%</td><td>10 日線 46,557.28</td><td>溫和</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>月線乖離</td><td class="up">+2.66%</td><td>月線 45,960.65</td><td>中性</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>大盤 PER / PBR</td><td>26.12 / 3.87</td><td>—</td><td class="dn">⚠️ 在殖利率創新高背景下，此估值水位脆弱</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>距歷史高</td><td>−1,035.51 點（−2.15%）</td><td>'26/06/23 盤中高 48,218.87</td><td>中性</td><td>Goodinfo 官方 09/09</td></tr>
+</table>
+
+<h3>籌碼結構：⚠️⚠️ 與過熱判斷相反，是明確的偏多轉向</h3>
+<table>
+<tr><th>項目</th><th>數值</th><th>較前一日變化</th><th>判讀</th><th>資料時點</th></tr>
+<tr><td><strong>外資台指期未平倉（大台）</strong></td><td>−81,066 口</td><td class="up">回補 1,196 口（09/08 −82,262）</td><td class="up">偏多</td><td>期交所官方 09/09</td></tr>
+<tr><td>　＋小型臺指</td><td class="up">+1,337 口</td><td class="up">由 −1,724 轉正</td><td class="up">偏多</td><td>期交所官方 09/09</td></tr>
+<tr><td>　＋微型臺指</td><td class="up">+20,417 口</td><td class="up">由 +14,739 增</td><td class="up">偏多</td><td>期交所官方 09/09</td></tr>
+<tr><td><strong>⚠️ 大台當量合計</strong></td><td><strong>−79,711 口</strong></td><td class="up"><strong>單日空單回補 2,245 口</strong>（09/08 −81,956）</td><td class="up"><strong>今日最強的單一偏多證據</strong></td><td>python 驗算，與財訊快報／永豐期貨一致</td></tr>
+<tr><td>外資現貨買賣超</td><td class="up">+209.24 億</td><td class="up">連買 4 日，累計 +1,787.14 億</td><td class="up">偏多</td><td class="dn">⚠️ Goodinfo 官方 09/09 盤後（前一交易日）</td></tr>
+<tr><td>投信買賣超</td><td class="up">+20.85 億</td><td class="up">賣→買</td><td class="up">偏多</td><td class="dn">⚠️ 口徑不一（統一期貨記 +30.4 億）</td></tr>
+<tr><td>自營商買賣超</td><td class="dn">−18.84 億</td><td class="dn">連 2 買轉 2 賣，累計 −204.24 億</td><td class="dn">偏空</td><td>Goodinfo 官方 09/09</td></tr>
+<tr><td>融資餘額</td><td>5,871.67 億</td><td class="dn">+9.0 億（+0.15%），由減轉增</td><td class="dn">偏空（散戶追價，但增幅溫和）</td><td>證交所官方 09/09</td></tr>
+<tr><td>融券餘額</td><td>203,610 張</td><td class="up">−5,004 張（−2.4%），連減 4 日</td><td class="up">偏多（空單回補）</td><td>證交所官方 09/09</td></tr>
+<tr><td>十大交易人特定法人淨多</td><td class="up">3,009 口</td><td class="up">+724 口</td><td class="up">偏多</td><td>財訊快報 09/09</td></tr>
+<tr><td>選擇權最大 OI 區間</td><td>賣權 47,000／買權 46,800</td><td class="dn">賣權 +100 點、買權 −700 點</td><td class="dn">⚠️ 區間下移偏空</td><td>統一期貨 09/09</td></tr>
+<tr><td>現股當沖率</td><td>23.8%</td><td>—</td><td>中性</td><td>Goodinfo 官方 09/09</td></tr>
+</table>
+
+<div class="callout">
+<strong>⚠️ 依 9/1 修正#4 的數據門檻，今日必須反過來寫「廣度良好」而非警語</strong>
+<p>09/09 上市：<strong>漲停 12／跌停 0／上漲 618／下跌 383／平盤 120</strong>（Goodinfo 官方）。上漲家數為下跌家數的 <strong>1.61 倍</strong>，且跌停掛零。這與 09/07、09/08 連兩日跌多於漲的結構明確不同，代表 09/09 的上漲<strong>不是權值撐盤型</strong>，多數個股有參與。</p>
+<p style="margin-bottom:0"><strong>⚠️ 但要誠實指出：這個廣度是「昨天的」。</strong>今日開低後能否維持是未知數。09/09 類股指數印證資金分散：油電燃氣 <span class="up">+9.0%</span>（最強）、光電 <span class="up">+3.6%</span>、航運 <span class="up">+1.6%</span>、電腦及週邊 <span class="up">+1.3%</span>、通信網路 <span class="up">+1.3%</span>、電子零組件 <span class="up">+1.1%</span>、電機機械 <span class="up">+1.1%</span>；而半導體類 <span class="dn">−0.2%</span>、金融保險 <span class="dn">−1.5%</span>、生技醫療 <span class="dn">−2.4%</span>。</p>
+</div>
+
+<div class="warn">
+⚠️ <strong>成交金額口徑不一致，四個都列：</strong>Goodinfo 官方 <strong>8,159.77 億</strong>、Yahoo 期權頁 7,747.93 億、永豐期貨 7,735 億、統一期貨稱「0.8 兆」。<strong>以 Goodinfo／證交所官方為準。</strong>無論用哪個口徑，都是<strong>連續第八個交易日未破兆元</strong>——量能否決條件生效，樂觀情境守 15% 上限。<br><br>
+⚠️ <strong>三大法人合計口徑亦不一致：</strong>Goodinfo 官方 +211.25 億、統一期貨 +220.8 億、永豐期貨 +220.81 億，差異在投信欄（20.85 億 vs 30.4 億，差 9.55 億）。都列，以 Goodinfo 官方為準。
+</div>
+
+<h2>7. 台股各族群開盤預估</h2>
+<table>
+<tr><th>族群</th><th>開盤判斷</th><th>代表個股</th><th>理由</th></tr>
+<tr><td>晶圓代工</td><td>平開</td><td>台積電</td><td>個股期夜盤逆漲 5 元（偏多）vs ADR −0.83%、溢價收斂 0.70pp（偏空），兩訊號互相抵銷</td></tr>
+<tr><td>成熟製程</td><td class="up">開高</td><td>聯電、力積電、世界先進</td><td>UMC ADR +3.99%，昨夜台廠 ADR 最強之一</td></tr>
+<tr><td>封測</td><td class="up">開高</td><td>日月光、京元電、南茂</td><td>ASX +3.54%（自家 ADR）、AMKR +1.24%，IMOS +2.33%</td></tr>
+<tr><td>ASIC／IC 設計</td><td class="up">開高</td><td>世芯-KY、創意、聯發科</td><td>MRVL +4.26% 為昨夜族群最強；但 AVGO −1.13% 為反向，高單價股在震盪日跌幅放大</td></tr>
+<tr><td>IC 載板／ABF</td><td class="up">開高</td><td>欣興、南電、景碩</td><td>INTC +1.69% 為 ABF 最直接正面訊號；但 09/09 已大漲反應（欣興 +4.09%）</td></tr>
+<tr><td>記憶體</td><td class="up">開高</td><td>南亞科、華邦電、旺宏</td><td>MU +2.75% 逆勢收紅、SK 海力士傳大額回購、標普指 AI 記憶體需求強勁</td></tr>
+<tr><td>CCL／PCB</td><td>平開</td><td>台光電、聯茂、金像電</td><td>無直接美股對照；8 月營收創高利多已於 09/09 反應</td></tr>
+<tr><td>光通訊／CPO</td><td>平開</td><td>聯亞、光聖、波若威</td><td>LITE +1.07%、COHR +0.53% 溫和；⚠️輝達傳由 CPO 轉向 NPO 過渡，題材主軸移轉，方向未定</td></tr>
+<tr><td>半導體設備</td><td class="dn">開低</td><td>家登、弘塑、辛耘</td><td>四檔全黑（KLAC −3.21%、ASML −2.00%、LRCX −1.43%、AMAT −0.83%），龍頭同步估值下修</td></tr>
+<tr><td><strong>AI 伺服器電源與散熱</strong></td><td class="dn"><strong>重挫開低</strong></td><td>台達電、群電、奇鋐、雙鴻</td><td><strong>VRT −9.61%</strong>，昨夜單一最劇烈訊號</td></tr>
+<tr><td>AI 伺服器組裝</td><td class="dn">開低</td><td>緯創、技嘉、緯穎、廣達</td><td>SMCI −3.30%、NVDA −0.91%；但 DELL +0.26% 收紅，內部分歧、跌幅應小於電源</td></tr>
+<tr><td>蘋果鏈</td><td class="dn">偏弱</td><td>大立光、玉晶光、鴻海</td><td>AAPL −0.28%，發表會後股價反跌，屬消息出盡；09/09 光學雙雄已先漲</td></tr>
+<tr><td>被動元件／連接器</td><td>平開</td><td>國巨、華新科、信邦</td><td>VSH +0.70% vs APH −0.51%、TEL −0.15%，內部分歧、加權近零</td></tr>
+<tr><td>金融</td><td>平開</td><td>富邦金、國泰金、中信金</td><td>金融期夜盤 +0.20%（惟成交僅 5 口、推論力弱）；殖利率上升理論利多，但 09/09 金融保險 −1.5% 未照此反應</td></tr>
+<tr><td><strong>傳產塑化</strong></td><td class="up"><strong>強勢開高</strong></td><td>台塑化、台塑、南亞</td><td><strong>油價破 100 美元</strong>，09/09 油電燃氣類已 +9.0% 為全市場最強，今日續強</td></tr>
+<tr><td>航運</td><td class="up">開高</td><td>陽明、長榮、萬海</td><td>油價上漲推升運價預期；陽明 8 月營收 216.11 億、年增 56.17%；09/09 航運類 +1.6%</td></tr>
+</table>
+
+<h2>8. 我的持股：今日開盤影響</h2>
+
+<div class="warn">
+<strong>⚠️ 今日連動折數的判斷前提，以及一條主動作廢的舊修正</strong><br><br>
+昨夜<strong>不是全黑日也不是全紅日</strong>（費半 +0.37% 逆勢收紅，但道瓊 −0.77%），故分流處理：AI 伺服器組裝與電源依 8/31 修正#2 一律 <strong>0.25 折</strong>，但因 VRT −9.61% 是極端值，<strong>下緣一律放寬突破「不得低於前收 −1.5%」的限制</strong>；半導體相關（封測、ASIC、載板、晶圓代工）採 0.7～0.8 折；被動元件 0.5 折；有自家 ADR 或個股期者一律優先用它。<br><br>
+<strong>⚠️⚠️ 主動作廢並限縮 9/9 修正#1。</strong>該條要求「由夜盤／個股期／ADR 推得的漲幅一律乘 0.6 係數」，其成立的機制是「台北已先漲、美股漲幅被足額搬過來造成高估」。<strong>今日情境完全相反</strong>——台北 09/08＋09/09 兩個交易日合計僅 −0.31%（未達 9/9 修正#2 的 +2% 扣除門檻，該條不觸發），而夜盤與多數對照股是<strong>跌的</strong>。若對稱把 0.6 係數套到跌幅上，等於人為縮小跌幅、再度造成開盤高估，正是要避免的偏誤方向。<strong>故今日 0.6 係數僅適用於「推得為正的漲幅」，跌幅足額採用。</strong>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2330 台積電</span><span class="hold-g">晶圓代工　占組合 5.54%　60 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>2,465（09/09，<span class="dn">−0.20%</span>）— 資料未過期</dd>
+<dt>開盤預估</dt><dd><strong>2,455～2,475</strong>（−0.41% ~ +0.41%）＝平開</dd>
+<dt>推估邏輯</dt><dd>個股期夜盤逆漲 5 元為主錨（權重 70%）→ 2,470；TSM ADR −0.83% × 0.8 折（權重 30%）→ 2,448.6；加權 = 0.7×2,470 + 0.3×2,448.6 = <strong>2,463.6</strong></dd>
+<dt>消息面</dt><dd>無重大個股消息。⚠️ 9/16 除息 26 元（下週，本週無影響）</dd>
+<dt>損益意涵</dt><dd>成本 2,295，緩衝 <span class="up">+7.41%</span>，開盤估區間全數遠高於成本，無翻虧風險</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span>（09/09 為 −0.20%，不觸發 9/2 修正#4 的弱勢規則；個股期偏多與 ADR 偏空互相抵銷）</dd>
+<dt>一句提醒</dt><dd><strong>2,465 是今日多空分界。</strong>站穩且量增代表個股期的多方訊號勝出；跌破則 ADR 的偏空定價勝出，整個指數的下緣要跟著下修</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2454 聯發科</span><span class="hold-g">IC 設計　占組合 11.79%　68 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>4,625（09/09，<span class="dn">−1.80%</span>，收在全日最低）</dd>
+<dt>開盤預估</dt><dd><strong>4,600～4,680</strong>（−0.54% ~ +1.19%）</dd>
+<dt>推估邏輯</dt><dd>QCOM +1.33%、MRVL +4.26%、AVGO −1.13%，IC 設計加權 +1.49% × 0.7 折 = +1.04%</dd>
+<dt>消息面</dt><dd>QCOM 拿下亞馬遜 AWS 客製化 AI 推論晶片十年、總額上看 600 億美元大單，亞馬遜並取得最高 40 億美元認購高通股票的權利</dd>
+<dt>損益意涵</dt><dd>成本 4,020.37，緩衝 <span class="up">+15.04%</span>，無翻虧風險</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span>（QCOM 的 AWS 大單對聯發科是<strong>同業題材外溢而非直接訂單</strong>；亞馬遜自研 ASIC 對手機 IC 設計商的長線意義偏中性）</dd>
+<dt>一句提醒</dt><dd>⚠️ <strong>依 9/9 修正#5 必須加註：</strong>09/09 大盤 +0.16% 而該檔 −1.80% 且收在全日最低——高單價 IC 設計在大盤震盪日跌幅放大 3～5 倍。今日大盤估開低，下檔要留 <strong>4,550</strong> 的心理準備</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">3661 世芯-KY</span><span class="hold-g">IC 設計　占組合 10.25%　70 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>3,905（09/09，<span class="dn">−3.10%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>3,920～3,990</strong>（+0.38% ~ +2.18%）</dd>
+<dt>推估邏輯</dt><dd><strong>MRVL +4.26%</strong> 是 ASIC 設計服務最直接的對照，且為昨夜族群最強；足額連動後取 0.7 折 = +2.98%。09/09 已 −3.10% 收在低檔、基期已降</dd>
+<dt>消息面</dt><dd>⚠️ 依 9/9 修正#5 固定提及：該檔有<strong>現增 GDR 稀釋背景</strong>，不得只寫 MRVL／AVGO 對照。無新增個股消息</dd>
+<dt>損益意涵</dt><dd>⚠️ 成本 3,848.57，緩衝僅 <span class="up">+1.47%</span>——<strong>緩衝已相當薄，跌破 3,848 即翻虧</strong>，開盤估下緣 3,920 距成本線 72 元</dd>
+<dt>收盤方向</dt><dd><span class="dir-s">強</span>（13 檔中昨夜對照股訊號最正面的一檔）</dd>
+<dt>一句提醒</dt><dd>今日訊號最正面，但緩衝薄且大盤震盪日跌幅放大的警語同樣適用——<strong>開高後 15 分鐘不轉強就別加碼</strong></dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2308 台達電</span><span class="hold-g">AI 伺服器／散熱電源　⚠️ 占組合 17.16%（最大單一部位）　255 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>1,795（09/09，<span class="dn">−0.55%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>1,755～1,790</strong>（<span class="dn">−2.23% ~ −0.28%</span>）＝開低</dd>
+<dt>推估邏輯</dt><dd><strong>VRT −27.94 美元、−9.61%</strong>（收 262.89）是昨夜全部對照股中最劇烈的單一訊號，0.25 折後 = −2.40%。<strong>⚠️ 明確突破 8/31 修正#2「下緣不得低於前收 −1.5%」的限制</strong>：該規則的前提是對照股屬正常波動，−9.61% 已是極端值，硬守 −1.5%（1,768）會系統性低估下檔</dd>
+<dt>反面證據</dt><dd>⚠️ 誠實寫另一面：VRT 重挫的性質是「AI 資料中心基礎設施全面獲利了結＋估值檢視」<strong>而非基本面轉壞</strong>（Vertiv 反而上調 2026 全年財測至營收 138～142 億美元、EPS 5.82～5.92 美元），屬單日估值修正而非族群龍頭財報崩壞，故 <strong>0.25 折仍適用、不改用足額連動</strong>；同族群 DELL +0.26% <strong>收紅</strong>、ANET −1.04%、SMCI −3.30%，內部分歧明顯，不宜做全面偏空外推</dd>
+<dt>損益意涵</dt><dd>成本 1,716.73，緩衝 <span class="up">+4.56%</span>。開盤估下緣 1,755 仍高於成本 38 元，<strong>今日不至於翻虧</strong>，但緩衝會被吃掉約四成</dd>
+<dt>收盤方向</dt><dd><span class="dir-w">弱</span></dd>
+<dt>一句提醒</dt><dd>⚠️⚠️ <strong>今日「訊號最差 × 部位最大」的組合，全組合最需要留意的一檔。</strong>若今日實際跌幅明顯超過 −2.23% 的下緣，代表 0.25 折係數在極端值下失效，盤後回顧必須據此修正係數</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2376 技嘉</span><span class="hold-g">AI 伺服器／散熱電源　占組合 9.17%　700 股（最大獲利部位）</span></div>
+<dl>
+<dt>前日收盤</dt><dd>349.5（09/09，<span class="dn">−2.10%</span>，收在全日最低）</dd>
+<dt>開盤預估</dt><dd><strong>345～350</strong>（−1.29% ~ +0.14%）</dd>
+<dt>推估邏輯</dt><dd>SMCI −3.30%、NVDA −0.91%、DELL +0.26%，組裝 0.25 折後約 −0.33%</dd>
+<dt>消息面</dt><dd>⚠️ <strong>記憶體成本面利空持續且昨夜再獲確認</strong>：MU +2.75% 逆勢收紅、SK 海力士傳 Q4 擬砸 40 兆韓元回購、標普指 AI 記憶體需求強勁。上游漲價對下游 ODM／PC 品牌是毛利壓力（9/8 修正#3，09/09 已<strong>第二次驗證有效</strong>——當日電腦及週邊類 +1.3% 而該檔 −2.10% 逆勢下跌，是<strong>個股因素而非族群因素</strong>）</dd>
+<dt>損益意涵</dt><dd>成本 254.82，緩衝 <span class="up">+37.16%</span>，無翻虧風險</dd>
+<dt>收盤方向</dt><dd><span class="dir-w">弱</span></dd>
+<dt>一句提醒</dt><dd>連兩日收在全日最低，記憶體成本線未解——<strong>這是結構性而非一日性的壓力</strong></dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">3231 緯創</span><span class="hold-g">AI 伺服器／散熱電源　占組合 9.92%　1,400 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>189（09/09，<span class="up">+1.34%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>185～190</strong>（−2.12% ~ +0.53%）</dd>
+<dt>推估邏輯</dt><dd>DELL +0.26%（直接代工夥伴，<strong>收紅</strong>）、SMCI −3.30%，組裝 0.25 折</dd>
+<dt>消息面</dt><dd>⚠️⚠️ <strong>今日最大的個股事件：GDR 新股正式上市。</strong>14.72 億美元、2.5 億股、稀釋 7.29%，預定發行日就是今日 09/10。參考 09/08 廣達 GDR 新股上市當日 −5.61%。<br>⚠️ 但反面證據同樣強：09/09 該檔逆勢 <span class="up">+1.34%</span>，代表賣壓可能已在 09/08（−5.33%）先行反映完畢；且 <strong>8 月營收 4,600 億元、年增 166%</strong> 創單月新高，並再砸逾 2 億美元投資美越伺服器產能</dd>
+<dt>損益意涵</dt><dd>成本 148，緩衝 <span class="up">+27.70%</span>，無翻虧風險</dd>
+<dt>收盤方向</dt><dd><span class="dir-w">弱</span>（新股上市當日的籌碼壓力優先於營收利多）</dd>
+<dt>一句提醒</dt><dd>新股上市當日<strong>盯委賣張數與開盤 30 分鐘成交金額</strong>——若量能明顯放大且股價守住 185，代表稀釋壓力已消化完畢</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">6412 群電</span><span class="hold-g">AI 伺服器／散熱電源　占組合 2.80%　1,000 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>74.7（09/09，<strong>0.00%</strong> 完全平盤）</dd>
+<dt>開盤預估</dt><dd><strong>74.0～75.0</strong>（−0.94% ~ +0.40%）</dd>
+<dt>推估邏輯</dt><dd>依 9/4 修正#7（<strong>已六次驗證</strong>，09/09 完全平盤）脫鉤 VRT、收盤預設平</dd>
+<dt>消息面</dt><dd>無重大個股消息</dd>
+<dt>損益意涵</dt><dd>成本 90.3，虧損 <span class="dn">−17.28%</span>（已為深度虧損，非今日新增風險）</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>⚠️ <strong>今日是「脫鉤 VRT」這條規則最嚴峻的一次壓力測試</strong>——VRT −9.61% 是規則成立以來對照股的最大單日跌幅。若今日該檔跌幅顯著大於 −1%，代表脫鉤假設在極端值下失效，盤後回顧必須據此修正</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2383 台光電</span><span class="hold-g">CCL／載板　占組合 3.02%　15 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>5,375（09/09，<span class="up">+0.66%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>5,330～5,400</strong>（−0.84% ~ +0.47%）</dd>
+<dt>推估邏輯</dt><dd>CCL 無直接美股對照，看 AI 伺服器 PCB 拉貨。8 月營收 201 億元創歷史新高的利多已於 09/09 反應</dd>
+<dt>消息面</dt><dd>無新增個股消息</dd>
+<dt>損益意涵</dt><dd>⚠️⚠️ <strong>成本 5,320，緩衝僅 <span class="up">+1.03%</span>（全組合最薄）。開盤估下緣 5,330 距成本線僅 10 元</strong>，盤中極易跌破</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>⚠️⚠️ <strong>5,320 是今日全篇唯一該設定的具體警戒價，跌破即翻虧。</strong>09/08 盤中最低 5,315 已經跌破過一次，這不是理論風險</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">3037 欣興</span><span class="hold-g">CCL／載板　占組合 9.31%　250 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>993（09/09，<span class="up">+4.09%</span>，盤中高 1,005 重回千元）</dd>
+<dt>開盤預估</dt><dd><strong>985～1,005</strong>（−0.81% ~ +1.21%）</dd>
+<dt>推估邏輯</dt><dd>INTC +1.69%（ABF 載板最直接的正面訊號）。⚠️ 前日漲幅 +4.09% <strong>未達 +5% 的一日行情回吐門檻</strong>，該規則不觸發，僅列為下檔風險參考</dd>
+<dt>消息面</dt><dd>個股利多已於 09/09 大幅反應——8 月營收創高、連 5 個月刷新紀錄，是當日組合獲利最多的一檔。⚠️ 依 9/3 修正⑥，<strong>洗產地法遵事件仍未結案</strong>，收盤方向上限一律「平」</dd>
+<dt>損益意涵</dt><dd>⚠️ 成本 987.4，緩衝 <span class="up">+0.57%</span>——<strong>剛翻正、極易再翻負</strong>。開盤估下緣 985 已<strong>低於成本線 987.4</strong></dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>⚠️ 開盤估下緣 985 就會觸及並跌破成本 987.4——<strong>昨天才剛翻正，今天可能又翻回去</strong></dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2449 京元電子</span><span class="hold-g">成熟製程／封測　占組合 10.63%　1,050 股（第二大虧損部位）</span></div>
+<dl>
+<dt>前日收盤</dt><dd>270（09/09，<span class="up">+0.56%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>269～274</strong>（−0.37% ~ +1.48%）</dd>
+<dt>推估邏輯</dt><dd>AMKR +1.24%（封測足額連動，但漲幅較 09/08 的 +6.18% 明顯收斂）＋費半 +0.37%</dd>
+<dt>消息面</dt><dd>無重大個股消息</dd>
+<dt>損益意涵</dt><dd>⚠️ 成本 284.76，虧損 <span class="dn">−5.18%</span>，<strong>開盤估全數仍在成本之下</strong>（上緣 274 距成本 284.76 尚差 10.76 元）</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>⚠️ <strong>連動係數的重要校正：</strong>09/09 該檔僅 +0.56%，遠不及 AMKR +6.18% 所暗示的幅度——代表台北封測對美股封測的連動係數<strong>實際上遠低於足額</strong>，今日不宜再用足額推估</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">3711 日月光投控</span><span class="hold-g">成熟製程／封測　占組合 3.60%　150 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>640（09/09，<span class="up">+3.56%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>643～652</strong>（+0.47% ~ +1.88%）＝開高</dd>
+<dt>推估邏輯</dt><dd>自家 ADR 為唯一不需推論的訊號（python 驗算，同一組匯率 31.4630）：<br>ASX 41.20 美元（+3.54%）× 31.4630 ÷ 2 = 隱含 <strong>648.14</strong>，對台北 640 為溢價 <strong>+1.27%</strong><br>前一組 09/08：39.79 × 31.4630 ÷ 2 = 625.96 對台北 618 為 <strong>+1.29%</strong><br>⚠️ 溢價<strong>幾乎持平</strong>（僅收斂 0.02pp）；依 0.8 折推得 646.5</dd>
+<dt>如何解讀</dt><dd>⚠️ 要正確解讀這個「持平」：台北 09/09 已漲 +3.56%、ASX 09/09 漲 +3.54%，<strong>兩邊同步</strong>，代表台北已完整消化前一輪 ADR 漲幅。今日<strong>不再有 09/09 那種「台北落後、補漲修復」的額外動能</strong>，只剩溢價本身的溫和上檔</dd>
+<dt>損益意涵</dt><dd>成本 587，緩衝 <span class="up">+9.03%</span>，無翻虧風險</dd>
+<dt>收盤方向</dt><dd><span class="dir-s">強</span>（13 檔中僅有的兩檔「強」之一）</dd>
+<dt>一句提醒</dt><dd><strong>幅度預期溫和，不會重演 09/09 的 +3.56%。</strong>開高但動能已被消化過一輪，追高要謹慎</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2352 佳世達</span><span class="hold-g">電子代工／品牌　占組合 0.24%　220 股</span></div>
+<dl>
+<dt>前日收盤</dt><dd>28.8（09/09，<span class="up">+0.52%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>28.6～29.0</strong>（−0.69% ~ +0.69%）</dd>
+<dt>推估邏輯</dt><dd>DELL +0.26% × 0.25 折。⚠️ 同為記憶體漲價的下游成本受害股</dd>
+<dt>消息面</dt><dd>無重大個股消息</dd>
+<dt>損益意涵</dt><dd>成本 37.81，虧損 <span class="dn">−23.83%</span>。部位極小（6,336 元），對組合影響有限</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>部位僅占 0.24%，不值得花注意力</dd>
+</dl>
+</div>
+
+<div class="hold">
+<div class="hold-h"><span class="hold-n">2327 國巨</span><span class="hold-g">被動元件　占組合 6.57%　310 股（最大虧損部位）</span></div>
+<dl>
+<dt>前日收盤</dt><dd>565（09/09，<span class="dn">−0.35%</span>）</dd>
+<dt>開盤預估</dt><dd><strong>561～570</strong>（−0.71% ~ +0.88%）</dd>
+<dt>推估邏輯</dt><dd>⚠️ <strong>美股被動元件與連接器三檔今日內部分歧，依規則不得抹平</strong>：VSH <span class="up">+0.70%</span>（收紅）、APH <span class="dn">−0.51%</span>、TEL <span class="dn">−0.15%</span>，加權後幾乎為零（+0.01%），0.5 折後無方向</dd>
+<dt>如何解讀</dt><dd>這與 09/09 那次「三檔全數收黑」的一致性<strong>完全不同</strong>，代表被動元件需求端<strong>並未全面轉弱</strong>，不應對國巨做全面偏空外推</dd>
+<dt>消息面</dt><dd>8 月自結營收 163.32 億元、年增 51.8%、連六個月創新高的利多已於 09/08、09/09 消化完畢</dd>
+<dt>損益意涵</dt><dd>成本 762.42，虧損 <span class="dn">−25.89%</span>（組合最大虧損 −61,200 元，非今日新增風險）</dd>
+<dt>收盤方向</dt><dd><span class="dir-p">平</span></dd>
+<dt>一句提醒</dt><dd>族群訊號中性，今日方向主要由大盤決定</dd>
+</dl>
+</div>
+
+<div class="card">
+<h3>組合層級總結</h3>
+<p>09/09 收盤現值 <strong>2,667,286 元</strong>、總成本 2,552,492 元、未實現 <span class="up">+114,794 元（+4.50%）</span>。（python 驗算）</p>
+<table>
+<tr><th>族群</th><th>檔數</th><th>現值</th><th>占比</th><th>今日訊號</th></tr>
+<tr><td><strong>AI 伺服器／散熱電源</strong></td><td>4</td><td>1,041,675</td><td><strong>39.05%</strong></td><td class="dn">⚠️ 全數偏空（VRT −9.61%、SMCI −3.30%）</td></tr>
+<tr><td>IC 設計</td><td>2</td><td>587,850</td><td>22.04%</td><td>分歧（3661 偏多、2454 偏平）</td></tr>
+<tr><td>成熟製程／封測</td><td>2</td><td>379,500</td><td>14.23%</td><td class="up">最強（ASX +3.54%、AMKR +1.24%）</td></tr>
+<tr><td>CCL／載板</td><td>2</td><td>328,875</td><td>12.33%</td><td class="up">偏多（INTC +1.69%）</td></tr>
+<tr><td>被動元件</td><td>1</td><td>175,150</td><td>6.57%</td><td>中性（族群內分歧）</td></tr>
+<tr><td>晶圓代工</td><td>1</td><td>147,900</td><td>5.54%</td><td>中性（個股期偏多 vs ADR 偏空）</td></tr>
+<tr><td>電子代工／品牌</td><td>1</td><td>6,336</td><td>0.24%</td><td>中性</td></tr>
+</table>
+<div class="warn">
+⚠️⚠️ <strong>AI 伺服器／散熱電源 4 檔合計 1,041,675 元、占 39.05%——這不是分散，是放大 4 倍的單一賭注。</strong>而昨夜 VRT −9.61%＋SMCI −3.30% 正好<strong>精準打在這一塊</strong>。09/08 已證明四檔會一起跌（當日貢獻組合損失的 66.9%）。<br><br>
+⚠️ <strong>依 9/9 修正#9，這兩塊（AI 伺服器 39.05% ＋ IC 設計 22.04%）合計 61.09%。今日它們的方向相反</strong>（AI 伺服器全數偏空、IC 設計中 3661 偏多而 2454 偏平）——<strong>這是好消息</strong>，代表這 61% 不會像 09/09 那樣同步負。
+</div>
+<p><strong>整體偏空還是偏多？</strong>組合層級<strong>偏空</strong>。收盤方向為強 2 檔（3661、3711）、平 8 檔、弱 3 檔（2308、2376、3231），但「弱」的三檔合計占比 36.25%，而「強」的兩檔僅占 13.85%——<strong>加權後是偏空的。</strong></p>
+<p><strong>風險集中在哪？</strong>AI 伺服器／散熱電源 39.05%。這是唯一有明確昨夜美股重挫訊號的一塊。</p>
+<p><strong>若走保守情境，哪一檔最脆弱？</strong>依序：</p>
+<ol>
+<li><strong>2383 台光電</strong>（緩衝僅 +1.03%，<strong>5,320 是今日唯一該設定的具體警戒價</strong>）</li>
+<li><strong>3037 欣興</strong>（+0.57%，987.4 剛翻正、開盤估下緣 985 就會跌破）</li>
+<li><strong>3661 世芯-KY</strong>（+1.47%，雖為今日最強訊號但緩衝已薄）</li>
+<li><strong>2308 台達電</strong>（+4.56%，且是<strong>最大單一部位 17.16%、對照股重挫 9.61%</strong>——今日「訊號最差 × 部位最大」的組合）</li>
+<li>2330 台積電（+7.41%）</li>
+</ol>
+<p class="small">既有深度虧損 2327 −25.89%、2352 −23.83%、6412 −17.28%、2449 −5.18% 為既存狀態，非今日新增風險。</p>
+<div class="warn">
+⚠️ <strong>Notion 持股表上的「報酬率%」與「未實現損益」兩欄為建檔舊值、不會隨最新收盤同步，一律不可信。</strong>例：2376 表上 +32.73%／實際 +37.16%；3037 表上 +9.47%／實際 +0.57%；2327 表上 −27.61%／實際 −25.89%；3661 表上 −4.22%／實際 +1.47%；3711 表上 −0.38%／實際 +9.03%。本報告全部以「09/09 收盤 vs 平均成本」自行計算。<br><br>
+⚠️ <strong>除權息檢查：</strong>13 檔在 09/10～09/15 間<strong>均無除權息</strong>，最近一檔為 2330 台積電 9/16 除息 26 元（Goodinfo「即將除權息」區塊逐檔比對）。<br><br>
+⚠️ <strong>反向提醒：</strong>Roman 持有這 13 檔<strong>不代表今日該看好它們</strong>。夜盤逆價差一夜翻面 194 點、油價破 100 美元、美 10 年殖利率創 2023 年 11 月以來新高——這三項是總體層級，13 檔全部躲不掉；VRT −9.61% 更是直接打在最大的那塊。<strong>以上全為主觀推估，非投資建議。</strong>
+</div>
+</div>
+
+<h2>9. 開盤三情境與關鍵價位</h2>
+
+<div class="sc">
+<div class="sc-i"><div class="lb small">樂觀情境</div><div class="p">15%</div><div class="r up">47,200～47,500</div><p class="small" style="margin:0">開低後承接量迅速進場，收復夜盤跌幅並站回前收之上。觸發條件：開盤 30 分鐘不破 47,000、成交量放大至兆元、台積電站穩 2,465 使個股期的多方訊號勝出。</p></div>
+<div class="sc-i"><div class="lb small">基準情境（預設）</div><div class="p">45%</div><div class="r">46,850～47,200</div><p class="small" style="margin:0">開低後在夜盤區間內震盪整理。油價與 CPI 前的觀望限制反彈幅度，但外資期貨回補 2,245 口與現貨連買 4 日提供下檔支撐；逆價差 −199 點屬中小額，現貨未必一次補足。</p></div>
+<div class="sc-i"><div class="lb small">保守情境</div><div class="p">40%</div><div class="r dn">46,450～46,850</div><p class="small" style="margin:0">回測夜盤盤中低點 46,747 與 10 日線 46,557.28。觸發因子見下方五項。</p></div>
+</div>
+
+<div class="warn">
+<strong>⚠️ 量能否決條件明確生效（9/8 修正#7，9/9 已驗證有效）：</strong>09/09 成交金額 8,159.77 億元（Goodinfo 官方），為<strong>連續第八個交易日未破兆元</strong>。樂觀情境一律守 <strong>15% 上限</strong>，不得以「費半收紅」或「外資連買」為由主觀上調。
+</div>
+
+<div class="card">
+<h3>保守情境的五個觸發因子</h3>
+<ol>
+<li><strong>油價</strong>：布蘭特 &gt;101 美元、WTI 96.05 美元雙創 5 月以來最高收盤。總體層級壓抑，台股很難靠族群輪動避開（09/09 油電燃氣 +9% 是唯一受益方，13 檔持股全不在其中）。</li>
+<li><strong>殖利率</strong>：美 10 年期 4.836%、盤中 4.857% 創 2023 年 11 月以來新高。資金成本上升直接壓抑高本益比電子股評價，而大盤 PER 已達 26.12。</li>
+<li><strong>VRT −9.61%</strong>：昨夜單一最劇烈的族群訊號，直接打在組合占比最高的 AI 伺服器／散熱電源 39.05% 上。</li>
+<li><strong>事件風險</strong>：美國 8 月 PPI（今日）與 CPI（明日）前的觀望，且 Fed 9/15-16 決策在即。</li>
+<li><strong>選擇權 OI 區間下移</strong>：9 月 F2 週選賣權最大未平倉上升 100 點至 47,000 點、買權最大未平倉下降 700 點至 46,800 點，籌碼結構偏空。</li>
+</ol>
+</div>
+
+<h3>壓力支撐速查表</h3>
+<table>
+<tr><th>壓力</th><th>來源</th><th>支撐</th><th>來源</th></tr>
+<tr><td class="up">47,142.74</td><td>09/09 開盤</td><td class="dn">47,060.78</td><td>09/09 全日低</td></tr>
+<tr><td class="up">47,183.36</td><td>前收</td><td class="dn">46,984</td><td>夜盤終盤</td></tr>
+<tr><td class="up">47,295</td><td>夜盤盤中高</td><td class="dn">46,804.84</td><td>5 日線</td></tr>
+<tr><td class="up">47,548.26</td><td>09/09 盤中高</td><td class="dn">46,747</td><td>夜盤盤中低</td></tr>
+<tr><td class="up">47,741.51</td><td>'26/06/22 收盤歷史高</td><td class="dn">46,557.28</td><td>10 日線</td></tr>
+<tr><td class="up">48,218.87</td><td>'26/06/23 盤中歷史高</td><td class="dn">45,960.65 / 45,196.84</td><td>月線 / 季線</td></tr>
+</table>
+
+<h3>台積電關鍵價</h3>
+<p><strong>2,465 為前收兼今日多空分界</strong>（開盤估中心就在此）。站穩 2,465 且量增代表個股期的多方訊號勝出。<br>
+上檔：2,470 → 2,490（09/09 盤中高）→ 2,500（整數關兼 09/08 以來未曾突破的壓力）<br>
+下檔：2,450 → 2,435 → 2,410</p>
+
+<div class="card">
+<h3>今日必須盯的事</h3>
+<ol>
+<li><strong>開盤後 15 分鐘的承接量</strong>——今日預期開低，真正的資訊是低點出現後有沒有量。</li>
+<li><strong>2383 台光電是否跌破 5,320</strong>——全組合唯一該設定的具體警戒價。</li>
+<li><strong>2308 台達電的實際跌幅是否超過 −2.23%</strong>——決定 0.25 折係數在極端值下是否失效。</li>
+<li><strong>3231 緯創 GDR 新股上市當日的委賣張數與開盤 30 分鐘成交金額。</strong></li>
+<li><strong>6412 群電是否守住 −1% 內</strong>——「脫鉤 VRT」規則的第七次驗證。</li>
+<li><strong>美國 8 月 PPI</strong>（今日）與 ECB 利率決策；輝達管理層出席高盛科技會議談需求與財務展望。</li>
+<li><strong>台積電 2,465 攻防</strong>——個股期（偏多）與 ADR（偏空）的對決。</li>
+</ol>
+</div>
+
+<div class="card">
+<h3>操作紀律提醒</h3>
+<ul>
+<li><strong>今日預期開低——真正的資訊是低點出現後有沒有承接量。沒量的止跌是假的，不要接刀。</strong></li>
+<li>若開低後量能未放大就急拉，要視為<strong>誘多</strong>。</li>
+<li>逆價差 −199.36 點屬中小額（未達 200 點分級門檻），<strong>現貨開盤未必一次補足全部跌幅</strong>，開盤估下緣不直接設在夜盤點位。但方向仍照證據走，不因此轉為看多。</li>
+<li>⚠️ <strong>本次非結算日</strong>（9 月結算日為 9/16），<strong>不套用結算收斂假設</strong>——今日若開低走低就是趨勢，不是結算噪音。</li>
+<li>⚠️ 今日<strong>不是</strong>指數調整生效日，無被動買盤緩衝。</li>
+<li>過熱（季線乖離擴大至 +4.40%）與籌碼（外資期貨回補 2,245 口、現貨連買 4 日）<strong>方向相反</strong>——這是「過熱程度高、但籌碼結構偏多轉向」的組合，兩者不可混為一談。</li>
+</ul>
+</div>
+
+<h2>10. 昨日回顧與今日修正</h2>
+
+<div class="card">
+<h3>09/09 對帳（Notion 盤後欄位已完整回填，本節為讀取自追蹤庫的正式回顧）</h3>
+<table>
+<tr><th>項目</th><th>09/09 晨報估</th><th>實際</th><th>命中</th></tr>
+<tr><td>定調</td><td>震盪偏多</td><td>收 47,183.36（+77.58、+0.16%）</td><td class="up">命中</td></tr>
+<tr><td>加權開盤</td><td>47,180～47,290</td><td>47,142.74（+0.08%）</td><td class="dn">落差（低於下緣 37.26 點）</td></tr>
+<tr><td>加權收盤</td><td>基準 47,050～47,400（50%）</td><td>47,183.36</td><td class="up">命中</td></tr>
+<tr><td>盤中高</td><td>壓力階梯 47,273→47,335→47,578</td><td>47,548.26</td><td class="up">命中（停在 47,578 之下 29.98 點）</td></tr>
+<tr><td>台積電開盤</td><td>2,485～2,505</td><td>2,480（+0.40%）</td><td class="dn">落差（低於下緣 5 元）</td></tr>
+<tr><td>台積電收盤方向</td><td>強</td><td>2,465（−0.20%）</td><td class="dn">落差</td></tr>
+<tr><td>族群主軸</td><td>半導體強、下游組裝弱</td><td>半導體 −0.2%、電腦及週邊 +1.3%、光電 +3.6%</td><td class="dn">落差（方向相反）</td></tr>
+<tr><td>廣度警語</td><td>預期廣度續弱</td><td>上漲 618／下跌 383（1.61 倍）</td><td class="dn">落差（廣度反而改善）</td></tr>
+<tr><td>持股命中</td><td>—</td><td>命中 6／部分 5／落差 2</td><td>部分</td></tr>
+</table>
+<p><strong>組合結果：</strong>指數收紅但組合小跌。現值 2,667,286 元（前日 2,671,853），當日 −4,567 元（−0.17%）。輸在 IC 設計（−14,530）與 AI 伺服器（−4,300），贏在 CCL／載板（+10,275）與封測（+4,875）。</p>
+</div>
+
+<h3>✅ 今日採用的修正</h3>
+<div class="card">
+<ol>
+<li><strong>9/9 修正#3（族群雙主軸）——今日採用。</strong>不再用「昨夜美股族群對照」單一來源定族群主軸。本報告第 7 區塊同時列出（a）美股對照推得的與（b）台股本地事件推得的（緯創 GDR 上市、蘋果發表會消息出盡、油價受益的塑化與航運）。<strong>昨天就是漏了本地事件才把族群押反。</strong></li>
+<li><strong>9/9 修正#4（宏觀雙向寫）——今日採用。</strong>第 4 區塊已對油價與殖利率各自點名台股受益方，並明確寫出「Roman 的 13 檔都不在受益方」。</li>
+<li><strong>9/9 修正#5（高單價 IC 設計風險警語）——今日採用。</strong>2454 與 3661 已加註「大盤震盪日跌幅放大 3～5 倍」，且 3661 已固定提及現增 GDR 稀釋背景。</li>
+<li><strong>9/9 修正#6 的四條已驗證規則——全部沿用：</strong>（a）量能否決條件（連八日未破兆元，樂觀守 15%）；（b）6412 脫鉤 VRT、收盤預設平（第七次驗證）；（c）3711 直接用 ASX 自家 ADR 溢價變化判斷（09/09 +3.56% 完全命中）；（d）2376 記憶體成本面利空（09/09 第二次驗證有效）；（e）壓力階梯寫法（09/09 高點停在 47,578 之下）。</li>
+<li><strong>9/9 修正#7（籌碼補齊）——今日採用並已完成。</strong>09/09 的三大法人與外資期貨未平倉今晨已全部補齊（外資現貨 +209.24 億、大台當量 −79,711 口），未拿 09/08 的舊籌碼冒充。</li>
+<li><strong>9/9 修正#8（特定事件）——今日採用。</strong>蘋果發表會已列為「消息出盡」、緯創 GDR 新股上市已單獨列為 3231 的最大個股事件。</li>
+<li><strong>9/9 修正#9（組合段寫出兩塊合計占比與是否同向）——今日採用。</strong>已寫出 AI 伺服器 39.05% ＋ IC 設計 22.04% ＝ 61.09%，且明確指出今日兩塊<strong>方向相反</strong>。</li>
+<li><strong>9/1 修正#4（廣度需數據門檻）——今日採用並反向套用。</strong>09/09 上漲 618／下跌 383，上漲明顯多於下跌，故今日<strong>反過來寫「廣度良好」</strong>而非警語。</li>
+</ol>
+</div>
+
+<h3>❌ 今日主動作廢的舊修正</h3>
+<div class="card">
+<ol>
+<li><strong>⚠️ 作廢並限縮 9/9 修正#1（0.6 係數）。</strong><br>
+<strong>原條文：</strong>「由夜盤／個股期／ADR 推得的漲幅一律乘上 0.6 係數再寫成開盤中心值。」<br>
+<strong>推翻理由：</strong>該條成立的機制（見 9/9 修正#2）是「台北已先漲 2.49%、費半與 ADR 的漲幅被足額搬過來」造成單邊高估。<strong>今日情境完全相反</strong>——台北 09/08＋09/09 合計僅 −0.31%，而夜盤跌 194 點、多數對照股是跌的。若對稱把 0.6 係數套到跌幅上，等於<strong>人為縮小跌幅、再度造成開盤高估</strong>，恰好是這條修正想避免的偏誤方向。<br>
+<strong>今日處理：</strong>0.6 係數<strong>僅適用於「推得為正的漲幅」，跌幅足額採用</strong>。</li>
+<li><strong>⚠️ 9/9 修正#2（台北已先漲扣除）今日不觸發。</strong>觸發門檻是「台北前兩個交易日累計漲幅 ≥ +2%」，今日實際為 −0.31%，未達門檻，故不做扣除。條文保留但今日不適用。</li>
+<li><strong>⚠️ 部分放寬 8/31 修正#2（電源／組裝下緣不得低於前收 −1.5%）。</strong><br>
+<strong>推翻理由：</strong>該規則的前提是對照股屬正常波動範圍。VRT −9.61% 已是<strong>極端值</strong>，硬守 −1.5% 會系統性低估 2308 的下檔。<br>
+<strong>今日處理：</strong>2308 的開盤估下緣放寬至 −2.23%（1,755），並在該檔明確標示「若實際跌幅明顯超過此下緣，代表 0.25 折係數在極端值下失效，盤後回顧必須據此修正係數」。<strong>0.25 折本身仍保留</strong>，因為 VRT 是估值修正而非財報崩壞。</li>
+<li><strong>⚠️ 昨日「指數靠台積電撐、個股廣度差」的預期已被推翻，今日反向。</strong><br>
+09/09 晨報依「TSM ADR +2.35% 強於費半 +1.30%」推論會回到台積電獨撐的格局，實際上台積電 −0.20% 而廣度大幅改善（618/383）。<strong>今日訊號正好相反</strong>（TSM ADR −0.83% <strong>弱於</strong>費半 +0.37%），故今日明確寫「指數靠台積電撐的格局不成立」。這條反向訊號的可靠度值得盤後追蹤。</li>
+</ol>
+</div>
+
+<div class="warn">
+<strong>從 09/09 落差中學到、今日已具體執行的一件事：</strong>昨天最大的教訓是「開盤單邊高估 5:0」。今日的具體做法是（a）作廢會人為縮小跌幅的 0.6 係數；（b）加權開盤估下緣直接錨定夜盤法的 46,989 而非只用逆價差 0.5 折的 47,084；（c）2308 的下緣突破 −1.5% 硬限制。<strong>盤後檢查方法：重算「實際開盤落在區間內的檔數」，目標 ≥ 10／13，且上下緣外的檔數要均衡（不得再出現單邊 5:0）。</strong>
+</div>
+
+<div class="foot">
+<h3 style="border:none;margin-top:0">資料時點</h3>
+<ul>
+<li><strong>台股本地數字</strong>（加權收盤、開高低、成交金額、季線乖離、融資融券、三大法人、漲跌家數、類股指數、即將除權息）：2026/09/09 收盤，Goodinfo 大盤市況總覽官方頁，<strong>Chrome 補</strong>。</li>
+<li><strong>外資期貨未平倉</strong>：2026/09/09，臺灣期貨交易所「三大法人－區分各期貨契約－依日期」官方頁，<strong>Chrome 補</strong>。大台當量由 python 驗算，並與財訊快報／永豐期貨／統一期貨報導交叉驗證一致（−79,711 口）。</li>
+<li><strong>台指期夜盤</strong>（終盤、盤中高低、各契約、成交量、參考價）：2026/09/10 04:59:59 終盤實測值，Yahoo 股市期權頁，<strong>Chrome 補</strong>。</li>
+<li><strong>台積電個股期夜盤</strong>：僅取得漲跌幅 +5 元，三立新聞網 09/10 盤前稿。</li>
+<li><strong>美股四大指數</strong>：2026/09/09 官方收盤，中央社【美股盤後】與民視財經網交叉驗證一致。</li>
+<li><strong>美股個股與台廠 ADR</strong>：2026/09/09 4:00PM EDT 官方收盤，Yahoo Finance 多檔報價頁，<strong>Chrome 補</strong>；ADR 時間戳經 tw.stock.yahoo.com/adr 頁「09/10 04:00」二次驗證。</li>
+<li><strong>VIX</strong>：2026/09/09 4:15PM EDT，CNBC .VIX 頁，<strong>Chrome 補</strong>。</li>
+<li><strong>USD/TWD</strong>：2026/09/10 07:42 CST，Yahoo 股市外匯頁，<strong>Chrome 補</strong>。</li>
+<li><strong>美 10 年期殖利率、油價</strong>：2026/09/09 收盤，Newtalk 新聞與中央社。</li>
+<li><strong>持股 13 檔前一交易日收盤</strong>：2026/09/09，取自 Notion「我的持股」資料庫，收盤日欄位經檢查<strong>全部等於前一交易日 09/09</strong>（昨日盤後回顧已回填），<strong>資料未過期，無需重查、無需回填</strong>。</li>
+</ul>
+<h3 style="border:none">⚠️ 本次未能取得的項目</h3>
+<ul>
+<li><strong>台積電個股期夜盤的確切點位</strong>——僅取得漲跌幅（+5 元），足以完成 +0.203% 的推估，但無法標示絕對價位。<strong>已用 Chrome 取得漲跌幅，未在 20 分鐘時間預算內再開期交所盤後行情頁查詢確切點位。</strong>不影響開盤估的計算。</li>
+</ul>
+<p><strong>Chrome 可用性：本次 Claude in Chrome 全程可用、無權限中斷</strong>，籌碼三項、持股基準價、夜盤高低、ADR、VIX、匯率全部成功取得，<strong>無「查不到」項目</strong>。</p>
+<h3 style="border:none">資料來源</h3>
+<p>Goodinfo! 台灣股市資訊網、臺灣期貨交易所、Yahoo 股市（期權／外匯／ADR）、Yahoo Finance、CNBC、中央社、民視財經網、Newtalk 新聞、三立新聞網、財訊快報、永豐期貨、統一期貨、ETtoday 新聞雲。</p>
+<h3 style="border:none">免責聲明</h3>
+<p>本報告由 AI 自動整理與分析，所有開盤預估、收盤方向、情境機率均為<strong>主觀推估</strong>，並非事實陳述。數字若有兩個以上來源不一致，已於文中並列並註明採用依據。本報告<strong>僅供研究參考，不構成任何投資建議或買賣要約</strong>。投資有風險，決策請自行判斷並自負盈虧。</p>
+<p class="small">產出時間：2026-09-10 08:05（台北時間）　|　台股 09:00 開盤</p>
+</div>
+
+</div>
+</body>
+</html>
