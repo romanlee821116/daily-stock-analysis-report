@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台股盤後回顧 2026/09/24</title>
+<style>
+:root{
+  --bg:#f4f4f1; --card:#fcfcfb; --text:#0b0b0b; --muted:#52514e; --line:#e2e1dc;
+  --up:#d03b3b; --down:#0ca30c; --flat:#52514e;
+  --hit-bg:rgba(208,59,59,.10); --part-bg:rgba(190,150,20,.14); --miss-bg:rgba(12,163,12,.12);
+  --hit-fg:#a82f2f; --part-fg:#8a6a08; --miss-fg:#0a7d0a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131312; --card:#1a1a19; --text:#ffffff; --muted:#c3c2b7; --line:#33332f;
+    --up:#e66767; --down:#3cbf3c; --flat:#c3c2b7;
+    --hit-bg:rgba(230,103,103,.14); --part-bg:rgba(220,180,60,.16); --miss-bg:rgba(60,191,60,.14);
+    --hit-fg:#e66767; --part-fg:#dcb43c; --miss-fg:#3cbf3c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131312; --card:#1a1a19; --text:#ffffff; --muted:#c3c2b7; --line:#33332f;
+  --up:#e66767; --down:#3cbf3c; --flat:#c3c2b7;
+  --hit-bg:rgba(230,103,103,.14); --part-bg:rgba(220,180,60,.16); --miss-bg:rgba(60,191,60,.14);
+  --hit-fg:#e66767; --part-fg:#dcb43c; --miss-fg:#3cbf3c;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-size:15px; line-height:1.72; letter-spacing:.01em;
+}
+.wrap{max-width:1000px; margin:0 auto; padding:32px 24px 64px}
+.num,table{font-variant-numeric:tabular-nums}
+h1{font-size:27px; line-height:1.3; margin:0 0 6px; letter-spacing:-.01em}
+h2{font-size:19px; margin:0 0 14px; letter-spacing:-.005em}
+h3{font-size:15px; margin:22px 0 8px; color:var(--muted); font-weight:600}
+p{margin:0 0 12px}
+.sub{color:var(--muted); font-size:13.5px; margin:0 0 26px}
+.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:0 0 20px}
+.up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
+.hero{font-size:16.5px; line-height:1.8; margin:0 0 18px}
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:6px}
+.stat{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:13px 14px}
+.stat .k{font-size:11.5px; color:var(--muted); letter-spacing:.04em; margin-bottom:5px}
+.stat .v{font-size:21px; font-weight:650; line-height:1.25}
+.stat .d{font-size:12.5px; margin-top:3px}
+table{width:100%; border-collapse:collapse; font-size:13.5px; margin:4px 0 6px}
+th,td{padding:9px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+th{font-size:11.5px; color:var(--muted); font-weight:600; letter-spacing:.04em; white-space:nowrap}
+td.n,th.n{text-align:right; white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+.tag{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:650; white-space:nowrap}
+.t-hit{background:var(--hit-bg); color:var(--hit-fg)}
+.t-part{background:var(--part-bg); color:var(--part-fg)}
+.t-miss{background:var(--miss-bg); color:var(--miss-fg)}
+.scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:0 -4px; padding:0 4px}
+ul{margin:0 0 12px; padding-left:19px} li{margin-bottom:7px}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+.col{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+.col h3{margin-top:0}
+.note{font-size:12.5px; color:var(--muted); line-height:1.7}
+.gap{background:var(--part-bg); border:1px solid var(--line); border-radius:10px; padding:12px 15px; font-size:13px; margin:14px 0 0}
+.path{display:grid; grid-template-columns:82px 1fr; gap:0 14px; font-size:13.5px}
+.path dt{color:var(--muted); font-size:12.5px; padding:7px 0; border-top:1px solid var(--line); white-space:nowrap}
+.path dd{margin:0; padding:7px 0; border-top:1px solid var(--line)}
+.path dt:first-of-type,.path dd:first-of-type{border-top:none}
+ol.fix{padding-left:20px} ol.fix li{margin-bottom:11px}
+ol.fix b{font-weight:650}
+footer{color:var(--muted); font-size:12px; line-height:1.75; border-top:1px solid var(--line); padding-top:18px; margin-top:8px}
+footer a{color:var(--muted)}
+@media (max-width:640px){
+  .wrap{padding:24px 16px 48px}
+  h1{font-size:22px} .hero{font-size:15px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+  .card{padding:18px 16px; border-radius:12px}
+  table{font-size:12.5px} th,td{padding:8px 7px}
+  .path{grid-template-columns:70px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>台股盤後回顧　2026/09/24（四）</h1>
+<p class="sub">今日晨報預估 vs 實際收盤對帳　·　中秋連假前最後交易日（9/25 休市）　·　產出時間 14:50（台北）</p>
+
+<!-- 1 總評 -->
+<section class="card">
+  <h2>總評</h2>
+  <p class="hero">
+    晨報「震盪偏空」<b>方向對、幅度大錯</b>：實際只跌 <span class="down">132.69 點（−0.28%）</span>，且是<b>開低走高</b>——09:08 殺到 47,754.72（−402.57 點，幾乎剛好等於夜盤跌幅）後全日一路回升，13:21 摸到全日高 48,117.54，收 48,024.60，落在晨報只給 35% 權重的基準情境內；給 45% 權重的保守情境僅在開盤 8 分鐘內短暫觸及。
+    最大落差是族群判斷：晨報寫「全面 risk-off、沒有可以輪動避開的角落」，實際<b>今天正是典型的輪動日</b>——指數的跌幅幾乎全由台積電一檔貢獻，資金轉進 CCL／載板與散熱，
+    持股 13 檔<span class="up">11 漲 1 平 2 跌</span>、組合 <span class="up">+1.06%</span>，跑贏大盤 1.34pp，與晨報「13 檔皆偏弱、無一檔給強」完全相反。
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="k">加權指數</div><div class="v num down">48,024.60</div><div class="d down num">−132.69　−0.28%</div></div>
+    <div class="stat"><div class="k">台積電 2330</div><div class="v num down">2,475</div><div class="d down num">−25　−1.00%</div></div>
+    <div class="stat"><div class="k">成交金額</div><div class="v num">7,366.23 億</div><div class="d num" style="color:var(--muted)">較前日 −17.7%</div></div>
+    <div class="stat"><div class="k">我的持股組合</div><div class="v num up">+1.06%</div><div class="d up num">+29,820 元</div></div>
+  </div>
+  <div class="gap">
+    <b>資料缺口（先講在前面）：</b>本次回顧於 14:35 執行，證交所三大法人買賣金額（BFI82U）、融資餘額、期交所外資期貨未平倉三項<b>當時皆尚未發布</b>（約 15:00 後），
+    查詢均回「沒有符合條件的資料」。故本報籌碼段落空缺、Notion「外資買賣超(億)」欄留空，<b>非遺漏而是資料未出</b>。已寫入明日晨報修正：晨報須自行補查 9/24 這三項。
+  </div>
+</section>
+
+<!-- 2 逐項對照 -->
+<section class="card">
+  <h2>晨報估計 vs 實際　逐項對照</h2>
+  <p class="note">預估值逐字取自 Notion「每日預估追蹤」2026/09/24 該列（晨報寫入時間 08:05），非重建值。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>項目</th><th>晨報預估（原文摘要）</th><th>實際</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>定調</b></td>
+        <td>震盪偏空；偏空條件 6 項 vs 偏多 2 項，機率明確向保守端傾斜</td>
+        <td>收黑 −0.28%，但開低走高、收在全日高下方 93 點</td>
+        <td><span class="tag t-part">部分</span></td>
+      </tr>
+      <tr>
+        <td><b>加權開盤</b></td>
+        <td class="num">47,860～47,990（中心 47,925）</td>
+        <td class="num">48,075.39（−81.90、−0.17%）</td>
+        <td><span class="tag t-miss">落差</span><br><span class="note">高於上緣 85.39 點</span></td>
+      </tr>
+      <tr>
+        <td><b>盤中高</b></td>
+        <td>壓力 48,157.29（9/23 收盤兼多空分界）→ 48,312 → 48,341.56</td>
+        <td class="num">48,117.54（13:21），未觸及 48,157.29</td>
+        <td><span class="tag t-hit">命中</span></td>
+      </tr>
+      <tr>
+        <td><b>加權收盤</b></td>
+        <td>保守 45%：47,300～47,800／<b>基準 35%：47,800～48,160</b>／樂觀 20%：48,160～48,450</td>
+        <td class="num">48,024.60 → 落在基準區間中段</td>
+        <td><span class="tag t-hit">命中</span><br><span class="note">但主機率情境未實現</span></td>
+      </tr>
+      <tr>
+        <td><b>台積電開盤</b></td>
+        <td class="num">2,470～2,492，中心 2,480</td>
+        <td class="num">開 2,480（誤差 0 元）</td>
+        <td><span class="tag t-hit">命中</span></td>
+      </tr>
+      <tr>
+        <td><b>台積電收盤方向</b></td>
+        <td>「平」——跌幅溫和、ADR 未收最低、有漲價傳言撐盤</td>
+        <td class="num">2,475（−25、−1.00%），收在全日低 2,470 附近</td>
+        <td><span class="tag t-part">部分</span></td>
+      </tr>
+      <tr>
+        <td><b>外資買賣超</b></td>
+        <td>未給數字預估；提及外資現貨連買 5 日、期貨淨空 76,084 口</td>
+        <td>查不到（14:35 尚未發布）</td>
+        <td><span class="tag t-part">無法判定</span></td>
+      </tr>
+      <tr>
+        <td><b>族群判斷</b></td>
+        <td>「今日是全面 risk-off，沒有可以輪動避開的角落」；13 檔持股 0 強／9 平／4 弱</td>
+        <td>電子零組件 <span class="up">+1.15%</span>、電腦及週邊 <span class="up">+0.71%</span>、塑膠 <span class="up">+3.60%</span>；未含金融電子股指數 <span class="up">+0.34%</span></td>
+        <td><span class="tag t-miss">落差</span><br><span class="note">今日最大的一項</span></td>
+      </tr>
+      <tr>
+        <td><b>核心警語 A</b><br><span class="note">廣度惡化</span></td>
+        <td>連三日下跌家數 &gt; 上漲家數，門檻達標</td>
+        <td class="num">上漲 427／下跌 600（漲停 11／跌停 1），下跌為上漲 1.41 倍，<b>連四日</b>成立</td>
+        <td><span class="tag t-hit">命中</span></td>
+      </tr>
+      <tr>
+        <td><b>核心警語 B</b><br><span class="note">季線乖離過熱</span></td>
+        <td>季線乖離 +6.3% 為近期最高過熱水位，連 6 漲後獲利了結風險</td>
+        <td>收盤季線乖離仍 <span class="num">+6.00%</span>（季線 45,305.23），過熱完全未被消化</td>
+        <td><span class="tag t-miss">落差</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 3 今日劇本 -->
+<section class="card">
+  <h2>今日完整劇本</h2>
+  <h3>路徑（證交所每 5 秒指數統計官方檔）</h3>
+  <dl class="path">
+    <dt>09:00:05</dt><dd><b class="num">開 48,075.39</b>（−81.90、−0.17%）。夜盤逆價差 −248 點只補了 81.90 點，遠低於晨報預期。</dd>
+    <dt>09:08:35</dt><dd><b class="num down">低 47,754.72</b>（−402.57、−0.84%）。<b>開盤 8 分半內一次做完全部補跌</b>——與夜盤 403 點跌幅幾乎完全相等——隨即止跌反彈，全日再未回測。</dd>
+    <dt>09:30–10:00</dt><dd>快速收復至 <span class="num">48,021.07</span>，回到平盤附近。</dd>
+    <dt>10:00–13:00</dt><dd>在 <span class="num">47,890～48,051</span> 窄幅震盪，量能持續萎縮，連假前觀望氣氛明確。</dd>
+    <dt>13:21</dt><dd><b class="num">高 48,117.54</b>（−39.75）。尾盤買盤回補，全日高點出現在最後 10 分鐘。</dd>
+    <dt>13:30</dt><dd><b class="num down">收 48,024.60</b>（−132.69、−0.28%），量 7,366.23 億。</dd>
+  </dl>
+  <h3>漲跌歸因（分析師／媒體事後解讀，非唯一定論）</h3>
+  <ul>
+    <li><b>指數的跌幅幾乎是台積電一檔。</b>半導體類 −0.66%、金融保險 −0.85%、電子類 −0.30%，但<b>未含金融電子股指數 +0.34%</b>——把台積電、權值電子與金融拿掉，台股今天是上漲的。台積電 −1.00%、鴻海 −2.14%、聯電 −3.75%、富邦金 −1.96% 是主要拖累。</li>
+    <li><b>總體壓力真實存在，但只打到外資權值股。</b>美 10 年期公債殖利率盤中衝破 5.13%（2007 年 7 月以來最高）、美股四大指數隔夜全黑、費半 −1.23%，這些壓力集中反映在外資持股最重的權值標的；內資主導的中小型題材股不受影響。</li>
+    <li><b>資金在盤內輪動而非離場。</b>CCL／載板與散熱接棒：景碩 962 元 <span class="up">+6.18%</span>、健策 6,920 元 <span class="up">+7.96%</span>、南電 1,240 元 <span class="up">+2.48%</span>、欣興 <span class="up">+2.16%</span>，聯茂、雙鴻漲停。塑膠類指數 <span class="up">+3.60%</span> 為當日最強大類（前一日還是領跌族群之一），媒體先前歸因於季底集團作帳與台塑集團轉型題材，今日無專文，此處屬推論。</li>
+    <li><b>連假前量縮是觀望不是恐慌。</b>成交 7,366.23 億，較 9/23 的 8,946.51 億縮 17.7%。縮的是權值追價量；漲停 11 檔／跌停 1 檔，題材股仍活躍。</li>
+    <li><b>記憶體與部分電子明顯轉弱：</b>南亞科 503 元 −2.33%、金像電 1,105 元 −3.07%、友達 34.20 元 −1.44%。</li>
+    <li><b>題材面：</b>川習會登場，市場關注經貿談判；台灣 8 月外銷訂單首度突破千億美元、年增 71.4%，AI 供應鏈量價齊揚。</li>
+  </ul>
+  <h3>技術位置</h3>
+  <p>收盤 48,024.60 站穩所有均線，<b>無任何均線跌破</b>：5 日線 47,429.01（乖離 +1.26%）、10 日線 46,749.33（+2.73%）、月線 46,653.30（+2.94%）、季線 45,305.23（<b>+6.00%</b>）。<span class="note">均線值取自 9/23 晨報所載 Goodinfo 官方數據。季線乖離僅由 +6.3% 微降至 +6.00%，過熱水位實質未解。</span></p>
+</section>
+
+<!-- 4 持股 -->
+<section class="card">
+  <h2>我的持股：晨報估 vs 今日實際</h2>
+  <p class="note">收盤價取自證交所 MIS 官方即時報價系統 13:30 收盤，13 檔一次取得，無一檔查不到。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr>
+      <th>標的</th><th>晨報開盤估／方向</th><th class="n">實際開</th><th class="n">實際收</th><th class="n">漲跌%</th><th>判定</th><th>說明</th>
+    </tr></thead>
+    <tbody>
+      <tr><td><b>2330</b> 台積電</td><td class="num">2,470–2,492／平</td><td class="n num">2,480</td><td class="n num">2,475</td><td class="n num down">−1.00%</td><td><span class="tag t-part">部分</span></td><td>開盤估正中心、誤差 0 元；但收在全日低 2,470 附近，「平」偏樂觀。</td></tr>
+      <tr><td><b>2454</b> 聯發科</td><td class="num">5,110–5,175／弱</td><td class="n num">5,105</td><td class="n num">5,285</td><td class="n num up">+1.93%</td><td><span class="tag t-miss">落差</span></td><td>晨報以 AVGO −2.62% 判弱，實際 IC 設計逆勢轉強，盤中一度摸到 5,360。</td></tr>
+      <tr><td><b>3661</b> 世芯-KY</td><td class="num">3,685–3,745／弱</td><td class="n num">3,730</td><td class="n num">3,770</td><td class="n num up">+0.27%</td><td><span class="tag t-miss">落差</span></td><td>同樣被 AVGO 重挫拖累判弱，實際收紅；方向反但幅度小。</td></tr>
+      <tr><td><b>2308</b> 台達電</td><td class="num">1,880–1,905／平</td><td class="n num">1,875</td><td class="n num">1,910</td><td class="n num up">+0.53%</td><td><span class="tag t-hit">命中</span></td><td>DELL 逆勢收紅的判讀正確；0.25 折係數續用有效。</td></tr>
+      <tr><td><b>2376</b> 技嘉</td><td class="num">360–367／平</td><td class="n num">362</td><td class="n num">361.5</td><td class="n num down">−0.96%</td><td><span class="tag t-part">部分</span></td><td>最大獲利部位，晨報點名的獲利回吐壓力確實出現，為 13 檔中僅有的 2 檔收黑之一。</td></tr>
+      <tr><td><b>3231</b> 緯創</td><td class="num">177.5–181／平</td><td class="n num">180</td><td class="n num">184.5</td><td class="n num up">+2.50%</td><td><span class="tag t-part">部分</span></td><td>方向對但幅度低估；收在全日最高 184.5，AI 伺服器鏈買盤強於預期。</td></tr>
+      <tr><td><b>6412</b> 群電</td><td class="num">73.6–75.0／平</td><td class="n num">74.2</td><td class="n num">74.6</td><td class="n num up">+0.40%</td><td><span class="tag t-hit">命中</span></td><td>脫鉤 VRT、改用前收 ±1.0% 的規則第 21 次驗證成功。</td></tr>
+      <tr><td><b>2383</b> 台光電</td><td class="num">4,970–5,040／平</td><td class="n num">5,025</td><td class="n num">5,050</td><td class="n num up">+0.60%</td><td><span class="tag t-hit">命中</span></td><td>晨報保留 CCL 相對強度的決定正確；盤中一度攻抵 5,170。</td></tr>
+      <tr><td><b>3037</b> 欣興</td><td class="num">1,145–1,165／平</td><td class="n num">1,155</td><td class="n num">1,185</td><td class="n num up">+2.16%</td><td><span class="tag t-part">部分</span></td><td>開盤估正中心；但晨報列為「四日 +18.25% 極度過熱、回吐幅度最大」，實際收在全日高附近。</td></tr>
+      <tr><td><b>2449</b> 京元電子</td><td class="num">295–302／<b>弱（最脆弱第一名）</b></td><td class="n num">303.5</td><td class="n num">311</td><td class="n num up">+2.30%</td><td><span class="tag t-miss">落差</span></td><td><b>今日最嚴重的一檔。</b>晨報以 AMKR −2.33%、ASX −2.81% 加上「9/23 已 −4.10% 跌勢未止穩」判為最脆弱，實際是 13 檔第二強。</td></tr>
+      <tr><td><b>3711</b> 日月光投控</td><td class="num">684–695／弱</td><td class="n num">685</td><td class="n num">699</td><td class="n num up">+0.87%</td><td><span class="tag t-miss">落差</span></td><td>開盤估準（685 在區間內），但收在全日最高 699；ASX −2.81% 的跌勢並未傳導。</td></tr>
+      <tr><td><b>2352</b> 佳世達</td><td class="num">28.4–29.6／平</td><td class="n num">29.0</td><td class="n num">29.0</td><td class="n num flat">0.00%</td><td><span class="tag t-hit">命中</span></td><td>脫鉤 DELL、±2.0% 區間規則第 5 次驗證成功。</td></tr>
+      <tr><td><b>2327</b> 國巨</td><td class="num">568–576／平</td><td class="n num">568</td><td class="n num">580</td><td class="n num up">+1.22%</td><td><span class="tag t-part">部分</span></td><td>晨報「別對被動元件做全面偏空外推」的提醒方向正確，但仍低估強度。</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>計分</h3>
+  <p>
+    <b>開盤估：命中 10／部分 3／落差 0。</b>機械連動法（個股期夜盤 70% + ADR 30%、族群加權折扣、脫鉤規則）今日表現是近期最佳，<b>這一層不需要修</b>。<br>
+    <b>收盤方向：命中 4／部分 5／落差 4。</b>關鍵在於——晨報判「弱」的四檔（2454、3661、2449、3711）<b>無一例外全部做反</b>，全數收紅。
+  </p>
+
+  <h3>組合層級檢討</h3>
+  <ul>
+    <li><b>組合今日 +29,820 元（+1.06%），大盤 −0.28%，跑贏 1.34pp。</b>現值 2,834,360 元、成本 2,552,492 元、未實現 +281,868 元（+11.04%）。</li>
+    <li><b>與前一日完全反轉：</b>9/23 大盤 +0.75% 而組合僅 +0.12%（落後）；今日大盤下跌而組合上漲。原因是組合重倉的 CCL／載板（2383＋3037）與 AI 伺服器／散熱（2308＋2376＋3231＋6412）正好是今日輪動的接手族群，而拖累指數的台積電在組合中只佔 5.2%。<b>這個組合的貝他對「台積電獨撐盤」是負的、對「族群輪動盤」是正的</b>，晨報一直用大盤方向去推組合方向，方向性本身就錯了。</li>
+    <li><b>最大貢獻：</b>2449 京元電 +7,350 元、3231 緯創 +6,300 元、3037 欣興 +6,250 元、2308 台達電 +2,550 元。<b>最大拖累：</b>2376 技嘉 −2,450 元、2330 台積電 −1,500 元。前三大貢獻中有兩檔（2449、3037）是晨報點名的「最脆弱」名單。</li>
+    <li><b>系統性偏誤：</b>晨報把「美股對照股僅 3／24 檔收紅」直接外推成「13 檔皆偏弱、無一檔給強」。實際上美股隔夜跌幅對台股<b>非權值中小型股</b>的傳導力遠低於係數假設——這不是保守，是把開盤估的工具誤用在收盤方向上。</li>
+  </ul>
+</section>
+
+<!-- 5 檢討 -->
+<section class="card">
+  <h2>檢討</h2>
+  <div class="two">
+    <div class="col">
+      <h3>估對的（可留用）</h3>
+      <ul>
+        <li><b>開盤估的機械連動法</b>——13 檔 10 命中／3 部分／0 落差，台積電更是誤差 0 元。個股期夜盤為主錨（權重 70%）＋ADR 折扣（30%）續用。</li>
+        <li><b>脫鉤規則</b>——6412 群電（前收 ±1.0%）與 2352 佳世達（±2.0%）再度驗證成功，累計第 21 次與第 5 次。</li>
+        <li><b>壓力位判斷</b>——48,157.29 未被突破，全日高 48,117.54 收在其下 40 點。</li>
+        <li><b>廣度警語</b>——427 漲／600 跌，連四日下跌家數大於上漲家數，門檻判定方法有效。</li>
+        <li><b>保留 CCL 相對強度</b>——晨報主動作廢 9/23「封測接棒」的錯誤、改留 CCL 強度，這個修正方向是對的（2383、3037 今日都漲）。</li>
+        <li><b>不對被動元件全面偏空外推</b>——2327 國巨 +1.22%，提醒正確。</li>
+        <li><b>逆價差的性質判斷</b>——晨報文字上已寫出「期貨已先行反映，現貨未必一次補足」，觀念是對的。</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>估錯的（要修正）</h3>
+      <ul>
+        <li><b>逆價差折扣係數太重</b>——觀念對了，數字沒跟上。0.45~0.75 折推出 47,860~47,990，實際開 48,075.39，只補了夜盤跌幅的 20.3%。</li>
+        <li><b>「全面 risk-off、無角落可避」——今日最大誤判。</b>總體壓力只打外資權值股；未含金融電子股指數 +0.34%，塑膠 +3.60%、電子零組件 +1.15%。</li>
+        <li><b>封測連兩日做反</b>——9/23 判強實際 −4.10%，9/24 判弱實際 +2.30%。共同病灶是「拿前一日台股表現外推次日」，等於在追昨天的行情。</li>
+        <li><b>美股對照股被誤用在收盤方向</b>——「僅 3／24 檔收紅」不足以推出「13 檔皆偏弱」。該工具只適用於開盤估。</li>
+        <li><b>「過熱＝當日會回吐」不成立</b>——3037 欣興被列回吐風險最高，收在全日高附近；大盤季線乖離收盤仍 +6.00%。</li>
+        <li><b>行事曆漏了休市日</b>——9/25 中秋休市、今日為連假前最後交易日，量縮 17.7% 是媒體一致歸因，晨報全文未提。</li>
+        <li><b>資料品質／流程</b>——盤後回顧排在 14:35 執行，三大法人、融資、外資期貨未平倉全部尚未發布，籌碼段整段空缺。這是流程問題，不是查不到。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6 修正 -->
+<section class="card">
+  <h2>帶進下一份晨報的修正</h2>
+  <p class="note">以下七項已同步寫入 Notion「帶進下份晨報的修正」欄，明日晨報會直接讀取。每項都寫成可檢查的動作。</p>
+  <ol class="fix">
+    <li><b>逆價差折扣係數：200~400 點級距由 0.45~0.75 下修為 0.15~0.35。</b>依據：9/24 逆價差 −248 點，實際開盤只補 81.90／403 = 20.3%。晨報須明寫「本日折扣係數 X、依據前一日實測補跌比例 Y%」，逐日累積驗證。<br><span class="note">驗收：明日開盤實際落點是否落入新係數推出的區間。</span></li>
+    <li><b>禁止把「全面 risk-off」直接外推到非權值持股。</b>若要寫「全面」二字，必須同時列出前一日台股【電子零組件類指數】與【電腦及週邊設備類指數】的漲跌；只要其中一類收紅，就不得使用「全面」，改寫「權值股承壓、中小型題材需個別判斷」。<br><span class="note">9/24 實測：電子零組件 950.90 → 961.88（+1.15%），完全不支持「全面」。</span></li>
+    <li><b>2449、3711 改用絕對連動、禁用動能理由。</b>收盤方向只得使用 ASX ADR 與 AMKR 當日絕對漲跌幅並一律打對折（係數 0.5）；晨報中不得出現「前一日已大跌、跌勢未見止穩」或「前一日已大漲、動能延續」這類文字。</li>
+    <li><b>美股對照股只用於開盤估，不用於收盤方向。</b>開盤估續用（今日 10 命中／3 部分／0 落差已證明有效）；收盤方向必須另外以「前一日台股該類股指數強弱」為主權重（至少 50%），兩者衝突時以台股自身族群輪動為準。</li>
+    <li><b>「過熱」不得單獨作為降評理由。</b>只寫成風險描述與停利參考，不得單獨把任何一檔從「平」降為「弱」；要降評必須同時具備當日對照美股跌幅 &gt;2% 或該檔個股利空消息。</li>
+    <li><b>行事曆檢查固定加一項「未來 5 個日曆日內的台股休市日」，並在定調段明記連假前後的量能與持倉影響。</b>下一個交易日需先查證交所與期交所行事曆確認是否為 9/28（週一）；連假期間美股累積多日漲跌須合併計算連動，不能只用最後一夜。</li>
+    <li><b>盤後回顧排程由 14:30 後移至 15:10 以後。</b>本次 14:35 執行導致三大法人、融資餘額、外資期貨未平倉三項全缺。明日晨報必須自行補查 9/24 這三項（Notion 今日留空），且不得因缺資料而往保守收一格。</li>
+  </ol>
+</section>
+
+<!-- 7 footer -->
+<footer>
+  <p><b>資料時點與來源。</b>指數 OHLC 與各類股指數：臺灣證券交易所「發行量加權股價指數歷史資料」與「每 5 秒指數統計」官方檔（2026/09/24 13:30 收盤）。持股 13 檔開高低收：證交所 MIS 即時報價系統（13:30 收盤，14:34 取得）。成交金額、漲跌家數、個股焦點、盤勢歸因：聯合新聞網、經濟日報、三立新聞網、鉅亨網 9/24 盤後報導交叉驗證（成交金額 7,366.23 億三家一致）。均線位置沿用 9/23 晨報所載 Goodinfo 官方值。三大法人買賣超、融資餘額、外資期貨未平倉：本次 14:35 查詢時證交所與期交所均尚未發布，標記為查不到，未以任何方式推估。晨報預估值逐字引用自 Notion「每日預估追蹤」2026/09/24 該列，非重建值。</p>
+  <p><b>免責聲明。</b>本報告由 AI 整理製作，僅供研究與紀錄參考，不構成任何投資建議或買賣要約。所有漲跌歸因均為分析師與媒體的事後解讀，非唯一定論；市場走勢成因複雜，單一敘事往往無法完整解釋。投資決策請自行判斷並承擔風險。</p>
+</footer>
+
+</div>
+</body>
+</html>
