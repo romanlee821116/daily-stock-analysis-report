@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20260930 主動式ETF 資金流分析報告</title>
+<style>
+:root{--bg:#fcfcfb;--fg:#1a1a19;--dim:#6b6b66;--line:#e5e5e0;--card:#fff;--buy:#2a78d6;--sell:#e34948;--warn:#b4700a;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1a19;--fg:#ededea;--dim:#9a9a94;--line:#33332f;--card:#232322;--buy:#3987e5;--sell:#e66767;--warn:#d69a3c;}}
+:root[data-theme="dark"]{--bg:#1a1a19;--fg:#ededea;--dim:#9a9a94;--line:#33332f;--card:#232322;--buy:#3987e5;--sell:#e66767;--warn:#d69a3c;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:26px;letter-spacing:-.01em;margin:0 0 6px}
+h2{font-size:19px;margin:44px 0 6px;padding-top:18px;border-top:1px solid var(--line)}
+h3{font-size:15px;margin:26px 0 8px;color:var(--dim);font-weight:600}
+.sub{color:var(--dim);font-size:13.5px;margin:0 0 4px}
+.lead{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:20px 0 4px}
+.lead p{margin:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .k{font-size:12px;color:var(--dim);margin-bottom:3px}
+.kpi .v{font-size:20px;font-variant-numeric:tabular-nums;font-weight:650;letter-spacing:-.02em}
+.kpi .s{font-size:12px;color:var(--dim);margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+th{text-align:left;font-weight:600;color:var(--dim);font-size:12px;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pos{color:var(--buy);font-weight:600} .neg{color:var(--sell);font-weight:600}
+.dim{color:var(--dim)}
+.tick{font-variant-numeric:tabular-nums;color:var(--dim);white-space:nowrap}
+.nm{white-space:nowrap}
+.th{white-space:nowrap}
+.tg{font-size:12px;color:var(--dim);white-space:nowrap}
+.etfs{font-size:12px;color:var(--dim)}
+.chart{width:46%;min-width:150px}
+.track{position:relative;height:16px;display:flex;align-items:center}
+.track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.bpos{position:absolute;left:50%;height:11px;background:var(--buy);border-radius:0 2px 2px 0}
+.bneg{position:absolute;right:50%;height:11px;background:var(--sell);border-radius:2px 0 0 2px}
+.track.one .bpos,.track.one .bneg{position:relative;left:0;right:0;border-radius:2px}
+.pill{display:inline-block;font-size:11px;padding:1px 6px;border:1px solid var(--line);border-radius:20px;color:var(--dim);margin-left:4px;vertical-align:1px}
+.pill.warn{color:var(--warn);border-color:var(--warn)}
+.tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:4px;font-weight:600;white-space:nowrap}
+.t-b{background:color-mix(in srgb,var(--buy) 15%,transparent);color:var(--buy)}
+.t-s{background:color-mix(in srgb,var(--sell) 15%,transparent);color:var(--sell)}
+ul{padding-left:20px;margin:8px 0} li{margin:5px 0}
+.note{font-size:13px;color:var(--dim)}
+.scroll{overflow-x:auto}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+@media(max-width:640px){.chart{display:none} .wrap{padding:24px 16px 60px} h1{font-size:22px}}
+</style></head><body><div class="wrap">
+
+<h1>20260930 主動式ETF 資金流分析報告</h1>
+<p class="sub">執行日 2026-09-30｜資料日：21 檔 20260929、1 檔 20260922（00996A）｜追蹤 22 檔台股主動式 ETF，總規模 8,509.3 億元</p>
+
+<div class="lead"><p><strong>一句話結論：</strong>全體淨買超僅 <strong class="pos">+10.24 億</strong>，表面接近持平，實際是一場劇烈的內部換股——<strong>11 檔零異動</strong>，剩下 11 檔中，中信台灣收益（00406A）單日全買 +36.73 億、換手率 19.61%，幾乎憑一己之力抵銷統一台股升級50（00403A）的 −19.09 億；資金明確從<strong class="neg">網通、散熱、封測</strong>流向 <strong class="pos">PCB/載板、晶圓代工、連接器</strong>。</p></div>
+
+<div class="kpis">
+<div class="kpi"><div class="k">全體淨買賣超</div><div class="v pos">+10.24 億</div><div class="s">買 62.45／賣 -52.21</div></div>
+<div class="kpi"><div class="k">最大流入主題</div><div class="v pos">PCB/CCL/載板</div><div class="s">+16.37 億（3 買／2 賣）</div></div>
+<div class="kpi"><div class="k">最大流出主題</div><div class="v neg">網通/光通訊</div><div class="s">-10.03 億（0 買／5 賣）</div></div>
+<div class="kpi"><div class="k">最強共識買盤</div><div class="v pos">貿聯-KY</div><div class="s">4 檔買進 +7.68 億</div></div>
+<div class="kpi"><div class="k">最強共識賣壓</div><div class="v neg">奇鋐</div><div class="s">5 檔賣出 -11.83 億</div></div>
+<div class="kpi"><div class="k">無異動檔數</div><div class="v">11 / 22</div><div class="s">占總規模 19.5%</div></div>
+</div>
+
+<h2>1. 產業主題資金流</h2>
+<p class="note">18 類主題中本日有資金流的 14 類，依淨額排序。買/賣方檔數已去重（同一 ETF 在同一主題內只算一次，以該主題淨額定方向）。</p>
+<div class="scroll"><table>
+<thead><tr><th>主題</th><th>淨額分布</th><th class="num">淨額(億)</th><th class="num">買超</th><th class="num">賣超</th><th class="num">買/賣檔數</th></tr></thead>
+<tbody>
+<tr><td class="th">PCB/CCL/載板</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:50.00%"></div></div></td>
+<td class="num pos">+16.37</td>
+<td class="num dim">16.60</td><td class="num dim">0.22</td>
+<td class="num dim">3 / 2</td></tr>
+<tr><td class="th">晶圓代工</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:30.24%"></div></div></td>
+<td class="num pos">+9.90</td>
+<td class="num dim">9.90</td><td class="num dim">0.00</td>
+<td class="num dim">2 / 0</td></tr>
+<tr><td class="th">連接器/機構件</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:23.46%"></div></div></td>
+<td class="num pos">+7.68</td>
+<td class="num dim">7.68</td><td class="num dim">0.00</td>
+<td class="num dim">4 / 0</td></tr>
+<tr><td class="th">IC設計/ASIC</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:5.22%"></div></div></td>
+<td class="num pos">+1.71</td>
+<td class="num dim">7.57</td><td class="num dim">5.86</td>
+<td class="num dim">3 / 3</td></tr>
+<tr><td class="th">傳產與其他</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:5.07%"></div></div></td>
+<td class="num pos">+1.66</td>
+<td class="num dim">2.01</td><td class="num dim">0.35</td>
+<td class="num dim">2 / 1</td></tr>
+<tr><td class="th">金融</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:3.42%"></div></div></td>
+<td class="num pos">+1.12</td>
+<td class="num dim">1.37</td><td class="num dim">0.25</td>
+<td class="num dim">1 / 3</td></tr>
+<tr><td class="th">面板光學LED</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:0.43%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-0.14</td>
+<td class="num dim">0.00</td><td class="num dim">0.14</td>
+<td class="num dim">0 / 1</td></tr>
+<tr><td class="th">消費電子零組件</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:3.42%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-1.12</td>
+<td class="num dim">0.00</td><td class="num dim">1.12</td>
+<td class="num dim">0 / 1</td></tr>
+<tr><td class="th">AI伺服器ODM</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:3.91%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-1.28</td>
+<td class="num dim">0.00</td><td class="num dim">1.28</td>
+<td class="num dim">0 / 1</td></tr>
+<tr><td class="th">半導體設備材料</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:6.81%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-2.23</td>
+<td class="num dim">1.57</td><td class="num dim">3.80</td>
+<td class="num dim">1 / 2</td></tr>
+<tr><td class="th">被動元件</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:11.73%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-3.84</td>
+<td class="num dim">0.00</td><td class="num dim">3.84</td>
+<td class="num dim">0 / 1</td></tr>
+<tr><td class="th">散熱與電源</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:14.08%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-4.61</td>
+<td class="num dim">8.25</td><td class="num dim">12.85</td>
+<td class="num dim">2 / 3</td></tr>
+<tr><td class="th">封測與測試介面</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:15.21%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-4.98</td>
+<td class="num dim">7.51</td><td class="num dim">12.48</td>
+<td class="num dim">1 / 4</td></tr>
+<tr><td class="th">網通/光通訊</td>
+<td class="chart"><div class="track"><div class="mid"></div>
+<div class="bneg" style="width:30.64%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-10.03</td>
+<td class="num dim">0.00</td><td class="num dim">10.03</td>
+<td class="num dim">0 / 5</td></tr>
+</tbody></table></div>
+
+<h2>2. 個股淨買超前 10</h2>
+<div class="scroll"><table>
+<thead><tr><th>代號</th><th>名稱</th><th>淨額</th><th class="num">淨買超(億)</th><th class="num">規模共識</th><th>主題</th><th>買方 ETF</th></tr></thead>
+<tbody>
+<tr><td class="tick">2330</td><td class="nm">台積電</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:100.0%"></div></div></td>
+<td class="num pos">+9.90</td>
+<td class="num dim">+12.75%</td>
+<td class="tg">晶圓代工</td>
+<td class="etfs">00991A, 00406A</td></tr>
+<tr><td class="tick">3665</td><td class="nm">貿聯-KY</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:77.6%"></div></div></td>
+<td class="num pos">+7.68</td>
+<td class="num dim">+3.32%</td>
+<td class="tg">連接器/機構件</td>
+<td class="etfs">00406A, 00994A, 00987A, 00408A</td></tr>
+<tr><td class="tick">2308</td><td class="nm">台達電</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:61.0%"></div></div></td>
+<td class="num pos">+6.04</td>
+<td class="num dim">+37.16%</td>
+<td class="tg">散熱與電源</td>
+<td class="etfs">00981A, 00406A</td></tr>
+<tr><td class="tick">5274</td><td class="nm">信驊</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:49.0%"></div></div></td>
+<td class="num pos">+4.85</td>
+<td class="num dim">+2.20%</td>
+<td class="tg">IC設計/ASIC</td>
+<td class="etfs">00406A</td></tr>
+<tr><td class="tick">2368</td><td class="nm">金像電</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:43.9%"></div></div></td>
+<td class="num pos">+4.35</td>
+<td class="num dim">+34.96%</td>
+<td class="tg">PCB/CCL/載板</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">6274</td><td class="nm">台燿</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:39.8%"></div></div></td>
+<td class="num pos">+3.94</td>
+<td class="num dim">+34.96%</td>
+<td class="tg">PCB/CCL/載板</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">3037</td><td class="nm">欣興</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:37.7%"></div></div></td>
+<td class="num pos">+3.73</td>
+<td class="num dim">+12.75%</td>
+<td class="tg">PCB/CCL/載板</td>
+<td class="etfs">00991A, 00406A</td></tr>
+<tr><td class="tick">2383</td><td class="nm">台光電</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:21.6%"></div></div></td>
+<td class="num pos">+2.14</td>
+<td class="num dim">+1.40%</td>
+<td class="tg">PCB/CCL/載板</td>
+<td class="etfs">00406A</td></tr>
+<tr><td class="tick">6187</td><td class="nm">萬潤</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:15.9%"></div></div></td>
+<td class="num pos">+1.57</td>
+<td class="num dim">+34.96%</td>
+<td class="tg">半導體設備材料</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">2885</td><td class="nm">元大金</td>
+<td class="chart"><div class="track one"><div class="bpos" style="width:13.8%"></div></div></td>
+<td class="num pos">+1.37</td>
+<td class="num dim">+2.20%</td>
+<td class="tg">金融</td>
+<td class="etfs">00406A</td></tr>
+</tbody></table></div>
+
+<h2>3. 個股淨賣超前 10</h2>
+<div class="scroll"><table>
+<thead><tr><th>代號</th><th>名稱</th><th>淨額</th><th class="num">淨賣超(億)</th><th class="num">規模共識</th><th>主題</th><th>賣方 ETF</th></tr></thead>
+<tbody>
+<tr><td class="tick">3017</td><td class="nm">奇鋐</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:100.0%"></div></div></td>
+<td class="num neg">-11.83</td>
+<td class="num dim">-19.00%</td>
+<td class="tg">散熱與電源</td>
+<td class="etfs">00403A, 00994A, 00408A</td></tr>
+<tr><td class="tick">2345</td><td class="nm">智邦</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:84.8%"></div></div></td>
+<td class="num neg">-10.03</td>
+<td class="num dim">-37.64%</td>
+<td class="tg">網通/光通訊</td>
+<td class="etfs">00403A, 00991A, 00982A, 00994A, 00408A</td></tr>
+<tr><td class="tick">3443</td><td class="nm">創意</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:37.5%"></div></div></td>
+<td class="num neg">-4.44</td>
+<td class="num dim">-24.22%</td>
+<td class="tg">IC設計/ASIC</td>
+<td class="etfs">00403A, 00400A, 00987A</td></tr>
+<tr><td class="tick">2327</td><td class="nm">國巨*</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:32.5%"></div></div></td>
+<td class="num neg">-3.84</td>
+<td class="num dim">-10.55%</td>
+<td class="tg">被動元件</td>
+<td class="etfs">00991A</td></tr>
+<tr><td class="tick">2360</td><td class="nm">致茂</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:31.4%"></div></div></td>
+<td class="num neg">-3.71</td>
+<td class="num dim">-20.40%</td>
+<td class="tg">半導體設備材料</td>
+<td class="etfs">00403A</td></tr>
+<tr><td class="tick">6223</td><td class="nm">旺矽</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:24.6%"></div></div></td>
+<td class="num neg">-2.91</td>
+<td class="num dim">-9.15%</td>
+<td class="tg">封測與測試介面</td>
+<td class="etfs">00991A, 00994A, 00408A</td></tr>
+<tr><td class="tick">3711</td><td class="nm">日月光投控</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:17.4%"></div></div></td>
+<td class="num neg">-2.06</td>
+<td class="num dim">-32.76%</td>
+<td class="tg">封測與測試介面</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">6669</td><td class="nm">緯穎</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:10.8%"></div></div></td>
+<td class="num neg">-1.28</td>
+<td class="num dim">-34.96%</td>
+<td class="tg">AI伺服器ODM</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">6278</td><td class="nm">台表科</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:9.5%"></div></div></td>
+<td class="num neg">-1.12</td>
+<td class="num dim">-34.96%</td>
+<td class="tg">消費電子零組件</td>
+<td class="etfs">00981A</td></tr>
+<tr><td class="tick">9941</td><td class="nm">裕融</td>
+<td class="chart"><div class="track one"><div class="bneg" style="width:2.1%"></div></div></td>
+<td class="num neg">-0.25</td>
+<td class="num dim">-2.24%</td>
+<td class="tg">金融</td>
+<td class="etfs">00999A, 00994A, 00408A</td></tr>
+</tbody></table></div>
+
+<h2>4. 多檔共識訊號（同方向 ≥ 3 檔）</h2>
+<div class="scroll"><table>
+<thead><tr><th>代號</th><th>名稱</th><th>主題</th><th>共識方向</th><th class="num">淨額(億)</th><th>參與 ETF</th></tr></thead>
+<tbody>
+<tr><td class="tick">3665</td><td class="nm">貿聯-KY</td><td class="tg">連接器/機構件</td><td><span class="tag t-b">買進 4 檔</span></td><td class="num pos">+7.68</td><td class="etfs">00406A, 00994A, 00987A, 00408A</td></tr>
+<tr><td class="tick">9941</td><td class="nm">裕融</td><td class="tg">金融</td><td><span class="tag t-s">賣出 3 檔</span></td><td class="num neg">-0.25</td><td class="etfs">00999A, 00994A, 00408A</td></tr>
+<tr><td class="tick">6223</td><td class="nm">旺矽</td><td class="tg">封測與測試介面</td><td><span class="tag t-s">賣出 3 檔</span></td><td class="num neg">-2.91</td><td class="etfs">00991A, 00994A, 00408A（另有 00406A 買進 +2.70 億）</td></tr>
+<tr><td class="tick">3443</td><td class="nm">創意</td><td class="tg">IC設計/ASIC</td><td><span class="tag t-s">賣出 3 檔</span></td><td class="num neg">-4.44</td><td class="etfs">00403A, 00400A, 00987A</td></tr>
+<tr><td class="tick">2345</td><td class="nm">智邦</td><td class="tg">網通/光通訊</td><td><span class="tag t-s">賣出 5 檔</span></td><td class="num neg">-10.03</td><td class="etfs">00403A, 00991A, 00982A, 00994A, 00408A</td></tr>
+<tr><td class="tick">3017</td><td class="nm">奇鋐</td><td class="tg">散熱與電源</td><td><span class="tag t-s">賣出 3 檔</span></td><td class="num neg">-11.83</td><td class="etfs">00403A, 00994A, 00408A（另有 00406A 買進 +1.02 億）</td></tr>
+</tbody></table></div>
+<p class="note"><strong>檔數與金額背離的兩個案例：</strong>奇鋐 3 檔賣、1 檔買，但買方 00406A 僅 +1.02 億，賣方以 00403A 的 −11.90 億為主，金額仍大幅淨流出 −11.83 億；旺矽同樣 3 賣 1 買，00406A 買 +2.70 億敵不過 00991A 的 −5.18 億，淨額 −2.91 億。<strong>遇到這種情況一律以金額為主。</strong></p>
+
+<h2>5. 00981A 統一台股增長專章</h2>
+<p class="note">規模 2,975 億，占 22 檔總規模 35.0%，是單一權重最大的一檔，其動向對全體數字影響最直接。</p>
+<div class="kpis">
+<div class="kpi"><div class="k">當日淨額</div><div class="v pos">+1.85 億</div><div class="s">買 11.12／賣 9.27</div></div>
+<div class="kpi"><div class="k">換手率</div><div class="v">0.69%</div><div class="s">22 檔中偏低</div></div>
+<div class="kpi"><div class="k">異動檔數</div><div class="v">7</div><div class="s">加碼 4／減碼 3／持股 35</div></div>
+</div>
+<h3>當日操作明細</h3>
+<div class="scroll"><table>
+<thead><tr><th>類型</th><th>代號</th><th>名稱</th><th class="num">股數變化</th><th class="num">金額(億)</th><th>主題</th><th class="num">權重</th></tr></thead>
+<tbody>
+<tr><td class="tag t-s">減</td><td class="tick">3711</td><td class="nm">日月光投控</td><td class="num dim">-1,000,000</td><td class="num neg">-6.87</td><td class="tg">封測與測試介面</td><td class="num dim">3.36→3.14%</td></tr>
+<tr><td class="tag t-b">加</td><td class="tick">2368</td><td class="nm">金像電</td><td class="num dim">+388,000</td><td class="num pos">+4.35</td><td class="tg">PCB/CCL/載板</td><td class="num dim">0.62→0.80%</td></tr>
+<tr><td class="tag t-b">加</td><td class="tick">6274</td><td class="nm">台燿</td><td class="num dim">+265,000</td><td class="num pos">+3.94</td><td class="tg">PCB/CCL/載板</td><td class="num dim">3.03→3.22%</td></tr>
+<tr><td class="tag t-b">加</td><td class="tick">6187</td><td class="nm">萬潤</td><td class="num dim">+120,000</td><td class="num pos">+1.57</td><td class="tg">半導體設備材料</td><td class="num dim">0.00→0.06%</td></tr>
+<tr><td class="tag t-s">減</td><td class="tick">6669</td><td class="nm">緯穎</td><td class="num dim">-61,000</td><td class="num neg">-1.28</td><td class="tg">AI伺服器ODM</td><td class="num dim">3.55→3.56%</td></tr>
+<tr><td class="tag t-b">加</td><td class="tick">2308</td><td class="nm">台達電</td><td class="num dim">+69,000</td><td class="num pos">+1.27</td><td class="tg">散熱與電源</td><td class="num dim">4.82→4.78%</td></tr>
+<tr><td class="tag t-s">減</td><td class="tick">6278</td><td class="nm">台表科</td><td class="num dim">-519,000</td><td class="num neg">-1.12</td><td class="tg">消費電子零組件</td><td class="num dim">0.23→0.20%</td></tr>
+</tbody></table></div>
+<h3>減碼前 3 大（本日僅 3 筆減碼）</h3>
+<ul>
+<li><strong>日月光投控 −6.87 億</strong>（−1,000,000 股，權重 3.36→3.14%）：整張百萬股出清一部分，是全體封測賣壓的主要來源。同日 00406A 反向買進 +4.81 億，兩大法人對封測看法分歧。</li>
+<li><strong>緯穎 −1.28 億</strong>（−61,000 股，權重 3.55→<strong>3.56%</strong>）：<strong>股數減、權重反而上升</strong>，典型的「調節」而非看壞——賣出的股數不足以抵銷當日股價漲幅。</li>
+<li><strong>台表科 −1.12 億</strong>（−519,000 股，權重 0.23→0.20%）：小部位續減，本日全體唯一的消費電子零組件賣壓。</li>
+</ul>
+<h3>權重與股數背離的解讀</h3>
+<ul>
+<li><strong>緯穎</strong>：減碼卻權重上升（3.55→3.56%）。若只看權重會誤判為加碼，實際是減持 6.1 萬股、金額 −1.28 億。</li>
+<li><strong>台達電</strong>：加碼 +69,000 股（+1.27 億），權重卻從 4.82% 降到 4.78%。買進的量跟不上其他持股的市值變化，權重被稀釋。</li>
+<li>兩例方向相反，正好說明<strong>權重變化同時含有股價效應與部位效應，判讀方向一律以股數與金額為準</strong>。</li>
+</ul>
+
+<h2>6. 其他值得注意的操作</h2>
+<ul>
+<li><strong>00406A 中信台灣收益：換手率 19.61%，全體最高且遠高於次高的 00994A（3.04%）。</strong>單日 10 檔全為加碼、零減碼，淨買 +36.73 億——以 187.3 億的規模做出近兩成的單日調整，形同一次大規模建倉或再平衡。另有 3 筆非股票部位（臺指選擇權）異動，依規則金額不計入統計。</li>
+<li><strong>00403A 統一台股升級50：單日淨賣 −19.09 億，方向與全體相反。</strong>賣壓高度集中於奇鋐一檔（−11.90 億，權重 6.81→5.84%），是全體散熱與電源主題翻負的唯一原因。</li>
+<li><strong>00406A 與 00403A 幾乎完全對做：</strong>奇鋐（A 買 +1.02／B 賣 −11.90）、創意（A 未動／B 賣 −2.85）、台積電與封測（A 大買／B 未動）。全體 +10.24 億的淨額，本質上是這兩檔對衝後的殘值。</li>
+<li><strong>11 檔零異動，合計規模 1,663.0 億（占 19.5%）</strong>，含 00992A、00405A、00407A、00980A、00985A、00993A、00984A、00995A、00996A、00401A、00410A。本日「市場全貌」實際只由 11 檔構成。</li>
+<li><strong>小規模高換手：</strong>00994A（3.04%）、00408A（2.95%）、00991A（2.91%）三檔換手率明顯高於同業，且 00994A 與 00408A 的操作方向高度一致（同賣奇鋐、旺矽、台光電、智邦、裕融，同買貿聯-KY），疑為同一投信團隊的同步調整。</li>
+</ul>
+
+<h2>7. 全 22 檔總覽</h2>
+<div class="scroll"><table>
+<thead><tr><th>代號</th><th>名稱</th><th class="num">規模(億)</th><th>淨額分布</th><th class="num">淨額(億)</th><th class="num">換手率</th><th class="num">加/減/新/剔</th></tr></thead>
+<tbody>
+<tr><td class="tick">00406A</td><td class="nm">中信台灣收益 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">187.3</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:50.00%"></div></div></td>
+<td class="num pos">+36.73</td>
+<td class="num dim">19.61%</td>
+<td class="num dim">10/0/0/0</td></tr>
+<tr><td class="tick">00981A</td><td class="nm">統一台股增長 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">2,975.0</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:2.52%"></div></div></td>
+<td class="num pos">+1.85</td>
+<td class="num dim">0.69%</td>
+<td class="num dim">4/3/0/0</td></tr>
+<tr><td class="tick">00992A</td><td class="nm">群益台灣科技創新 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">436.9</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00405A</td><td class="nm">富邦台灣龍耀 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">302.3</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00407A</td><td class="nm">凱基台灣 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">276.6</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00980A</td><td class="nm">野村臺灣優選 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">201.3</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00985A</td><td class="nm">野村台灣 50 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">102.7</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00993A</td><td class="nm">安聯台灣 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">100.4</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00984A</td><td class="nm">安聯台灣高息 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">100.3</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00995A</td><td class="nm">中信台灣卓越 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">50.5</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00996A</td><td class="nm">兆豐台灣豐收 <span class="pill">無異動</span><span class="pill warn">資料日 20260922</span></td>
+<td class="num dim">43.5</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00401A</td><td class="nm">摩根台灣鑫收 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">32.4</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00410A</td><td class="nm">永豐科技趨勢 <span class="pill">無異動</span><span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">16.1</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.00%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num dim">+0.00</td>
+<td class="num dim">0.00%</td>
+<td class="num dim">0/0/0/0</td></tr>
+<tr><td class="tick">00987A</td><td class="nm">台新臺灣優勢成長 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">26.9</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.05%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-0.04</td>
+<td class="num dim">1.04%</td>
+<td class="num dim">1/1/0/0</td></tr>
+<tr><td class="tick">00404A</td><td class="nm">聯博台灣動能收益50 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">33.6</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.11%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-0.08</td>
+<td class="num dim">0.25%</td>
+<td class="num dim">0/0/0/1</td></tr>
+<tr><td class="tick">00999A</td><td class="nm">野村臺灣高息 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">122.4</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.41%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-0.30</td>
+<td class="num dim">0.84%</td>
+<td class="num dim">2/5/0/0</td></tr>
+<tr><td class="tick">00408A</td><td class="nm">第一金優股息 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">16.2</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:0.45%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-0.33</td>
+<td class="num dim">2.95%</td>
+<td class="num dim">1/5/0/0</td></tr>
+<tr><td class="tick">00994A</td><td class="nm">第一金台股優勢 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">52.1</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:1.76%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-1.29</td>
+<td class="num dim">3.04%</td>
+<td class="num dim">1/4/0/1</td></tr>
+<tr><td class="tick">00400A</td><td class="nm">國泰台股動能高息 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">298.2</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:2.29%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-1.68</td>
+<td class="num dim">1.35%</td>
+<td class="num dim">1/2/0/0</td></tr>
+<tr><td class="tick">00982A</td><td class="nm">群益台灣強棒 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">500.6</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:3.32%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-2.44</td>
+<td class="num dim">0.49%</td>
+<td class="num dim">0/1/0/0</td></tr>
+<tr><td class="tick">00991A</td><td class="nm">復華台灣未來50 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">898.0</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:4.22%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-3.10</td>
+<td class="num dim">2.91%</td>
+<td class="num dim">6/3/0/0</td></tr>
+<tr><td class="tick">00403A</td><td class="nm">統一台股升級50 <span class="pill warn">資料日 20260929</span></td>
+<td class="num dim">1,736.0</td>
+<td class="chart"><div class="track"><div class="mid"></div><div class="bneg" style="width:25.99%"></div><div class="bpos" style="width:0.00%"></div></div></td>
+<td class="num neg">-19.09</td>
+<td class="num dim">1.24%</td>
+<td class="num dim">1/4/0/0</td></tr>
+</tbody></table></div>
+
+<h2>8. 方法與注意事項</h2>
+<ul>
+<li><strong>資料日不一致：</strong>21 檔為 20260929，<strong>00996A 兆豐台灣豐收仍停留在 20260922</strong>（落後 5 個交易日），投信尚未公告新資料。依 SOP 該檔不重複建立 Notion 紀錄，其零異動也不代表當日實際未操作。</li>
+<li><strong>加權方式：</strong>所有主題與個股彙總皆以實際成交金額（新台幣元 ÷ 1e8，億元）加總，金額本身已反映規模差異，無需另行加權。00981A 占總規模 34.96%，其操作自然主導數字。</li>
+<li><strong>規模共識 %</strong> ＝（買方 ETF 規模總和 − 賣方 ETF 規模總和）÷ 22 檔總規模 × 100，衡量方向的「規模廣度」，與金額大小是兩個不同維度。例如台達電金額僅 +6.04 億，但規模共識高達 +37.16%，因買方含最大的 00981A。</li>
+<li><strong>權重含股價效應：</strong>權重上升不等於加碼。本報告所有方向判讀一律以股數與金額為準，權重僅作參考（見第 5 節緯穎／台達電兩例）。</li>
+<li><strong>檔數共識可能與金額共識相反：</strong>已於第 4 節點名奇鋐與旺矽兩例，結論以金額為主。</li>
+<li><strong>非股票部位排除：</strong>00406A 持有 3 筆臺指選擇權部位當日有異動，其金額為估計值且方向語意不同，依 SOP 不計入任何金額統計，僅在此註記筆數。</li>
+<li><strong>本日新出現、尚未建檔的個股（7 檔）：</strong>6505 台塑化（暫歸「傳產與其他」）、3529 力旺（暫歸「IC設計/ASIC」）、2727 王品（暫歸「傳產與其他」）、9941 裕融（暫歸「金融」）、5534 長虹（暫歸「傳產與其他」）、4746 台耀（暫歸「傳產與其他」）、6691 洋基工程（暫歸「半導體設備材料」）。已依主要業務歸入最接近的既有類別，建議下次手動補進 SOP 第 3 節分類表。</li>
+<li><strong>規模資料：</strong>使用 SOP 第 2 節的靜態規模表（總計 8,509.3 億）。規模會隨時間變化，建議定期校正。</li>
+<li>資料來源：etfedge.xyz daily JSON，經 Claude in Chrome 抓取（該網域被雲端網路白名單阻擋）。</li>
+</ul>
+
+<footer>20260930 主動式ETF 資金流分析報告｜執行日 2026-09-30｜資料來源 etfedge.xyz｜依「ETF每日追蹤 SOP（自動排程用）」自動產生</footer>
+</div></body></html>
