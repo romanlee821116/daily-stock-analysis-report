@@ -6,6 +6,10 @@ cd "$(dirname "$0")/.."
 
 RECENT=8   # sidebar 直接展開的筆數,其餘收進「更多」
 
+# 贊助連結(sidebar 底部)
+KOFI_URL="https://ko-fi.com/Y4A328TJ0Y"
+KOFI_EMBED="${KOFI_URL}/?hidefeed=true&widget=true&embed=true&preview=true"
+
 # 掃一個目錄,新到舊輸出「日期<TAB>路徑」。
 # 檔名只要含 8 位數日期就算,所以 20260820.html 與
 # twse_night_brief_20260820.html 都吃得下——排程交付的原檔名可以直接丟進來。
@@ -135,6 +139,19 @@ summary:hover{color:var(--tp)}
 .empty{padding:0 18px;margin:0;font-size:13px;color:var(--mu)}
 .foot{margin:18px 18px 0;padding-top:14px;border-top:1px solid var(--grid);
  font-size:11px;line-height:1.5;color:var(--mu)}
+.support{margin:18px 18px 0;display:flex;flex-direction:column;gap:6px}
+.support-h{font-size:12px;color:var(--mu)}
+.support a{display:block;padding:6px 10px;border:1px solid var(--grid);border-radius:6px;
+ color:var(--ts);font-size:13px;text-decoration:none}
+.support a:hover{color:var(--tp);border-color:var(--acc);background:var(--hi)}
+.kofi{width:min(400px,calc(100vw - 32px));height:min(740px,calc(100vh - 32px));padding:0;
+ border:1px solid var(--grid);border-radius:12px;background:var(--surface);color:var(--tp);overflow:hidden}
+.kofi::backdrop{background:rgba(0,0,0,.45)}
+.kofi-bar{display:flex;justify-content:space-between;align-items:center;
+ padding:10px 10px 10px 16px;border-bottom:1px solid var(--grid);font-size:14px}
+.kofi-x{border:0;background:none;color:var(--mu);font-size:22px;line-height:1;padding:2px 8px;cursor:pointer}
+.kofi-x:hover{color:var(--tp)}
+.kofi iframe{height:calc(100% - 49px);background:#fff}
 .stage{flex:1;min-width:0}
 iframe{display:block;width:100%;height:100%;border:0;background:var(--plane)}
 .blank{padding:40px 24px;color:var(--mu)}
@@ -150,7 +167,11 @@ iframe{display:block;width:100%;height:100%;border:0;background:var(--plane)}
  .side a{border-left:0;border-bottom:2px solid transparent;padding:2px 10px;white-space:nowrap}
  .side a.on{border-bottom-color:var(--acc);border-left-color:transparent}
  .side details{display:none}
+ .support{margin:0 14px 0 0;flex-direction:row;align-items:center}
+ .support-h{display:none}
+ .support a{white-space:nowrap;padding:2px 10px;border:1px solid var(--grid)}
  .foot{display:none}
+ .kofi{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;border:0;border-radius:0}
  .stage{flex:1;min-height:0}
 }
 </style></head>
@@ -159,11 +180,35 @@ iframe{display:block;width:100%;height:100%;border:0;background:var(--plane)}
 <div class="brand">台股每日追蹤<small>盤前分析 × 主動式 ETF 資金流</small></div>
 ${nav_pre}
 ${nav_etf}
+<div class="support">
+<div class="support-h">覺得有幫助? 歡迎贊助</div>
+<a id="kofi-open" href="${KOFI_URL}" target="_blank" rel="noopener">☕ 在 Ko-fi 請我喝咖啡</a>
+</div>
 <p class="foot">資料來源 etfedge.xyz｜報告由 Claude 每日排程產生。<br>
 本站為事實彙整與分類統計,不構成投資建議。</p>
 </aside>
 <main class="stage">${stage}</main>
 </div>
+<dialog class="kofi" id="kofi" aria-label="贊助">
+<div class="kofi-bar">覺得有幫助? 歡迎贊助<button class="kofi-x" type="button" aria-label="關閉">×</button></div>
+<iframe data-src="${KOFI_EMBED}" title="Ko-fi 贊助"></iframe>
+</dialog>
+<script>
+// 贊助視窗:點側欄按鈕才載入 Ko-fi,cmd/ctrl 點擊維持開新分頁
+(function(){
+  var dlg=document.getElementById('kofi'),btn=document.getElementById('kofi-open');
+  if(!dlg||!btn||!dlg.showModal)return;
+  var f=dlg.querySelector('iframe');
+  btn.addEventListener('click',function(e){
+    if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0)return;
+    e.preventDefault();
+    if(!f.getAttribute('src'))f.setAttribute('src',f.getAttribute('data-src'));
+    dlg.showModal();
+  });
+  dlg.querySelector('.kofi-x').addEventListener('click',function(){dlg.close()});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+})();
+</script>
 <script>
 (function(){
   var frame=document.getElementById('view');
