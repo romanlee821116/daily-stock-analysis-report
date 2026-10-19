@@ -1,119 +1,92 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ETF daily reports -> stock x date signal panel. Header-driven, tolerant of 3+ template generations."""
-import re, os, csv, glob, html as H
+"""
+parse_signals.py — ETF 共識買盤訊號面板（回測用）
 
-def strip(h): return re.sub(r'\s+',' ', re.sub(r'<[^>]*>',' ', H.unescape(h))).strip()
-def num(x):
-    m = re.search(r'-?\d+(?:\.\d+)?', strip(x).replace(',',''))
-    return float(m.group(0)) if m else None
+⚠️ 這支程式**不自己解析 HTML**。
+解析器只有一份，住在 tools/breakout_scan.py 的 load_etf_flows()。
+2026-10-19 之前這裡有第二份解析器，結果兩邊對同一天同一檔給出不同的買方檔數
+（51 筆不一致），所以合併掉了。要改解析行為請改 breakout_scan.py，不要改這裡。
 
-def sections(s):
-    hs=list(re.finditer(r'<h2[^>]*>(.*?)</h2>', s, re.S)); out=[]
-    for i,m in enumerate(hs):
-        end=hs[i+1].start() if i+1<len(hs) else len(s)
-        out.append((strip(m.group(1)), s[m.end():end]))
-    return out
+執行：python3 backtest/parse_signals.py
+輸出：backtest/signal_panel.csv
+"""
 
-def tables(h): return re.findall(r'<table.*?</table>', h, re.S)
-def trs(t):    return re.findall(r'<tr[^>]*>(.*?)</tr>', t, re.S)
-def cells(tr): return re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', tr, re.S)
+from __future__ import annotations
 
-def colmap(hdr):
-    m={}
-    for i,c in enumerate(hdr):
-        t=strip(c)
-        if   re.search(r'代號',t):            m['code']=i
-        elif re.search(r'名稱',t):            m['name']=i
-        elif re.search(r'個股',t):            m['codename']=i
-        elif re.search(r'淨額|淨買賣超',t):    m['net']=i
-        elif re.search(r'方向',t):            m['dir']=i
-        elif re.search(r'買方',t):            m['buyers']=i
-        elif re.search(r'賣方',t):            m['sellers']=i
-        elif re.search(r'參與',t):            m['parts']=i
-        elif re.search(r'檔數',t):            m['cnt']=i
-        elif re.search(r'主題|族群',t):        m['theme']=i
-    return m
+import csv
+import importlib.util
+import sys
+from collections import Counter
+from pathlib import Path
 
-rows=[]; perfile={}
-files=sorted(f for f in glob.glob('reports/*.html')
-             if re.fullmatch(r'\d{8}\.html', os.path.basename(f)))
-for fp in files:
-    d=os.path.basename(fp)[:8]; date=f"{d[:4]}-{d[4:6]}-{d[6:]}"
-    s=open(fp,encoding='utf-8').read()
-    s=re.sub(r'<!--.*?-->','',s,flags=re.S); s=re.sub(r'<style.*?</style>','',s,flags=re.S)
-    n0=len(rows)
-    for head, body in sections(s):
-        is_cons = '多檔共識' in head
-        is_rank = bool(re.search(r'個股(資金流|淨買)', head))
-        if not (is_cons or is_rank): continue
-        for tbl in tables(body):
-            rr=trs(tbl)
-            if not rr: continue
-            hdr=cells(rr[0]); cm=colmap(hdr)
-            if 'net' not in cm or not ('code' in cm or 'codename' in cm): continue
-            for tr in rr[1:]:
-                tds=cells(tr)
-                if len(tds) < len(hdr)-1: continue
-                def g(k):
-                    i=cm.get(k)
-                    return tds[i] if i is not None and i < len(tds) else ''
-                if 'code' in cm:
-                    mc=re.match(r'(\d{4})', strip(g('code')))
-                    if not mc: continue
-                    code=mc.group(1); name=strip(g('name'))
-                else:
-                    mc=re.match(r'(\d{4})\s*(.*)', strip(g('codename')))
-                    if not mc: continue
-                    code, name = mc.group(1), mc.group(2).strip()
-                net=num(g('net'))
-                if net is None: continue
-                buyers=sellers=[]
-                if 'buyers' in cm or 'sellers' in cm:
-                    buyers =re.findall(r'\b00\d{3}A\b', g('buyers'))
-                    sellers=re.findall(r'\b00\d{3}A\b', g('sellers'))
-                elif 'parts' in cm:
-                    p=re.findall(r'\b00\d{3}A\b', g('parts'))
-                    direction=strip(g('dir'))
-                    if '賣' in direction or net<0: buyers,sellers=[],p
-                    else: buyers,sellers=p,[]
-                nb,ns=len(buyers),len(sellers)
-                if not (nb or ns):
-                    mc2=re.search(r'(\d+)\s*/\s*(\d+)', strip(g('cnt')) or ' '.join(strip(t) for t in tds))
-                    if mc2: nb,ns=int(mc2.group(1)),int(mc2.group(2))
-                    elif 'cnt' in cm:
-                        c=num(g('cnt')) or 0
-                        if '賣' in strip(g('dir')) or net<0: ns=int(c)
-                        else: nb=int(c)
-                theme=strip(g('theme'))
-                rows.append(dict(date=date, code=code, name=name, net_yi=net,
-                                 n_buy=nb, n_sell=ns, theme=theme,
-                                 buyers='|'.join(buyers), sellers='|'.join(sellers),
-                                 src='consensus' if is_cons else 'rank'))
-    perfile[date]=len(rows)-n0
+REPO = Path(__file__).resolve().parent.parent
+SCANNER = REPO / "tools" / "breakout_scan.py"
+OUT = REPO / "backtest" / "signal_panel.csv"
 
-best={}
-for r in rows:
-    k=(r['date'],r['code']); p=best.get(k)
-    if p is None: best[k]=r; continue
-    if r['src']=='consensus' and p['src']!='consensus':
-        r['theme']=r['theme'] or p['theme']; best[k]=r
-    else:
-        if not p['theme'] and r['theme']: p['theme']=r['theme']
-        if (r['n_buy']+r['n_sell'])>(p['n_buy']+p['n_sell']):
-            p['n_buy'],p['n_sell']=r['n_buy'],r['n_sell']
-            p['buyers'],p['sellers']=r['buyers'],r['sellers']
 
-out=sorted(best.values(), key=lambda r:(r['date'], -abs(r['net_yi'])))
-cols=['date','code','name','net_yi','n_buy','n_sell','theme','buyers','sellers','src']
-with open('backtest/signal_panel.csv','w',newline='',encoding='utf-8-sig') as f:
-    w=csv.DictWriter(f,fieldnames=cols,extrasaction='ignore'); w.writeheader()
-    for r in out: w.writerow(r)
+def load_scanner():
+    if not SCANNER.exists():
+        sys.exit(f"找不到解析器 {SCANNER}")
+    spec = importlib.util.spec_from_file_location("breakout_scan", SCANNER)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
-days=sorted({r['date'] for r in out})
-print(f"files parsed  : {len(files)}")
-print(f"trading days  : {len(days)}  {days[0]} .. {days[-1]}")
-print(f"panel rows    : {len(out)}")
-print(f"distinct stks : {len({r['code'] for r in out})}")
-print(f"with ETF lists: {sum(1 for r in out if r['buyers'] or r['sellers'])}")
-empty=[d for d,n in sorted(perfile.items()) if n==0]
-print("empty days    :", empty or "none")
+
+def main() -> None:
+    bs = load_scanner()
+    warnings: list[str] = []
+    flows = bs.load_etf_flows(REPO / "reports", warnings)
+
+    rows = []
+    for as_of in sorted(flows):
+        for code, r in flows[as_of].items():
+            rows.append({
+                "date": as_of,
+                "code": code,
+                "name": r["name"],
+                "net_yi": r["net"],
+                "n_buy": r["buyers"],
+                "n_sell": r["sellers"],
+                "theme": r["theme"],
+                "buyers": "|".join(r["buyer_list"]),
+                "sellers": "|".join(r["seller_list"]),
+            })
+    rows.sort(key=lambda x: (x["date"], -abs(x["net_yi"])))
+
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    with OUT.open("w", newline="", encoding="utf-8-sig") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+
+    days = sorted({r["date"] for r in rows})
+    idx = {d: i for i, d in enumerate(days)}
+    n = len(days)
+
+    print(f"交易日   : {n}  {days[0]} .. {days[-1]}")
+    print(f"面板筆數 : {len(rows)}")
+    print(f"個股數   : {len({r['code'] for r in rows})}")
+    print(f"有ETF名單: {sum(1 for r in rows if r['buyers'] or r['sellers'])}")
+    for w_ in warnings:
+        print("WARN:", w_)
+
+    print("\n=== 訊號事件數與可計算前瞻報酬的樣本數 ===")
+    print(f"{'門檻':>8}{'事件數':>8}{'可算5日':>9}{'可算10日':>10}{'可算20日':>10}")
+    for k in (3, 4, 5, 6):
+        ev = [r for r in rows if r["n_buy"] >= k]
+        c = [sum(1 for r in ev if idx[r["date"]] + h < n) for h in (5, 10, 20)]
+        print(f"{'買方>=' + str(k):>8}{len(ev):>8}{c[0]:>9}{c[1]:>10}{c[2]:>10}")
+
+    ev3 = [r for r in rows if r["n_buy"] >= 3]
+    u = Counter(r["code"] for r in ev3)
+    print(f"\n買方>=3 的 {len(ev3)} 筆事件涵蓋 {len(u)} 檔；"
+          f"前 25 檔佔 {sum(c for _, c in u.most_common(25)) / len(ev3) * 100:.0f}%")
+    (REPO / "backtest" / "top25.txt").write_text(
+        "\n".join(f"{c} {next(r['name'] for r in rows if r['code'] == c)}"
+                  for c, _ in u.most_common(25)) + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
