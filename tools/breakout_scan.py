@@ -89,12 +89,25 @@ PARAMS = {
     "fail_return10":           -3.0,    # 10 日報酬 % ≤
     "backfill_done_days":       20,     # N 日後 回填完成
 
-    # 評分（第 4 節）
-    "score_etf_buyer_unit":     6, "score_etf_buyer_cap":  24,
-    "score_etf_positive":       8,
-    "score_trust_unit":         2, "score_trust_cap":       8,
-    "score_shape_range":       15, "score_shape_ma":       10, "score_shape_vol": 10,
-    "score_trigger_base":      10, "score_trigger_vol":    10, "score_trigger_close": 5,
+    # 排序分（2026-10-20 重寫，見 backtest/RESULTS_20261019.md 第五輪）
+    # ⚠️ 舊版配分（籌碼40＋型態35＋觸發25）回測四分位非單調：
+    #    Q1 -1.48% / Q2 +3.96% / Q3 +3.61% / Q4 +2.90%，沒有鑑別力。
+    # 新版只用三個實測有效的變數，門檻內四分位勝率 35%→47%→53%→71%。
+    # 錨點是照「切兩半」的方向手訂的整數，不是擬合出來的係數。
+    "score_shape_w":           40,   # 突破前 20 日振幅：越緊越好
+    "score_range_full":        10.0, #   振幅 <=10% 給滿分
+    "score_range_zero":        40.0, #   振幅 >=40% 給 0
+    "score_vol_w":             30,   # 量比：越小越好（漲停鎖死量縮是強勢）
+    "score_vol_full":           0.5, #   量比 <=0.5 給滿分
+    "score_vol_zero":           2.5, #   量比 >=2.5 給 0
+    "score_gain_w":            30,   # 當日漲幅：越大越好
+    "score_gain_zero":          3.0, #   漲幅 <=3% 給 0
+    "score_gain_full":         10.0, #   漲幅 >=10% 給滿分
+    # 籌碼：第一輪回測各門檻 t 都 ≈ 0，沒有可測得的選股能力 → 預設不計分。
+    # 要放回去就把權重調大（分數仍會被壓回 0~100）。
+    "score_chip_w":             0,
+    "score_report_min":        50,   # 建議只看分數 >= 此值的起漲訊號
+    #   回測：>=0 超額+2.25%/t=1.33、>=40 +5.16%/t=2.43、>=50 +7.15%/t=2.59（勝率66.7%）
 }
 
 STATES = ("潛伏", "蓄勢", "起漲", "已發動", "失效")
@@ -671,32 +684,44 @@ def transition_type(prev_state, state):
 
 
 def score(ind, state):
-    """SOP 第 4 節，0～100，只用來排序。"""
+    """
+    0～100 排序分，只用來排序，不參與狀態判定。
+
+    ⚠️ 只有「起漲」的分數經過回測驗證（31 檔 × 2026-05~10、68 個訊號）：
+       門檻內四分位的 10 日同日超額報酬 -4.44% / -0.27% / +8.05% / +5.64%，
+       勝率 35.3% / 47.1% / 52.9% / 70.6%。
+       觀察狀態（潛伏/蓄勢）當日多半沒有漲幅，分數會落在振幅＋量能兩項上，
+       那是合理的排序，但沒有回測背書——不要拿它當進場依據。
+    """
     P = PARAMS
-    s = 0.0
-    # 籌碼 40
-    s += min(ind["etf_buyers"] * P["score_etf_buyer_unit"], P["score_etf_buyer_cap"])
-    if ind["etf_net"] > 0:
-        s += P["score_etf_positive"]
-    s += min(ind["trust_streak"] * P["score_trust_unit"], P["score_trust_cap"])
-    # 型態 35
-    if ind["range20"] is not None:
-        s += P["score_shape_range"] * max(0.0, 1 - ind["range20"] / P["coil_range_max"])
-    if ind["ma_spread"] is not None:
-        s += P["score_shape_ma"] * max(0.0, 1 - ind["ma_spread"] / P["coil_ma_spread_max"])
-    if ind["vol_shrink"] is not None:
-        s += P["score_shape_vol"] * max(0.0, 1 - ind["vol_shrink"] / P["coil_vol_shrink_max"])
-    # 觸發 25（只有起漲才給）
-    if state == "起漲":
-        s += P["score_trigger_base"]
-        if ind["vol_ratio"]:
-            # 漲停級漲幅視同滿分量能（理由同 classify 的量能條件註解）
-            if ind["day_gain"] >= P["launch_strong_gain"]:
-                s += P["score_trigger_vol"]
-            else:
-                s += P["score_trigger_vol"] * min(
-                    1.0, max(0.0, (ind["vol_ratio"] - P["launch_vol_ratio_min"]) / 1.5))
-        s += P["score_trigger_close"] * max(0.0, min(1.0, ind["close_pos"]))
+
+    def ramp(x, zero, full):
+        """x 從 zero 線性到 full，輸出 0~1；zero 可大於 full（反向）。"""
+        if x is None:
+            return 0.0
+        if full == zero:
+            return 0.0
+        return max(0.0, min(1.0, (x - zero) / (full - zero)))
+
+    shape = P["score_shape_w"] * ramp(
+        ind["range20"] if ind["range20"] is not None else P["score_range_zero"],
+        P["score_range_zero"], P["score_range_full"])
+    vol = P["score_vol_w"] * ramp(
+        ind["vol_ratio"] if ind["vol_ratio"] is not None else P["score_vol_zero"],
+        P["score_vol_zero"], P["score_vol_full"])
+    gain = P["score_gain_w"] * ramp(
+        ind["day_gain"], P["score_gain_zero"], P["score_gain_full"])
+
+    s = shape + vol + gain
+
+    # 籌碼：預設權重 0（回測無 edge）。權重 >0 時才計入。
+    if P["score_chip_w"] > 0:
+        chip = 0.0
+        if ind["etf_net"] > 0:
+            chip += min(ind["etf_buyers"] / 4.0, 1.0) * 0.6
+        chip += min(ind["trust_streak"] / 5.0, 1.0) * 0.4
+        s += P["score_chip_w"] * chip
+
     return round(max(0.0, min(100.0, s)), 1)
 
 
@@ -860,7 +885,11 @@ def run(run_date: date, dry_run=False):
             "ETF近5日淨買(億)": rnd(ind["etf_net"]),
             "外資連買天數": ind["foreign_streak"],
             "投信連買天數": ind["trust_streak"],
-            "評分": sc,
+            "排序分": sc,
+            # 高分訊號＝分數 >= score_report_min。回測（31檔×2026-05~10、68個起漲訊號）
+            # 顯示 >=50 那組 10 日同日超額 +7.15%／勝率 66.7%／t=+2.59，
+            # 全部訊號則是 +2.25%／51.5%／t=+1.33。只有「起漲」的分數經過驗證。
+            "高分訊號": "是" if (st == "起漲" and sc >= PARAMS["score_report_min"]) else "否",
         }
 
         tt = transition_type(prev_state, st)
@@ -893,8 +922,8 @@ def run(run_date: date, dry_run=False):
     log("回填前瞻報酬…")
     backfill, still_open = build_backfill(state["records"], prices, warnings)
 
-    watchlist.sort(key=lambda r: -r["評分"])
-    launched.sort(key=lambda r: -r["評分"])
+    watchlist.sort(key=lambda r: -r["排序分"])
+    launched.sort(key=lambda r: -r["排序分"])
     extended.sort(key=lambda r: -(r["20MA乖離%"] or 0))
 
     out = {
@@ -1059,15 +1088,33 @@ def selftest():
     check("跌破停損 → 失敗", judge(2.0, 3.0, True) == "失敗")
     check("其餘 → 持平", judge(1.0, 2.0, False) == "持平")
 
-    print("評分：")
-    hi = dict(ind, etf_net=5.0, etf_buyers=6, trust_streak=5,
-              range20=1.0, ma_spread=0.2, vol_shrink=0.1, vol_ratio=3.0, close_pos=1.0)
-    lo = dict(ind, etf_net=-1.0, etf_buyers=0, trust_streak=0,
-              range20=30.0, ma_spread=9.0, vol_shrink=2.0, vol_ratio=1.0, close_pos=0.0)
-    s_hi, s_lo = score(hi, "起漲"), score(lo, "潛伏")
-    check("評分落在 0~100", 0 <= s_lo <= 100 and 0 <= s_hi <= 100)
-    check("強訊號分數高於弱訊號", s_hi > s_lo)
-    check("非起漲不給觸發分", score(hi, "潛伏") < s_hi)
+    print("排序分：")
+    best = dict(ind, range20=5.0, vol_ratio=0.4, day_gain=11.0)
+    worst = dict(ind, range20=50.0, vol_ratio=3.0, day_gain=3.0)
+    check("滿分情境 = 100", score(best, "起漲") == 100.0)
+    check("零分情境 = 0", score(worst, "起漲") == 0.0)
+    check("分數恆在 0~100",
+          all(0 <= score(dict(ind, range20=r, vol_ratio=v, day_gain=g), "起漲") <= 100
+              for r in (0, 25, 99) for v in (0, 1.5, 9) for g in (-5, 5, 30)))
+
+    # 三個分項各自單調（其他兩項固定）
+    base = dict(ind, range20=25.0, vol_ratio=1.5, day_gain=6.0)
+    check("振幅越小分數越高",
+          score(dict(base, range20=15.0), "起漲") > score(dict(base, range20=35.0), "起漲"))
+    check("量比越小分數越高（漲停量縮是強勢）",
+          score(dict(base, vol_ratio=0.8), "起漲") > score(dict(base, vol_ratio=2.2), "起漲"))
+    check("漲幅越大分數越高",
+          score(dict(base, day_gain=9.0), "起漲") > score(dict(base, day_gain=4.0), "起漲"))
+
+    # 籌碼預設不計分
+    chips_hi = dict(base, etf_net=9.0, etf_buyers=8, trust_streak=9)
+    check("籌碼預設權重 0（回測無 edge）",
+          score(chips_hi, "起漲") == score(base, "起漲"))
+
+    # 缺值不得讓分數爆掉
+    check("指標缺值時給 0 分不報錯",
+          score(dict(base, range20=None, vol_ratio=None), "起漲")
+          == round(PARAMS["score_gain_w"] * (6.0 - 3.0) / 7.0, 1))
 
     print("回填視窗：")
     b = _synth(n=40, step=0.01)
