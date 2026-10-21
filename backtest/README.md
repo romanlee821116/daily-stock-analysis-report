@@ -79,3 +79,39 @@ v1 的解析器採「共識節優先」。但舊模板的共識表**只列出 �
 1. 取得 Top 25 標的 2026-08 ~ 今日的日線收盤（`backtest/top25.txt`）
 2. 計算 5/10/20 日超額報酬（對加權指數）
 3. 依 n_buy 分層看單調性 —— 若訊號有效，n_buy 越高報酬應越好
+
+---
+
+## 要把回測宇宙從 38 檔補到 124 檔：`tools/fetch_history.py`
+
+雲端沙箱連不到任何台股資料源，`backtest/prices_all.csv` 的 38 檔是靠 WebFetch
+一檔一月手搬的，已經到極限（後段開始出現摘要截斷與 TPEx 連線失敗）。
+這支腳本在**你的 Mac 上**跑，走 yfinance，一次抓完整個觀察池。
+
+```bash
+python3 -m pip install --user yfinance     # 只需一次
+python3 tools/fetch_history.py --selftest  # 純邏輯自測，不需網路（14 項）
+python3 tools/fetch_history.py --years 2   # 觀察池 124 檔 ＋ 對照組 7 檔
+```
+
+輸出 `backtest/prices_history.csv`，欄位與 `prices_all.csv` 完全相同。
+回測腳本目前寫死讀 `prices_all.csv` / `prices_neutral.csv`，改用新檔請自行改檔名
+或在腳本裡換掉路徑。
+
+### 它會自動做的三件事
+1. **OHLC 合理性檢查** — high < close 之類的壞列直接剔除該檔並回報。
+2. **跳空還原** — 相鄰交易日變動超過 ±11% 一律視為除權息／分割（台股日
+   漲跌幅 ±10%，行情不可能跳這麼多），向前還原並在 log 列出。
+   不做這件事，除息日會變成假崩跌、觸發假停損、汙染前瞻報酬。
+3. **資料不足剔除** — 少於 100 根的代號不寫出。
+
+### 其他選項
+- `--resume` 只補 CSV 裡還沒有的代號（抓到一半斷掉時用）
+- `--codes 2330,2454` 只抓指定代號
+- `--no-control` 不要對照組
+- `--batch 25` 每批幾檔
+
+### 對照組是什麼
+`CONTROL` 那 7 檔是**確認完全沒出現在任何 ETF 報告裡**的上市股，用來檢驗
+宇宙選擇偏誤（見 RESULTS 第七輪）。要擴充的話，新代號必須先確認不在
+ETF 報告的 130 個代號、也不在 THEMES 的 124 個代號裡，否則對照就失效。

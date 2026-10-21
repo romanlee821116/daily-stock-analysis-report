@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """挑出真實起漲日（突破20日高 + 後續10日最大漲幅>=15%），印出各條件的實際數值。"""
 import csv, importlib.util, os, pathlib
-REPO = pathlib.Path(os.path.expanduser("~/mnt/daily-stock-analysis-report"))
+# repo 根目錄由這支腳本自己的位置推導，不要寫死任何人的家目錄路徑。
+# （2026-10-21 修：原本寫死 ~/mnt/... 那是 Claude 端的掛載點，
+#  在使用者自己的 Mac 上一定 FileNotFoundError。）
+REPO = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location("bs", REPO/"tools"/"breakout_scan.py")
 bs = importlib.util.module_from_spec(spec); spec.loader.exec_module(bs); P = bs.PARAMS
 bars={}

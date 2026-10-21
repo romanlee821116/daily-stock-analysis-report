@@ -7,9 +7,13 @@
   <key>WorkingDirectory</key>   <string>/Users/roman/project/daily-stock-analysis-report</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/bin/python3</string>
-    <string>tools/breakout_scan.py</string>
+    <string>/bin/bash</string>
+    <string>tools/daily.sh</string>
   </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PY</key> <string>/usr/bin/python3</string>
+  </dict>
   <key>StartCalendarInterval</key>
   <dict>
     <key>Hour</key>   <integer>6</integer>

@@ -6,7 +6,10 @@ ETF 籌碼訊號 → 前瞻報酬回測。
 """
 import csv, importlib.util, os, pathlib, statistics as st
 
-REPO = pathlib.Path(os.path.expanduser("~/mnt/daily-stock-analysis-report"))
+# repo 根目錄由這支腳本自己的位置推導，不要寫死任何人的家目錄路徑。
+# （2026-10-21 修：原本寫死 ~/mnt/... 那是 Claude 端的掛載點，
+#  在使用者自己的 Mac 上一定 FileNotFoundError。）
+REPO = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location("bs", REPO / "tools" / "breakout_scan.py")
 bs = importlib.util.module_from_spec(spec); spec.loader.exec_module(bs)
 

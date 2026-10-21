@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys as _sys
 import os
 import re
 import sys
@@ -106,6 +107,11 @@ PARAMS = {
     # 籌碼：第一輪回測各門檻 t 都 ≈ 0，沒有可測得的選股能力 → 預設不計分。
     # 要放回去就把權重調大（分數仍會被壓回 0~100）。
     "score_chip_w":             0,
+    # 觀察池（2026-10-21 改成 point-in-time，見 build_universe）
+    "universe_lookback":       20,   # 用最近 N 個報告日出現過的個股當觀察池
+    "universe_min":            30,   # 低於此數視為暖機不足，改用 THEMES 保底
+    # 核心名單（2026-10-21 加入，見 tools/build_core.py 與 build_universe）
+    "core_max_age_days":       14,   # 核心名單超過這麼多天沒更新就發警告（仍會用）
     "score_report_min":        50,   # 建議只看分數 >= 此值的起漲訊號
     #   回測：>=0 超額+2.25%/t=1.33、>=40 +5.16%/t=2.43、>=50 +7.15%/t=2.59（勝率66.7%）
 }
@@ -167,6 +173,7 @@ REPO = Path(__file__).resolve().parent.parent
 SCAN_DIR = REPO / "data" / "scan"
 STATE_PATH = SCAN_DIR / "state.json"
 REPORTS_DIR = REPO / "reports"
+CORE_PATH = REPO / "data" / "core_universe.json"
 
 TPE = "Asia/Taipei"
 
@@ -218,33 +225,63 @@ def load_prices(codes, end: date, lookback_days: int = 400):
             progress=False,
             threads=True,
         )
+        if df is None or len(df) == 0:
+            return {}
+
+        # ⚠️ 取欄位的方式（2026-10-21 修，踩過的坑）
+        # 舊版寫 `df[t] if len(tickers) > 1 else df`，假設「單一 ticker 回平欄位」。
+        # yfinance 1.2.0 起，單一 ticker 加 group_by="ticker" 一樣回 MultiIndex，
+        # 於是 sub 仍是兩層欄位，下一行 dropna(subset=["Close"]) 直接丟 KeyError，
+        # 而且那個例外沒被接住 → 整批（不只那一檔）全部陪葬。
+        # 實際災情：sorted(THEMES) 第 1 批 25 檔（含 2330、2317、2303）整批消失，
+        # 逐檔補抓因為每次都是單一 ticker，又踩同一個雷，一檔都救不回來。
+        # → 改成只看欄位是不是 MultiIndex，不看 ticker 數量。
+        multi = hasattr(df.columns, "nlevels") and df.columns.nlevels > 1
+
         res = {}
         for c in want:
             t = f"{c}{suffix}"
             try:
-                sub = df[t] if len(tickers) > 1 else df
-            except KeyError:
+                if multi:
+                    if t not in df.columns.get_level_values(0):
+                        continue
+                    sub = df[t]
+                else:
+                    sub = df
+                if "Close" not in sub.columns:
+                    continue
+                sub = sub.dropna(subset=["Close"])
+                if sub.empty:
+                    continue
+                bars = []
+                for ts, row in sub.iterrows():
+                    try:
+                        bars.append({
+                            "d": ts.date().isoformat(),
+                            "o": float(row["Open"]), "h": float(row["High"]),
+                            "l": float(row["Low"]),  "c": float(row["Close"]),
+                            "v": float(row["Volume"]),
+                        })
+                    except (TypeError, ValueError, KeyError):
+                        continue        # 單一壞列不該毀掉整檔
+                if bars:
+                    res[c] = bars
+            except Exception:           # noqa: BLE001
+                # 單一代號出問題就跳過它，絕對不要讓它帶走整批。
                 continue
-            sub = sub.dropna(subset=["Close"])
-            if sub.empty:
-                continue
-            bars = []
-            for ts, row in sub.iterrows():
-                bars.append({
-                    "d": ts.date().isoformat(),
-                    "o": float(row["Open"]), "h": float(row["High"]),
-                    "l": float(row["Low"]),  "c": float(row["Close"]),
-                    "v": float(row["Volume"]),
-                })
-            if bars:
-                res[c] = bars
         return res
 
-    got = _grab(".TW", list(codes))
-    out.update(got)
+    # 每個 suffix 各自包起來：.TWO 那一輪出事也不能影響 .TW 已經抓到的結果。
+    try:
+        out.update(_grab(".TW", list(codes)))
+    except Exception:                   # noqa: BLE001
+        pass
     missing = [c for c in codes if c not in out]
     if missing:
-        out.update(_grab(".TWO", missing))
+        try:
+            out.update(_grab(".TWO", missing))
+        except Exception:               # noqa: BLE001
+            pass
     return out
 
 
@@ -803,6 +840,113 @@ def load_state():
     return {"stocks": {}, "records": [], "last_data_date": None}
 
 
+def load_core_universe(run_date: date, warnings):
+    """
+    讀 tools/build_core.py 產出的核心名單（全市場日均成交金額前 N 名）。
+
+    為什麼需要（見 backtest/RESULTS_20261019.md 第十一輪）：
+        純 ETF 觀察池只涵蓋 43~48% 的起漲訊號，半導體只有 29 檔 ——
+        ETF 買賣超排行每天只列前幾名，尾巴進不來。
+        核心名單用「成交金額排名」這種規則產生，不是人工挑的，
+        所以沒有選樣偏誤，而且只用執行當下可得的資料。
+
+    回傳 {code: 產業別}；沒有產業別的給 None。
+    檔案不存在就回 {} 並發警告（不中斷，ETF 池還在）。
+    """
+    if not CORE_PATH.exists():
+        warnings.append(
+            f"核心名單 {CORE_PATH.name} 不存在，本次只用 ETF 池"
+            "（覆蓋率實測只有 43~48%）；請在本機跑 python3 tools/build_core.py")
+        return {}
+    try:
+        js = json.loads(CORE_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        warnings.append(f"核心名單讀取失敗（{e}），本次只用 ETF 池")
+        return {}
+
+    codes = js.get("codes") or {}
+    if not isinstance(codes, dict) or not codes:
+        warnings.append("核心名單是空的，本次只用 ETF 池")
+        return {}
+
+    as_of = js.get("as_of")
+    if as_of:
+        try:
+            age = (run_date - date.fromisoformat(as_of)).days
+        except ValueError:
+            age = None
+            warnings.append(f"核心名單的 as_of 格式看不懂（{as_of}），當成未知新舊")
+        if age is not None and age > PARAMS["core_max_age_days"]:
+            warnings.append(
+                f"核心名單是 {as_of} 產的、已經 {age} 天沒更新"
+                f"（上限 {PARAMS['core_max_age_days']} 天），成交值排名可能已經換人；"
+                "本次照用，但請重跑 tools/build_core.py")
+    else:
+        warnings.append("核心名單沒有 as_of 欄位，無法判斷新舊")
+
+    out = {c: (v.get("industry") if isinstance(v, dict) else None)
+           for c, v in codes.items()}
+    if not any(out.values()):
+        warnings.append(
+            "核心名單沒有產業別（舊版格式或當時用了 --no-industry），"
+            "這些個股在報告裡會是未分類；重跑 tools/build_core.py 即可補上")
+    return out
+
+
+def build_universe(flows, run_date: date, state, warnings, core=None):
+    """
+    逐日 point-in-time 觀察池：只用 as_of < 執行日 的 ETF 報告。回傳 {code: 主題}。
+
+    為什麼要這樣做（見 backtest/RESULTS_20261019.md 第七、十輪）：
+        原本的 THEMES 是回頭從「整段期間」的 ETF 報告挑出來的固定名單，
+        等於選樣本時已經知道未來誰會活躍 —— 前視偏誤。
+        改成「當天只能看 D−1 以前的報告」就沒有這個問題，而且這正是
+        實際運作的樣子：ETF tracker 盤後產報告，隔天早上掃描器才跑。
+
+    已在追蹤的個股（潛伏/蓄勢/起漲/已發動）一律保留在池內，
+    否則手上還在觀察的標的會因為某天沒上榜就整個消失。
+    """
+    P = PARAMS
+    usable = [a for a in sorted(flows) if a < run_date.isoformat()]
+    recent = usable[-P["universe_lookback"]:]
+    uni = {}
+    for a in recent:
+        for code, r in flows[a].items():
+            uni[code] = r.get("theme") or THEMES.get(code)
+
+    etf_n = len(uni)
+
+    # 核心名單：規則產生的全市場成交值前 N 名，補 ETF 池漏掉的那一半。
+    # ETF 報告有給主題就以報告為準（比較新），核心名單只負責「把人放進來」。
+    # 主題優先序：ETF 報告（最新、最具體）> THEMES（人工標）> 核心名單的產業別。
+    # 產業別只是「半導體業」這種粗分類，沒有主題貼切，所以排最後，
+    # 但總比整片未分類好 —— 日報是按主題分組的。
+    core = core or {}
+    for code, industry in core.items():
+        uni.setdefault(code, THEMES.get(code) or industry)
+
+    held = set(state.get("stocks", {}))
+    for code in held:
+        uni.setdefault(code, THEMES.get(code))
+
+    if len(uni) < P["universe_min"]:
+        warnings.append(
+            f"ETF 報告僅涵蓋 {len(usable)} 天、觀察池只有 {len(uni)} 檔"
+            f"（低於 {P['universe_min']}），暖機不足，本次改用 THEMES 保底名單")
+        for code, th in THEMES.items():
+            uni.setdefault(code, th)
+    else:
+        # ⚠️ recent 可能是空的：核心名單自己就能撐過 universe_min，
+        #    這時 ETF 報告一份都還沒有，recent[0] 會 IndexError。
+        span = (f"近 {len(recent)} 個報告日 {recent[0]}~{recent[-1]}"
+                if recent else "尚無可用報告")
+        warnings.append(
+            f"觀察池共 {len(uni)} 檔＝ETF 池 {etf_n} 檔（{span}）"
+            f"∪ 核心名單 {len(core)} 檔，"
+            f"其中 {len(held & set(uni))} 檔是既有追蹤標的")
+    return uni
+
+
 def run(run_date: date, dry_run=False):
     warnings = []
     state = load_state()
@@ -810,7 +954,15 @@ def run(run_date: date, dry_run=False):
     if first_run:
         warnings.append("首次執行：觀察池尚未暖機，潛伏/蓄勢訊號不完整")
 
-    codes = sorted(THEMES)
+    log("解析 ETF 流向…")
+    flows = load_etf_flows(REPORTS_DIR, warnings)
+    as_of_list = sorted(flows)
+    if as_of_list and len(as_of_list) < 10:
+        warnings.append(f"ETF 流向僅累積 {len(as_of_list)} 天，暖機期、潛伏訊號不完整")
+
+    core = load_core_universe(run_date, warnings)
+    universe = build_universe(flows, run_date, state, warnings, core)
+    codes = sorted(universe)
     log(f"抓價量 {len(codes)} 檔…")
     prices = load_prices(codes, run_date)
     if not prices:
@@ -829,12 +981,6 @@ def run(run_date: date, dry_run=False):
     if missing:
         warnings.append(f"價量抓不到 {len(missing)} 檔：{','.join(missing[:12])}"
                         + ("…" if len(missing) > 12 else ""))
-
-    log("解析 ETF 流向…")
-    flows = load_etf_flows(REPORTS_DIR, warnings)
-    as_of_list = sorted(flows)
-    if as_of_list and len(as_of_list) < 10:
-        warnings.append(f"ETF 流向僅累積 {len(as_of_list)} 天，暖機期、潛伏訊號不完整")
 
     log("抓法人…")
     inst = load_institutional(PARAMS["latent_trust_streak_min"] + 7, run_date, warnings)
@@ -870,7 +1016,7 @@ def run(run_date: date, dry_run=False):
             continue
 
         sc = score(ind, st)
-        theme = THEMES.get(code)
+        theme = universe.get(code) or THEMES.get(code)
         row_base = {
             "代號": code, "名稱": "", "主題": theme,
             "狀態": st, "前一狀態": prev_state or "無",
@@ -1115,6 +1261,208 @@ def selftest():
     check("指標缺值時給 0 分不報錯",
           score(dict(base, range20=None, vol_ratio=None), "起漲")
           == round(PARAMS["score_gain_w"] * (6.0 - 3.0) / 7.0, 1))
+
+    print("觀察池（build_universe，point-in-time）：")
+    _flows = {
+        "2026-10-16": {"1111": {"theme": "A"}, "2222": {"theme": "B"}},
+        "2026-10-19": {"2222": {"theme": "B"}, "3333": {"theme": "C"}},
+        "2026-10-20": {"4444": {"theme": "D"}},   # 執行日當天，不該被看到
+    }
+    _P = PARAMS["universe_min"]
+    PARAMS["universe_min"] = 1                    # 暫時關掉保底，才測得到純邏輯
+    try:
+        w = []
+        u = build_universe(_flows, date(2026, 10, 20), {"stocks": {}}, w)
+        check("只用 D−1 以前的報告", set(u) == {"1111", "2222", "3333"})
+        check("當天的報告不得外洩（4444 不在池內）", "4444" not in u)
+        check("主題標籤取自報告", u["3333"] == "C")
+
+        # 既有追蹤標的要保留，即使近期沒上榜
+        u2 = build_universe(_flows, date(2026, 10, 20),
+                            {"stocks": {"9999": {"state": "潛伏"}}}, [])
+        check("既有追蹤標的保留在池內", "9999" in u2)
+
+        # lookback 只取最近 N 個報告日
+        _lb = PARAMS["universe_lookback"]; PARAMS["universe_lookback"] = 1
+        u3 = build_universe(_flows, date(2026, 10, 20), {"stocks": {}}, [])
+        check("lookback=1 只取最近一個報告日", set(u3) == {"2222", "3333"})
+        PARAMS["universe_lookback"] = _lb
+
+        # 暖機不足要退回 THEMES 並發警告
+        PARAMS["universe_min"] = 10_000
+        w4 = []
+        u4 = build_universe(_flows, date(2026, 10, 20), {"stocks": {}}, w4)
+        check("暖機不足改用 THEMES 保底", len(u4) > len(THEMES) - 1)
+        check("暖機不足有發警告", any("暖機不足" in x for x in w4))
+
+        # --- 核心名單聯集（2026-10-21）---
+        # 上面測保底時把 universe_min 拉到 10000，這裡要放回來，
+        # 否則 THEMES 保底會灌進來、測不到聯集本身。
+        PARAMS["universe_min"] = 1
+        _core = {"5555": "半導體業", "2222": "電子零組件業", "7777": None}
+        u5 = build_universe(_flows, date(2026, 10, 20), {"stocks": {}}, [], _core)
+        check("核心名單併進觀察池",
+              set(u5) == {"1111", "2222", "3333", "5555", "7777"})
+        check("ETF 報告的主題優先於核心名單的產業別", u5["2222"] == "B")
+        check("核心名單獨有的個股用產業別當主題", u5["5555"] == "半導體業")
+        check("核心名單沒產業別的才留白", u5["7777"] is None)
+
+        # 核心名單缺席時不得整個壞掉
+        u6 = build_universe(_flows, date(2026, 10, 20), {"stocks": {}}, [], None)
+        check("沒有核心名單時照常運作", set(u6) == {"1111", "2222", "3333"})
+
+        # 一份 ETF 報告都沒有、只靠核心名單撐起來時，警告字串不能 IndexError
+        PARAMS["universe_min"] = 2
+        w7 = []
+        u7 = build_universe({}, date(2026, 10, 20), {"stocks": {}}, w7,
+                            {"5555": "x", "6666": "y"})
+        check("沒有任何報告、只有核心名單也能建池", set(u7) == {"5555", "6666"})
+        check("沒有報告時的警告不得炸掉", any("尚無可用報告" in x for x in w7))
+    finally:
+        PARAMS["universe_min"] = _P
+
+    print("核心名單讀取（load_core_universe）：")
+    import tempfile as _tf
+    _real_core = globals()["CORE_PATH"]
+    try:
+        with _tf.TemporaryDirectory() as _d:
+            _d = Path(_d)
+
+            globals()["CORE_PATH"] = _d / "missing.json"
+            w = []
+            check("檔案不存在回空字典", load_core_universe(date(2026, 10, 21), w) == {})
+            check("檔案不存在要發警告", any("不存在" in x for x in w))
+
+            _bad = _d / "bad.json"
+            _bad.write_text("{這不是 json", encoding="utf-8")
+            globals()["CORE_PATH"] = _bad
+            w = []
+            check("壞掉的 json 回空字典、不丟例外",
+                  load_core_universe(date(2026, 10, 21), w) == {})
+            check("壞掉的 json 要發警告", any("讀取失敗" in x for x in w))
+
+            _ok = _d / "ok.json"
+            _ok.write_text(json.dumps(
+                {"as_of": "2026-10-21",
+                 "codes": {"2330": {"name": "台積電", "turnover": 1.0,
+                                    "industry": "半導體業"}}},
+                ensure_ascii=False), encoding="utf-8")
+            globals()["CORE_PATH"] = _ok
+            w = []
+            check("正常檔案讀出代號與產業別",
+                  load_core_universe(date(2026, 10, 21), w) == {"2330": "半導體業"})
+            check("剛產出的名單不發過期警告", not any("沒更新" in x for x in w))
+
+            # 過期：as_of 距執行日超過 core_max_age_days
+            _old = _d / "old.json"
+            _old.write_text(json.dumps(
+                {"as_of": "2026-09-01",
+                 "codes": {"2330": {"name": "台積電",
+                                    "industry": "半導體業"}}},
+                ensure_ascii=False), encoding="utf-8")
+            globals()["CORE_PATH"] = _old
+            w = []
+            _r = load_core_universe(date(2026, 10, 21), w)
+            check("過期名單照樣回傳內容", _r == {"2330": "半導體業"})
+            check("過期名單要發警告", any("沒更新" in x for x in w))
+
+            # 舊版格式（沒有 industry 欄位）要能讀、但要提醒
+            _noind = _d / "noind.json"
+            _noind.write_text(json.dumps(
+                {"as_of": "2026-10-21",
+                 "codes": {"2330": {"name": "台積電"}}},
+                ensure_ascii=False), encoding="utf-8")
+            globals()["CORE_PATH"] = _noind
+            w = []
+            check("舊版格式仍讀得到代號",
+                  load_core_universe(date(2026, 10, 21), w) == {"2330": None})
+            check("沒有產業別要發警告", any("沒有產業別" in x for x in w))
+
+            _empty = _d / "empty.json"
+            _empty.write_text('{"as_of": "2026-10-21", "codes": {}}',
+                              encoding="utf-8")
+            globals()["CORE_PATH"] = _empty
+            w = []
+            check("空名單回空字典並警告",
+                  load_core_universe(date(2026, 10, 21), w) == {}
+                  and any("空的" in x for x in w))
+    finally:
+        globals()["CORE_PATH"] = _real_core
+
+    print("取價（load_prices）：")
+    # 用假的 yfinance 模擬兩種欄位結構，鎖死 2026-10-21 那個「整批陪葬」的 bug。
+    try:
+        import pandas as _pd
+        import types as _types
+
+        _idx = _pd.to_datetime(["2026-10-19", "2026-10-20", "2026-10-21"])
+
+        def _flat():
+            return _pd.DataFrame({"Open": [1.0, 2, 3], "High": [1.0, 2, 3],
+                                  "Low": [1.0, 2, 3], "Close": [1.0, 2, 3],
+                                  "Volume": [10.0, 20, 30]}, index=_idx)
+
+        def _multi(tks, bad=()):
+            cols, data = [], {}
+            for t in tks:
+                for f in ("Open", "High", "Low", "Close", "Volume"):
+                    cols.append((t, f))
+                    v = [None, None, None] if t in bad else [1.0, 2.0, 3.0]
+                    data[(t, f)] = v
+            return _pd.DataFrame(data, index=_idx,
+                                 columns=_pd.MultiIndex.from_tuples(cols))
+
+        def _with_fake(df_factory):
+            fake = _types.ModuleType("yfinance")
+            fake.download = lambda **kw: df_factory(kw["tickers"].split())
+            _sys.modules["yfinance"] = fake
+            try:
+                return load_prices(["2330", "2317"], date(2026, 10, 21), 30)
+            finally:
+                _sys.modules.pop("yfinance", None)
+
+        # 1) 多檔 + MultiIndex（正常情況）
+        r1 = _with_fake(lambda tks: _multi(tks))
+        check("多檔 MultiIndex 正常解析", set(r1) == {"2330", "2317"})
+
+        # 2) 單檔也回 MultiIndex（yfinance >=1.2 的行為）→ 不得丟 KeyError
+        def _single_multi(tks):
+            return _multi(tks[:1]) if len(tks) == 1 else _multi(tks)
+        fake = _types.ModuleType("yfinance")
+        fake.download = lambda **kw: _single_multi(kw["tickers"].split())
+        _sys.modules["yfinance"] = fake
+        try:
+            r2 = load_prices(["2330"], date(2026, 10, 21), 30)
+        finally:
+            _sys.modules.pop("yfinance", None)
+        check("單檔回 MultiIndex 也能解析", "2330" in r2)
+
+        # 3) 其中一檔全是 NaN → 另一檔仍要拿到（不得整批陪葬）
+        r3 = _with_fake(lambda tks: _multi(tks, bad=[tks[0]]))
+        check("單一壞檔不拖垮整批", "2317" in r3 and "2330" not in r3)
+
+        # 4) 平欄位（舊版 yfinance）仍要能解析
+        fake = _types.ModuleType("yfinance")
+        fake.download = lambda **kw: _flat()
+        _sys.modules["yfinance"] = fake
+        try:
+            r4 = load_prices(["2330"], date(2026, 10, 21), 30)
+        finally:
+            _sys.modules.pop("yfinance", None)
+        check("平欄位（舊版）仍可解析", "2330" in r4)
+
+        # 5) download 直接丟例外 → 回空 dict，不得往外炸
+        fake = _types.ModuleType("yfinance")
+        def _boom(**kw): raise RuntimeError("rate limited")
+        fake.download = _boom
+        _sys.modules["yfinance"] = fake
+        try:
+            r5 = load_prices(["2330"], date(2026, 10, 21), 30)
+        finally:
+            _sys.modules.pop("yfinance", None)
+        check("download 爆掉時回空 dict 不外拋", r5 == {})
+    except ImportError:
+        check("（略過 load_prices 測試：沒有 pandas）", True)
 
     print("回填視窗：")
     b = _synth(n=40, step=0.01)
