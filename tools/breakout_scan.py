@@ -195,7 +195,7 @@ def rnd(x, n=2):
 
 # ══════════════════════════════ 資料來源 ══════════════════════════════
 
-def load_prices(codes, end: date, lookback_days: int = 400):
+def load_prices(codes, end: date, lookback_days: int = 400, suffix_cache=None):
     """
     回傳 {code: [{d, o, h, l, c, v}, ...]}，日期由舊到新，只到 end（含）。
     用 yfinance 批次抓；抓不到的代號不會出現在結果裡（呼叫端要容忍）。
@@ -209,6 +209,7 @@ def load_prices(codes, end: date, lookback_days: int = 400):
 
     start = end - timedelta(days=lookback_days)
     out, missing = {}, []
+    got_suffix = {}
 
     # 上市 .TW 與上櫃 .TWO 都試；先一次抓 .TW，失敗的再試 .TWO
     def _grab(suffix, want):
@@ -266,22 +267,47 @@ def load_prices(codes, end: date, lookback_days: int = 400):
                         continue        # 單一壞列不該毀掉整檔
                 if bars:
                     res[c] = bars
+                    got_suffix[c] = suffix
             except Exception:           # noqa: BLE001
                 # 單一代號出問題就跳過它，絕對不要讓它帶走整批。
                 continue
         return res
 
-    # 每個 suffix 各自包起來：.TWO 那一輪出事也不能影響 .TW 已經抓到的結果。
-    try:
-        out.update(_grab(".TW", list(codes)))
-    except Exception:                   # noqa: BLE001
-        pass
-    missing = [c for c in codes if c not in out]
-    if missing:
+    # ⚠️ 上櫃股的 .TW 一定 404（2026-10-21 實測每天固定 20 檔刷版面）。
+    # suffix_cache 記住每一檔上次成功的後綴，下次直接用對的那個：
+    # 省掉 20 次無謂請求，也讓 log 裡的 possibly delisted 真的代表有問題。
+    # 快取只是加速，不是真相來源 —— 用快取沒抓到的，照樣走原本的兩輪流程補。
+    cache = suffix_cache if isinstance(suffix_cache, dict) else {}
+    first = {".TW": [], ".TWO": []}
+    for c in codes:
+        first.setdefault(cache.get(c, ".TW"), []).append(c)
+
+    for sfx in (".TW", ".TWO"):
+        if not first.get(sfx):
+            continue
         try:
-            out.update(_grab(".TWO", missing))
+            out.update(_grab(sfx, first[sfx]))
         except Exception:               # noqa: BLE001
             pass
+
+    # 還沒抓到的，再用另一個後綴試一次（新進榜的個股第一次會走到這裡）
+    missing = [c for c in codes if c not in out]
+    if missing:
+        retry = {".TW": [], ".TWO": []}
+        for c in missing:
+            retry[".TWO" if cache.get(c, ".TW") == ".TW" else ".TW"].append(c)
+        for sfx in (".TW", ".TWO"):
+            if not retry[sfx]:
+                continue
+            try:
+                out.update(_grab(sfx, retry[sfx]))
+            except Exception:           # noqa: BLE001
+                pass
+
+    # 回寫快取（只記成功的；失敗的不要寫，免得把暫時性失敗固化成錯的後綴）
+    if isinstance(suffix_cache, dict):
+        for c, sfx in got_suffix.items():
+            suffix_cache[c] = sfx
     return out
 
 
@@ -850,24 +876,26 @@ def load_core_universe(run_date: date, warnings):
         核心名單用「成交金額排名」這種規則產生，不是人工挑的，
         所以沒有選樣偏誤，而且只用執行當下可得的資料。
 
-    回傳 {code: 產業別}；沒有產業別的給 None。
-    檔案不存在就回 {} 並發警告（不中斷，ETF 池還在）。
+    回傳 (core, directory)：
+        core      = {code: 產業別}，前 N 名，決定誰進觀察池
+        directory = {code: {"name", "industry"}}，全市場上市，純查表用
+    檔案不存在就回 ({}, {}) 並發警告（不中斷，ETF 池還在）。
     """
     if not CORE_PATH.exists():
         warnings.append(
             f"核心名單 {CORE_PATH.name} 不存在，本次只用 ETF 池"
             "（覆蓋率實測只有 43~48%）；請在本機跑 python3 tools/build_core.py")
-        return {}
+        return {}, {}
     try:
         js = json.loads(CORE_PATH.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError) as e:
         warnings.append(f"核心名單讀取失敗（{e}），本次只用 ETF 池")
-        return {}
+        return {}, {}
 
     codes = js.get("codes") or {}
     if not isinstance(codes, dict) or not codes:
         warnings.append("核心名單是空的，本次只用 ETF 池")
-        return {}
+        return {}, {}
 
     as_of = js.get("as_of")
     if as_of:
@@ -890,7 +918,16 @@ def load_core_universe(run_date: date, warnings):
         warnings.append(
             "核心名單沒有產業別（舊版格式或當時用了 --no-industry），"
             "這些個股在報告裡會是未分類；重跑 tools/build_core.py 即可補上")
-    return out
+
+    # directory 是 2026-10-21 才加的，舊檔沒有 → 回空字典，呼叫端自己 fallback
+    raw = js.get("directory")
+    directory = {c: v for c, v in raw.items()
+                 if isinstance(v, dict)} if isinstance(raw, dict) else {}
+    if not directory:
+        warnings.append(
+            "核心名單沒有 directory（舊版格式），個股名稱與非前 150 名的產業別"
+            "會查不到；重跑 tools/build_core.py 即可補上")
+    return out, directory
 
 
 def build_universe(flows, run_date: date, state, warnings, core=None):
@@ -960,11 +997,33 @@ def run(run_date: date, dry_run=False):
     if as_of_list and len(as_of_list) < 10:
         warnings.append(f"ETF 流向僅累積 {len(as_of_list)} 天，暖機期、潛伏訊號不完整")
 
-    core = load_core_universe(run_date, warnings)
+    core, directory = load_core_universe(run_date, warnings)
     universe = build_universe(flows, run_date, state, warnings, core)
+
+    # 個股名稱：ETF 報告最新最準（含上櫃），查不到再問 directory（只有上市）。
+    # 兩邊都沒有就留空字串 —— 絕不自己編一個名字。
+    names = {}
+    for a in sorted(flows):
+        for c, r in flows[a].items():
+            if r.get("name"):
+                names[c] = r["name"]
+    for c, v in directory.items():
+        names.setdefault(c, v.get("name") or "")
+
+    # 主題補洞：觀察池裡沒主題的，用 directory 的產業別頂著
+    for c, th in list(universe.items()):
+        if not th:
+            universe[c] = (directory.get(c) or {}).get("industry")
+    still_unknown = [c for c, th in universe.items() if not th]
+    if still_unknown:
+        warnings.append(
+            f"{len(still_unknown)} 檔查不到主題或產業別（多半是上櫃股，"
+            f"build_core 只含上市）：{'、'.join(sorted(still_unknown)[:8])}")
     codes = sorted(universe)
     log(f"抓價量 {len(codes)} 檔…")
-    prices = load_prices(codes, run_date)
+    suffix_cache = state.get("suffix") if isinstance(state.get("suffix"), dict) else {}
+    prices = load_prices(codes, run_date, suffix_cache=suffix_cache)
+    state["suffix"] = {c: sfx for c, sfx in suffix_cache.items() if c in universe}
     if not prices:
         raise SystemExit("價量全部抓不到，可能是網路或 yfinance 問題；本日不產出")
 
@@ -1018,7 +1077,7 @@ def run(run_date: date, dry_run=False):
         sc = score(ind, st)
         theme = universe.get(code) or THEMES.get(code)
         row_base = {
-            "代號": code, "名稱": "", "主題": theme,
+            "代號": code, "名稱": names.get(code, ""), "主題": theme,
             "狀態": st, "前一狀態": prev_state or "無",
             "收盤": rnd(ind["close"]),
             "突破價": rnd((rec or {}).get("breakout") or ind["hi_n"]),
@@ -1061,7 +1120,7 @@ def run(run_date: date, dry_run=False):
             watchlist.append({**row_base,
                               "距突破%": rnd(pct(row_base["突破價"], ind["close"]))})
         elif st == "已發動":
-            extended.append({"代號": code, "名稱": "", "主題": theme,
+            extended.append({"代號": code, "名稱": names.get(code, ""), "主題": theme,
                              "20MA乖離%": rnd(ind["ma20_bias"]),
                              "5日漲幅%": rnd(ind["gain5"])})
 
@@ -1330,7 +1389,8 @@ def selftest():
 
             globals()["CORE_PATH"] = _d / "missing.json"
             w = []
-            check("檔案不存在回空字典", load_core_universe(date(2026, 10, 21), w) == {})
+            check("檔案不存在回空字典",
+                  load_core_universe(date(2026, 10, 21), w) == ({}, {}))
             check("檔案不存在要發警告", any("不存在" in x for x in w))
 
             _bad = _d / "bad.json"
@@ -1338,19 +1398,26 @@ def selftest():
             globals()["CORE_PATH"] = _bad
             w = []
             check("壞掉的 json 回空字典、不丟例外",
-                  load_core_universe(date(2026, 10, 21), w) == {})
+                  load_core_universe(date(2026, 10, 21), w) == ({}, {}))
             check("壞掉的 json 要發警告", any("讀取失敗" in x for x in w))
 
             _ok = _d / "ok.json"
             _ok.write_text(json.dumps(
                 {"as_of": "2026-10-21",
                  "codes": {"2330": {"name": "台積電", "turnover": 1.0,
-                                    "industry": "半導體業"}}},
+                                    "industry": "半導體業"}},
+                 "directory": {"2330": {"name": "台積電",
+                                        "industry": "半導體業"},
+                               "2317": {"name": "鴻海",
+                                        "industry": "其他電子業"}}},
                 ensure_ascii=False), encoding="utf-8")
             globals()["CORE_PATH"] = _ok
             w = []
-            check("正常檔案讀出代號與產業別",
-                  load_core_universe(date(2026, 10, 21), w) == {"2330": "半導體業"})
+            _c, _dir = load_core_universe(date(2026, 10, 21), w)
+            check("正常檔案讀出代號與產業別", _c == {"2330": "半導體業"})
+            check("directory 讀得到股名",
+                  _dir.get("2317", {}).get("name") == "鴻海")
+            check("directory 涵蓋非前 N 名的個股", "2317" in _dir and "2317" not in _c)
             check("剛產出的名單不發過期警告", not any("沒更新" in x for x in w))
 
             # 過期：as_of 距執行日超過 core_max_age_days
@@ -1362,7 +1429,7 @@ def selftest():
                 ensure_ascii=False), encoding="utf-8")
             globals()["CORE_PATH"] = _old
             w = []
-            _r = load_core_universe(date(2026, 10, 21), w)
+            _r, _ = load_core_universe(date(2026, 10, 21), w)
             check("過期名單照樣回傳內容", _r == {"2330": "半導體業"})
             check("過期名單要發警告", any("沒更新" in x for x in w))
 
@@ -1374,8 +1441,10 @@ def selftest():
                 ensure_ascii=False), encoding="utf-8")
             globals()["CORE_PATH"] = _noind
             w = []
-            check("舊版格式仍讀得到代號",
-                  load_core_universe(date(2026, 10, 21), w) == {"2330": None})
+            _c2, _d2 = load_core_universe(date(2026, 10, 21), w)
+            check("舊版格式仍讀得到代號", _c2 == {"2330": None})
+            check("舊版格式沒有 directory 要發警告",
+                  _d2 == {} and any("directory" in x for x in w))
             check("沒有產業別要發警告", any("沒有產業別" in x for x in w))
 
             _empty = _d / "empty.json"
@@ -1384,7 +1453,7 @@ def selftest():
             globals()["CORE_PATH"] = _empty
             w = []
             check("空名單回空字典並警告",
-                  load_core_universe(date(2026, 10, 21), w) == {}
+                  load_core_universe(date(2026, 10, 21), w) == ({}, {})
                   and any("空的" in x for x in w))
     finally:
         globals()["CORE_PATH"] = _real_core
@@ -1440,6 +1509,51 @@ def selftest():
         # 3) 其中一檔全是 NaN → 另一檔仍要拿到（不得整批陪葬）
         r3 = _with_fake(lambda tks: _multi(tks, bad=[tks[0]]))
         check("單一壞檔不拖垮整批", "2317" in r3 and "2330" not in r3)
+
+        # 3b) 後綴快取（2026-10-21）：上櫃股每天固定 404 刷版面
+        #     模擬「只有 .TWO 查得到」的個股，驗證快取記得住、下次不再白跑 .TW。
+        def _otc_only(tks):
+            ok = [t for t in tks if t.endswith(".TWO")]
+            return _multi(ok) if ok else _pd.DataFrame()
+
+        calls = []
+        fake = _types.ModuleType("yfinance")
+
+        def _dl(**kw):
+            calls.append(kw["tickers"])
+            return _otc_only(kw["tickers"].split())
+        fake.download = _dl
+        _sys.modules["yfinance"] = fake
+        try:
+            cache = {}
+            r3b = load_prices(["6223"], date(2026, 10, 21), 30, suffix_cache=cache)
+            check("上櫃股第一次要靠 .TWO 補抓抓到", "6223" in r3b)
+            check("成功的後綴有寫進快取", cache.get("6223") == ".TWO")
+            check("第一次確實白跑了一輪 .TW",
+                  any(t == "6223.TW" for t in calls))
+
+            calls.clear()
+            r3c = load_prices(["6223"], date(2026, 10, 21), 30, suffix_cache=cache)
+            check("有快取時直接拿到", "6223" in r3c)
+            check("有快取時不再試 .TW（省掉那 20 行 404）",
+                  calls == ["6223.TWO"])
+
+            # 快取寫錯（例如個股轉上市）也要能自己救回來
+            bad = {"2330": ".TWO"}
+            calls.clear()
+            fake.download = lambda **kw: (calls.append(kw["tickers"])
+                                          or _multi([t for t in kw["tickers"].split()
+                                                     if t.endswith(".TW")]))
+            r3d = load_prices(["2330"], date(2026, 10, 21), 30, suffix_cache=bad)
+            check("快取指向錯的後綴時仍能補抓回來", "2330" in r3d)
+            check("補抓成功後快取要被更正", bad.get("2330") == ".TW")
+
+            # 沒給快取（舊呼叫方式）不得壞掉
+            fake.download = _dl
+            check("不給 suffix_cache 也要能運作",
+                  "6223" in load_prices(["6223"], date(2026, 10, 21), 30))
+        finally:
+            _sys.modules.pop("yfinance", None)
 
         # 4) 平欄位（舊版 yfinance）仍要能解析
         fake = _types.ModuleType("yfinance")

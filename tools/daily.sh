@@ -35,5 +35,8 @@ fi
 echo "--- 起漲點掃描 ---"
 "$PY" tools/breakout_scan.py
 rc=$?
-echo "===== $(date '+%Y-%m-%d %H:%M:%S') 結束（掃描 rc=$rc）====="
-exit $rc
+# ⚠️ 變數一律用 ${rc} 包起來，不要寫 $rc 後面直接接全形字。
+#    macOS 內建的是 bash 3.2，對多位元組字元不敏感，會把 $rc） 當成變數名
+#    「rc?」而在 set -u 下炸掉 unbound variable（2026-10-21 實測）。
+echo "===== $(date '+%Y-%m-%d %H:%M:%S') 結束（掃描 rc=${rc}）====="
+exit "${rc}"

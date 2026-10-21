@@ -19,7 +19,10 @@ build_core.py — 產生「核心觀察名單」：全市場近 N 日平均成�
 
 輸出：data/core_universe.json
     {"as_of": "2026-10-21", "days": 5, "top": 150,
-     "codes": {"2330": {"name": "台積電", "turnover": 123456789.0}, ...}}
+     "codes":     {"2330": {"name": "台積電", "turnover": 1.2e8,
+                            "industry": "半導體業"}, ...},   # 觀察池用（前 N 名）
+     "directory": {"2330": {"name": "台積電",
+                            "industry": "半導體業"}, ...}}   # 查表用（全市場上市）
 
 ⚠️ point-in-time 的界線
     這份名單是用「執行當下」的成交金額算的，往後每天掃描用它沒有問題。
@@ -249,7 +252,7 @@ def main() -> None:
     ranked = sorted(acc.items(), key=lambda kv: -(kv[1]["sum"] / max(kv[1]["n"], 1)))
     top = ranked[:args.top]
 
-    ind = {}
+    ind: dict[str, str] = {}
     if args.industry and last_ok:
         print(f"\n抓產業別（{last_ok}，{len(INDUSTRY_TYPES)} 個產業）…")
         ind = fetch_industries(last_ok)
@@ -257,16 +260,27 @@ def main() -> None:
         print(f"產業別對到 {len(ind)} 檔；前 {len(top)} 名裡有 {len(miss)} 檔沒對到"
               + (f"：{', '.join(miss[:10])}" if miss else ""))
 
+    # directory：全市場上市普通股的「代號 → 股名＋產業」。
+    # 為什麼不只存前 N 名（2026-10-21）：
+    #   觀察池 = ETF 池 ∪ 核心名單，ETF 池裡有一堆不在前 N 名的個股，
+    #   它們沒有產業別就只能掛「未分類」，而掃描輸出的「名稱」欄一直是空的。
+    #   產業別本來就一次抓回全市場 1000 多檔，只存 150 筆是浪費。
+    #   多存這一份，掃描器就能替任何上市個股查到股名與產業，不必多發任何請求。
+    directory = {c: {"name": v["name"], "industry": ind.get(c)}
+                 for c, v in sorted(acc.items())}
+
     out = {"as_of": date.today().isoformat(), "days": args.days, "top": args.top,
            "source": "TWSE MI_INDEX ALLBUT0999" + ("＋分產業收盤行情" if ind else ""),
            "codes": {c: {"name": v["name"],
                          "turnover": round(v["sum"] / max(v["n"], 1), 0),
                          "industry": ind.get(c)}
-                     for c, v in top}}
+                     for c, v in top},
+           "directory": directory}
     p = Path(args.out)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n全市場普通股 {len(acc)} 檔 → 取前 {len(top)} 名，寫入 {p}")
+    print(f"\n全市場普通股 {len(acc)} 檔 → 取前 {len(top)} 名，"
+          f"另存 directory {len(directory)} 檔（股名＋產業），寫入 {p}")
     print("前 10 名：")
     for c, v in top[:10]:
         print(f"  {c} {v['name']:<10} 日均成交 {v['sum']/max(v['n'],1)/1e8:>8.1f} 億")
