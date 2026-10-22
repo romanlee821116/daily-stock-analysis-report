@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台股盤前晨報 2026/10/22</title>
+<style>
+:root{
+--bg:#f4f4f1; --card:#fcfcfb; --text:#0b0b0b; --text2:#52514e; --line:#e2e1dc;
+--up:#d03b3b; --down:#0ca30c;
+--accentbg:rgba(208,59,59,.06); --upbg:rgba(208,59,59,.08); --downbg:rgba(12,163,12,.08);
+--amber:#c98a16; --amberbg:rgba(201,138,22,.09);
+}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]){
+--bg:#131312; --card:#1a1a19; --text:#ffffff; --text2:#c3c2b7; --line:#33332f;
+--up:#e66767; --down:#3cbf3c;
+--accentbg:rgba(230,103,103,.10); --upbg:rgba(230,103,103,.12); --downbg:rgba(60,191,60,.12);
+--amber:#e0ae4d; --amberbg:rgba(224,174,77,.13);
+}}
+:root[data-theme="dark"]{
+--bg:#131312; --card:#1a1a19; --text:#ffffff; --text2:#c3c2b7; --line:#33332f;
+--up:#e66767; --down:#3cbf3c;
+--accentbg:rgba(230,103,103,.10); --upbg:rgba(230,103,103,.12); --downbg:rgba(60,191,60,.12);
+--amber:#e0ae4d; --amberbg:rgba(224,174,77,.13);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+font-size:14px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px;counter-reset:sec}
+h1{font-size:21px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--text2);font-size:12.5px;margin:0 0 20px}
+h2{display:flex;align-items:center;gap:9px;font-size:16px;margin:30px 0 12px;letter-spacing:-.01em;counter-increment:sec}
+h2::before{content:counter(sec);display:flex;align-items:center;justify-content:center;
+min-width:23px;height:23px;border:1px solid var(--line);border-radius:7px;
+font-size:12px;color:var(--text2);font-weight:600;flex:none}
+h3{font-size:13px;margin:18px 0 5px}
+.num,.n,td,th{font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)} .m{color:var(--text2)}
+b{font-weight:650}
+
+/* 結論卡 */
+.lead{background:var(--card);border:1px solid rgba(208,59,59,.55);border-radius:14px;padding:18px 20px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lead{border-color:rgba(230,103,103,.6)}}
+:root[data-theme="dark"] .lead{border-color:rgba(230,103,103,.6)}
+.tone{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 13px;
+font-size:12px;color:var(--text2);font-weight:600;margin-bottom:11px}
+.lead .big{font-size:17px;font-weight:700;line-height:1.5;margin:0 0 8px}
+.lead .exp{font-size:13.5px;color:var(--text2);margin:0 0 15px}
+.leadgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:15px}
+.leadgrid>div{border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:var(--bg)}
+.leadgrid .k{font-size:12px;color:var(--text2);margin-bottom:3px}
+.leadgrid .v{font-size:21px;font-weight:700;line-height:1.25}
+.leadgrid .s{font-size:12.5px;color:var(--text2);margin-top:2px}
+.quote{border-left:3px solid var(--up);background:var(--accentbg);border-radius:0 10px 10px 0;
+padding:11px 15px;font-size:13.5px}
+.quote p{margin:0 0 6px}
+.quote p:last-child{margin:0}
+
+/* tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.tiles>div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px}
+.tiles .lb{font-size:12px;color:var(--text2)}
+.tiles .vv{font-size:20px;font-weight:700;line-height:1.3;margin-top:2px}
+.tiles .ch{font-size:13px;font-weight:600}
+.tiles .nt{font-size:11.5px;color:var(--text2);margin-top:4px;line-height:1.45}
+
+/* verdict */
+.verdict{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:13px}
+.verdict>div{border:1px solid var(--line);border-radius:11px;padding:14px 16px;background:var(--card)}
+.verdict .k{font-size:12px;color:var(--text2);margin-bottom:3px}
+.verdict .c{font-size:17px;font-weight:700;line-height:1.4;margin-bottom:5px}
+.verdict .r{font-size:12.5px;color:var(--text2)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
+border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th{font-size:12px;color:var(--text2);text-align:left;font-weight:600;
+padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.n{text-align:right;white-space:nowrap}
+.dir{font-weight:700;white-space:nowrap}
+
+/* event cards */
+.ev{background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:12px}
+.ev.strong{border-left:4px solid var(--up)}
+.ev.weak{border-left:4px solid var(--down)}
+.ev.mixed{border-left:4px solid var(--text2)}
+.ev .hd{padding:15px 18px 0}
+.ev .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
+.chip{font-size:11.5px;border-radius:999px;padding:2px 10px;border:1px solid var(--line);color:var(--text2)}
+.chip.s{background:var(--upbg);color:var(--up);border:none;font-weight:700}
+.chip.w{background:var(--downbg);color:var(--down);border:none;font-weight:700}
+.chip.m{border:1px solid var(--line);color:var(--text2);font-weight:700}
+.ev .ti{font-size:14.5px;font-weight:700;line-height:1.5;margin:0 0 7px}
+.ev .wh{font-size:13.5px;color:var(--text2);margin:0 0 15px}
+.ev .rel{border-top:1px solid var(--line);background:var(--accentbg);padding:12px 18px;font-size:13.5px}
+.ev .rel.none{background:transparent;color:var(--text2)}
+.ev .lb{display:block;font-size:11.5px;color:var(--text2);margin-bottom:3px;font-weight:600}
+
+.note{background:var(--amberbg);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;
+padding:12px 15px;font-size:13px;margin-top:13px}
+.sm{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.55}
+.ft{margin-top:34px;padding-top:16px;border-top:1px solid var(--line)}
+.ft p{font-size:11.5px;color:var(--text2);margin:0 0 7px;line-height:1.6}
+.warnbox{background:var(--amberbg);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;
+padding:12px 15px;font-size:13px;margin-bottom:18px}
+
+@media (max-width:640px){
+.tiles{grid-template-columns:repeat(2,1fr)}
+.leadgrid{grid-template-columns:1fr}
+.verdict{grid-template-columns:1fr}
+.wrap{padding:20px 16px}
+table{font-size:12.5px}
+td,th{padding:8px 7px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>台股盤前晨報</h1>
+<p class="sub">2026/10/22（四）· 前一交易日 10/21 · 美股對照 10/21 收盤 · 台指期夜盤 10/21 15:00–次日 05:00</p>
+
+<div class="warnbox">
+<b>⚠️ 本次排程延遲約 1 小時 40 分啟動</b>（原定 07:30，實際 09:10 才取得第一個時間戳），報告產出時台股已開盤。
+為維持預測追蹤的有效性，以下所有<b>開盤估與方向判斷一律只用開盤前可得的資料推導</b>，未用今日盤中資訊回頭修改。
+已知的實際盤中數字另以「實際」標註。請檢查排程設定——若連續延遲，晨報的開盤預估功能等同失效。
+</div>
+
+<h2>今日結論</h2>
+<div class="lead">
+<span class="tone">定調：震盪偏多</span>
+<p class="big">三天以來第一次，<span class="up">美股給了明確方向，而且方向正好打在你最重的部位上</span>——佔組合 45.26% 的 AI 伺服器與電源，五檔對照股<span class="up">全部上漲、全部過門檻</span>，同時外資現貨<span class="up">終止連十賣、首度翻買</span>。</p>
+<p class="exp">30 檔對照股 27 漲 3 跌、費半 +1.97%，與昨天的「11 漲 19 跌」完全相反，連動法今天有充分輸出。保留的理由有三：季線乖離由 +0.39% 重新升溫到 +1.56%、融資由連 4 減轉為單日增加、夜盤正價差 +594 偏大而過去兩日開盤都只認夜盤漲幅的四分之一。</p>
+<div class="leadgrid">
+<div><div class="k">加權開盤預估</div><div class="v">46,960–47,060</div><div class="s">前收 46,887.77 · 實際開 46,942.75</div></div>
+<div><div class="k">台積電開盤預估</div><div class="v">2,440–2,465</div><div class="s">前收 2,420 · 收盤方向：強</div></div>
+<div><div class="k">持股 12 檔收盤方向</div><div class="v">強 6 · 弱 0</div><div class="s">平 2 · 不給方向 4</div></div>
+</div>
+<div class="quote">
+<p><b>一句話：</b>今天不是「台股自己反彈」的一天，是<b>美股半導體全面轉強、而且強在 AI 硬體這一段</b>——你 45% 的 AI 伺服器部位第一次拿到乾淨的族群訊號，代價是組合今天幾乎沒有分散，這條鏈走低就是全組合走低。</p>
+<p><b>最該盯：</b>開盤後 15 分鐘的<b>買盤</b>（不是賣壓）。過去兩日都是「開盤即全日最低、買盤開盤後才進場」，今天實際開盤 46,942.75 又低於估計下緣、09:15 時仍是全日最低——這已是連續第三日，承接量出不來，這波就只是夜盤的空頭回補。</p>
+</div>
+</div>
+
+<h2>關鍵數據看板</h2>
+<div class="tiles">
+<div><div class="lb">台指期夜盤終盤</div><div class="vv">47,482</div><div class="ch up">▲469 · +1.00%</div><div class="nt">正價差 +594，期貨比現貨樂觀 594 點</div></div>
+<div><div class="lb">加權前日收盤</div><div class="vv">46,887.77</div><div class="ch up">+594.84 · +1.28%</div><div class="nt">連 2 跌後反彈，開盤即全日最低</div></div>
+<div><div class="lb">費半 SOX</div><div class="vv">11,505.56</div><div class="ch up">+221.74 · +1.97%</div><div class="nt">自日內高僅回落 0.49%，尾盤沒被倒貨</div></div>
+<div><div class="lb">TSM ADR 溢價</div><div class="vv">+15.77%</div><div class="ch up">擴大 1.11pp</div><div class="nt">在 +10~20% 常態區，水位不是方向指標</div></div>
+<div><div class="lb">S&amp;P 500</div><div class="vv">7,757.17</div><div class="ch up">+44.60 · +0.58%</div><div class="nt">三大指數同向收紅，非單一族群撐盤</div></div>
+<div><div class="lb">美 10 年期殖利率</div><div class="vv">5.15%</div><div class="ch up">+0.03 · +0.57%</div><div class="nt">未創 52 週高（5.36），水位仍在高檔區</div></div>
+<div><div class="lb">WTI 原油</div><div class="vv">98.33</div><div class="ch up">+1.18 · +1.21%</div><div class="nt">過 0.5% 門檻，塑化列為候選領漲</div></div>
+<div><div class="lb">VIX 波動率</div><div class="vv">16.68</div><div class="ch down">−0.63 · −3.64%</div><div class="nt">連三日降溫，風險偏好回升</div></div>
+</div>
+
+<h2>籌碼與過熱</h2>
+<div class="verdict">
+<div>
+<div class="k">過熱程度</div>
+<div class="c"><span class="up">由消化區重新升溫，水位仍溫和</span></div>
+<div class="r">季線乖離 10/16 +2.29% → 10/19 +1.59% → 10/20 +0.39% → <b>10/21 +1.56%</b>。單日擴大 1.17pp，已脫離 ±1% 的消化區，但仍低於 10/16 的高點。<b>主動作廢昨日「過熱已完全消化」的判語</b>——這是數據要求的反向改寫，不是照抄。</div>
+</div>
+<div>
+<div class="k">籌碼結構</div>
+<div class="c"><span class="up">本月最乾淨的一次轉折</span></div>
+<div class="r">外資現貨<b>終止連 10 賣、首度翻買</b>，外資台指期連續第四日減空（四日累計回補 7,605 口），融券單日大減 10.8%。唯一的雜音是融資由連 4 減轉為單日增加——指數漲時融資跟漲屬正常，但浮額由去化轉回補，是短線轉趨鬆動的第一個訊號。</div>
+</div>
+</div>
+<table>
+<thead><tr><th>項目</th><th class="n">數值（10/21）</th><th class="n">變化</th><th>判讀</th></tr></thead>
+<tbody>
+<tr><td>季線乖離</td><td class="n">+1.56%</td><td class="n up">+1.17pp</td><td>重新升溫，但低於本月高點，不構成過熱警訊</td></tr>
+<tr><td>融資餘額</td><td class="n">6,443.74 億</td><td class="n up">+62.73 億（+0.98%）</td><td>連 4 減→增，浮額開始回補，唯一偏保守的一項</td></tr>
+<tr><td>外資台指期未平倉</td><td class="n">−86,473 口</td><td class="n up">回補 +2,671 口</td><td>水位仍淨空，但<b>連四日減空</b>，看變化量比看水位重要</td></tr>
+<tr><td>外資現貨買賣超</td><td class="n up">+22.39 億</td><td class="n up">連 10 賣 → 買</td><td><b>最重要的一項</b>，逾 8,000 億的賣壓鏈斷了；惟僅一天，持續性未確認</td></tr>
+<tr><td>漲跌家數</td><td class="n">610 / 384</td><td class="n up">1.59 : 1</td><td>由前日 279:717 翻正，<b>廣度良好</b>，作廢昨日的廣度惡化警語</td></tr>
+</tbody>
+</table>
+<p class="sm">資料時點：Goodinfo 大盤頁與期交所 futContractsDate，均為 2026/10/21 官方值。<b>籌碼三項（季線乖離／融資融券／外資期貨未平倉）本次完整取得，定調未因資料缺失收一格。</b>成交金額 8,746.14 億為 Goodinfo 全市場口徑，與證交所股票口徑不同，量能門檻 6,560 億即按此口徑計算。</p>
+
+<h2>今天發生了什麼：六件事與產業影響</h2>
+
+<div class="ev strong">
+<div class="hd">
+<div class="tags"><span class="chip s">AI 伺服器與電源 · 轉強</span><span class="chip">族群門檻全數通過</span><span class="chip">分歧修復</span></div>
+<p class="ti">AI 伺服器五檔對照股全數大漲：SMCI +9.55%、DELL +5.27%、VRT +4.22%、NVDA +2.54%、ANET +1.73%</p>
+<p class="wh">這是三天來第一次整個廣集合原封不動通過「單一標的撐不起族群方向」的門檻——無一檔低於 1.0%、全部同向、集中度 41% 未超標。關鍵在 <b>VRT</b>：它是電源整合最直接的對照股，連續兩日走弱（−0.16%、−1.22%）後昨夜大幅反彈，昨天晨報最擔心的「上游元件在漲、下游電源整合商在跌」的背離<b>消失了</b>。訊號傳導路徑是整機出貨（SMCI／DELL）→ 電源與散熱模組 → 台廠組裝與電源供應。</p>
+</div>
+<div class="rel"><span class="lb">關係到你的持股</span>
+<b>2308 台達電（23.53%）、3231 緯創（9.53%）、2376 技嘉（9.44%）、6412 群電（2.77%），合計 45.26%</b>，是全組合最大的單一曝險。今天這條鏈是順風，但也意味著<b>組合幾乎沒有分散</b>——這條鏈若開高走低，四檔會一起走低。其中 3231 與 2376 雖然族群轉強，卻因為已連漲兩日而<b>不給方向</b>（規則條件 ii）。</div>
+</div>
+
+<div class="ev strong">
+<div class="hd">
+<div class="tags"><span class="chip s">封測 · 轉強</span><span class="chip">重大訂單</span><span class="chip">連三日無訊號後首度有訊號</span></div>
+<p class="ti">輝達 11 億美元測試訂單點名京元電子；封測對照股 AMKR +4.87%、ASX +4.02% 雙雙跨過 4% 門檻</p>
+<p class="wh">封測有專屬的高門檻（對照股變動未達 4% 一律不給方向），今天是近期第一次兩檔同時跨過且同向。機制上，<b>測試產能是 AI 晶片出貨的實體瓶頸</b>，當晶片廠直接對測試廠下大額訂單，鎖的是未來數季的產能與稼動率，屬於結構性而非題材性的利多。ASX 的 ADR 折溢價換算隱含日月光台幣價約 687.8。</p>
+</div>
+<div class="rel"><span class="lb">關係到你的持股</span>
+<b>2449 京元電子（10.98%）</b>正是這則訂單的主角。昨天晨報寫「它已連三個交易日找不到任何對照股訊號、美股連動法對它已經失效」——<b>今天這條失效解除了</b>。但同日另有一則 Factset 將其 EPS 預估下修的法人訊號，觸發規則的排除條件，因此<b>不給方向</b>；這是刻意保留，而且保留的方向可能是錯的——今天這一檔的上檔風險明顯大於下檔風險。</div>
+</div>
+
+<div class="ev strong">
+<div class="hd">
+<div class="tags"><span class="chip s">資金與籌碼 · 轉強</span><span class="chip">外資轉向</span><span class="chip">結算後軋空回補</span></div>
+<p class="ti">外資現貨終止連 10 賣、單日翻買 22.39 億；台指期連四日減空，融券單日大減 10.8%</p>
+<p class="wh">連 10 賣累計賣超逾 8,000 億，是 10 月指數最主要的壓力來源。賣壓鏈中斷的意義不在那 22 億本身，而在<b>方向改變</b>：現貨翻買、期貨減空、融券回補三件事同時發生，代表空方在結算後同步鬆手。台幣同步由 32.577 升值到 32.435，脫離約 18 個月新低——外資匯出壓力這條線也鬆了。政策干預三條件（台幣破 32.5／外資大賣／貼近季線）<b>今天全數不成立</b>，與前兩日全數成立完全相反。</p>
+</div>
+<div class="rel"><span class="lb">關係到你的持股</span>
+影響全組合，但對<b>七檔千金股（股價四位數，合計 59.03%）特別重要</b>：2383、2454、3661、2330、2308、2368、3037。高價股在資金流出期跌得最快、流入期彈性最好，外資翻買對這 59% 的部位是直接的評價支撐。</div>
+</div>
+
+<div class="ev strong">
+<div class="hd">
+<div class="tags"><span class="chip s">GaN／SiC 第三代半導體 · 轉強</span><span class="chip">內部分歧修復</span></div>
+<p class="ti">四檔對照股全數上漲：WOLF +4.85%、NVTS +4.81%、POWI +2.73%、ON +1.75%</p>
+<p class="wh">昨天這個族群因為 WOLF 逆勢重挫 2.65% 而被判「不給方向」，今天 WOLF 由最弱變成最強的一檔，分歧完全消失。機制上，輝達主導的 <b>800V HVDC 資料中心供電架構</b>把 GaN／SiC 從車用利基推進到資料中心主流，這是一條需求面的結構性轉折，上游元件走強通常領先下游電源模組的接單。</p>
+</div>
+<div class="rel"><span class="lb">關係到你的持股</span>
+<b>2308 台達電（23.53%）＋ 6412 群電（2.77%），合計 26.30%</b>，是組合第一大的單一主題曝險。台達電正面搶 800V HVDC 這塊，上游元件全漲對它是乾淨的順風。6412 雖同屬這條線，但昨天是四檔 AI 伺服器持股中唯一收黑的，原因查不到，因此今天保守給「平」而非「強」。</div>
+</div>
+
+<div class="ev mixed">
+<div class="hd">
+<div class="tags"><span class="chip m">塑化 · 偏強（你零曝險）</span><span class="chip">油價</span><span class="chip">結構盲點</span></div>
+<p class="ti">WTI 98.33（+1.21%）、布蘭特 110.39（+1.44%）雙雙漲逾門檻，塑化四雄為今日候選領漲族群</p>
+<p class="wh">油價是<b>總體層級</b>的因子，不是族群輪動——它直接推升石化中下游的報價基準與庫存評價利益，傳導到台塑、南亞、台化、台塑化。這條線與半導體景氣無關，所以它可以在電子走弱的日子獨立上漲，也可以在電子大漲的日子一起漲、墊高指數。10/21 塑化已經大漲過一輪（南亞 +8.27%）。</p>
+</div>
+<div class="rel none"><span class="lb">關係到你的持股</span>
+<b>無直接持股——而這正是今天要寫它的理由。</b>你 100% 壓在電子，塑化與今日盤中續強的玻璃陶瓷（+3.15%）都是<b>零曝險</b>。意思是：如果今天帶頭的是塑化與傳產補漲，<b>指數會看起來不錯，但你的組合吃不到那一段</b>。反過來，若帶頭的是 AI 伺服器與半導體，組合會跑贏指數。在撐盤族群確定之前不給跑輸／跑贏的百分點數字。</div>
+</div>
+
+<div class="ev mixed">
+<div class="hd">
+<div class="tags"><span class="chip m">半導體設備 · 無法判斷</span><span class="chip">族群內部分歧</span><span class="chip">風險解除</span></div>
+<p class="ti">由前一日四檔全面重挫轉為分歧：ASML +2.81%、KLAC +1.04%、AMAT +0.98%、LRCX −1.00%</p>
+<p class="wh">昨天這四檔同步重挫（平均 −2.24%），晨報據此警告「設備股續弱會回頭壓到晶圓代工與封測的評價」。今天轉為分歧、整體止穩，<b>這條風險解除大半</b>。但 AMAT 低於 1.0% 門檻、LRCX 方向與其餘相反，依規則<b>不給方向</b>。值得注意的是 LRCX 是今夜 30 檔中唯一跌逾 1% 的一檔，而它昨天剛公布財報——財報股要看市場在殺什麼，而不是看營收數字。</p>
+</div>
+<div class="rel none"><span class="lb">關係到你的持股</span>
+<b>無直接持股，但不能略過。</b>設備股是半導體資本支出的領先指標，昨天的全面重挫是對 2027 年 capex 的質疑，若續弱會回頭壓到<b>2330 台積電（5.46%）與 2449 京元電子（10.98%）</b>的評價。今天止穩，等於把昨天掛在這兩檔頭上的一個間接風險拿掉了。</div>
+</div>
+
+<h2>產業轉強轉弱一覽</h2>
+<table>
+<thead><tr><th>產業</th><th>今日</th><th>為什麼</th><th>我的持股</th></tr></thead>
+<tbody>
+<tr><td>AI 伺服器與散熱電源</td><td class="dir up">轉強</td><td>SMCI +9.55%、DELL +5.27%、VRT +4.22%，五檔全過門檻且同向</td><td><b>2308、3231、2376、6412</b></td></tr>
+<tr><td>封測</td><td class="dir up">轉強</td><td>AMKR +4.87%、ASX +4.02% 雙雙跨 4% 專屬門檻；輝達 11 億美元訂單</td><td><b>2449</b></td></tr>
+<tr><td>GaN／SiC 第三代半導體</td><td class="dir up">轉強</td><td>WOLF +4.85%、NVTS +4.81%、POWI +2.73%、ON +1.75%，四檔全漲</td><td><b>2308、6412</b>（間接）</td></tr>
+<tr><td>光通訊／CPO</td><td class="dir up">轉強</td><td>LITE +3.43%、COHR +2.47%，兩檔同向過門檻</td><td>無</td></tr>
+<tr><td>功率半導體／主動元件</td><td class="dir up">轉強</td><td>DIOD +4.04%、POWI +2.73%、ON +1.75%，三檔同向</td><td>無</td></tr>
+<tr><td>玻纖布／玻纖紗</td><td class="dir up">轉強</td><td>無美股對照；今日盤中玻璃陶瓷類股 +3.15% 續強（10/20 亦為第二強類股）</td><td>無（對 2383、3037 為成本面）</td></tr>
+<tr><td>傳產塑化</td><td class="dir up">轉強</td><td>WTI +1.21%、布蘭特 +1.44%，雙雙過 0.5% 門檻；10/21 已大漲一輪</td><td>無</td></tr>
+<tr><td>CCL／載板／ABF</td><td class="dir up">偏強</td><td>NVDA +2.54%、INTC +1.39%、AVGO +1.03%，三檔全過門檻</td><td><b>2368、3037、2383</b></td></tr>
+<tr><td>IC 設計</td><td class="dir up">偏強</td><td>MRVL +1.81%、QCOM +1.28%、AVGO +1.03%；AVGO 只險過門檻 0.03pp</td><td><b>3661、2454</b></td></tr>
+<tr><td>晶圓代工</td><td class="dir up">偏強</td><td>TSM ADR +1.60%，但略落後費半 0.37pp，不判定明確強弱</td><td><b>2330</b></td></tr>
+<tr><td>記憶體</td><td class="dir up">偏強</td><td>MU +1.96%；單一標的，依規則不足以定族群方向</td><td>無</td></tr>
+<tr><td>散熱（水冷板／均熱片）</td><td class="dir up">偏強</td><td>隨 VRT +4.22%；10/07 司法事件已過 10 個交易日，回到常態連動</td><td>無（與 2308 鄰近）</td></tr>
+<tr><td>測試介面／探針卡</td><td class="dir up">偏強</td><td>隨封測轉強；未查到矽格／穎崴／精測的個別新增催化</td><td>無（與 2449 鄰近）</td></tr>
+<tr><td>重電／電網</td><td class="dir up">偏強</td><td>隨 VRT +4.22%；本地盤面（華城／士電／中興電）未取得驗證</td><td>無</td></tr>
+<tr><td>蘋果鏈</td><td class="dir up">偏強</td><td>AAPL +1.32%，單一標的方向偏多</td><td>無</td></tr>
+<tr><td>成熟製程／IDM</td><td class="dir up">偏強</td><td>INTC +1.39%；UMC +0.76% 低於門檻</td><td>無</td></tr>
+<tr><td>金融</td><td class="dir m">只描述關聯</td><td>美 10 年期殖利率 5.15%（+0.57%）。殖利率上行利於利差、不利風險偏好，因果可能相反，依規則不給方向</td><td>無</td></tr>
+<tr><td>被動元件</td><td class="dir m">不給方向</td><td>VSH +4.59% 很強，但 APH −0.15%、TEL +0.20% 完全沒動且方向相反</td><td><b>2327</b></td></tr>
+<tr><td>半導體設備</td><td class="dir m">不給方向</td><td>ASML +2.81% vs LRCX −1.00% 方向相反，AMAT +0.98% 低於門檻；由全面重挫轉為分歧</td><td>無</td></tr>
+</tbody>
+</table>
+<p class="sm">「不給方向」是規則觸發的刻意保留，不是查不到——三條門檻為：兩檔以上絕對值低於 1.0%、單一標的佔加權訊號逾 60%、族群內部方向相反。封測另有對照股變動須達 4% 的專屬門檻。</p>
+
+<h2>我的持股：今日開盤</h2>
+<table>
+<thead><tr><th>標的</th><th class="n">佔比</th><th class="n">前收</th><th class="n">開盤估</th><th>收盤方向</th><th>一句話</th></tr></thead>
+<tbody>
+<tr><td><b>2308 台達電</b></td><td class="n">23.53%</td><td class="n">1,625</td><td class="n">1,630–1,660</td><td class="dir up">強</td><td>VRT 由連兩日走弱翻為大漲、GaN／SiC 上游四檔全漲，昨天的上下游背離警訊解除</td></tr>
+<tr><td><b>3661 世芯-KY</b></td><td class="n">11.86%</td><td class="n">3,710</td><td class="n">3,730–3,765</td><td class="dir up">強</td><td>今天最脆弱的一個「強」——AVGO 只超過門檻 0.03pp，若它當時少收一角這檔就變不給方向</td></tr>
+<tr><td><b>2449 京元電子</b></td><td class="n">10.98%</td><td class="n">278</td><td class="n">275–290</td><td class="dir m">不給方向</td><td>輝達 11 億美元訂單是硬的、族群門檻也過了，卡在同日 Factset 下修 EPS；上檔風險大於下檔</td></tr>
+<tr><td><b>3231 緯創</b></td><td class="n">9.53%</td><td class="n">195</td><td class="n">196–201</td><td class="dir m">不給方向</td><td>族群轉強但自己已連漲兩日，被規則攔下；也是今日掃描唯一判定「起漲」的一檔</td></tr>
+<tr><td><b>2376 技嘉</b></td><td class="n">9.44%</td><td class="n">358.5</td><td class="n">360–366</td><td class="dir m">不給方向</td><td>對照股是全場最強一組，它自己卻只小漲——資金在 AI 伺服器鏈裡選了緯創不是它；了結壓力全組合最大</td></tr>
+<tr><td><b>2368 金像電</b></td><td class="n">8.99%</td><td class="n">1,195</td><td class="n">1,200–1,225</td><td class="dir up">強</td><td>TPCA Show 今日最後一天，依昨日教訓展期不再當利空、也不當新增催化，視為中性</td></tr>
+<tr><td><b>2454 聯發科</b></td><td class="n">6.23%</td><td class="n">4,140</td><td class="n">4,160–4,200</td><td class="dir m">平</td><td>族群過門檻但主動降一級：TPU 延後傳聞三天未獲證實或否認，昨天開高走低收全天低檔</td></tr>
+<tr><td><b>2330 台積電</b></td><td class="n">5.46%</td><td class="n">2,420</td><td class="n">2,440–2,465</td><td class="dir up">強</td><td>Moody's 昨日調升評等至 Aa2；但 ADR 略落後費半，今天指數動能不會只來自權值股</td></tr>
+<tr><td><b>2327 國巨</b></td><td class="n">4.28%</td><td class="n">542</td><td class="n">543–552</td><td class="dir m">不給方向</td><td>被動元件是今天唯一仍內部分歧的族群；長期套牢，昨日反彈與解套是兩回事</td></tr>
+<tr><td><b>3037 欣興</b></td><td class="n">4.14%</td><td class="n">1,100</td><td class="n">1,110–1,135</td><td class="dir up">強</td><td>昨日盤中一度 +9% 卻收在 1,100，尾盤已有出貨跡象；今日再衝高請用出貨檢查線</td></tr>
+<tr><td><b>2383 台光電</b></td><td class="n">2.81%</td><td class="n">4,990</td><td class="n">5,010–5,070</td><td class="dir up">強</td><td><b>實際今日 09:02 已鎖漲停 5,485</b>，遠高於估計上緣；本報今天最大的單檔落差，催化待確認</td></tr>
+<tr><td><b>6412 群電</b></td><td class="n">2.77%</td><td class="n">73.6</td><td class="n">74.0–75.5</td><td class="dir m">平</td><td>昨天是四檔 AI 伺服器持股中唯一收黑的，查不到自身消息，原因不明故保守降一級</td></tr>
+</tbody>
+</table>
+<div class="note">
+<b>組合層級。</b>風險集中在 <b>AI 伺服器與散熱電源 45.26%</b>（2308＋3231＋2376＋6412），其次 IC 設計 18.08%、CCL／載板 15.94%、封測 10.98%、晶圓代工 5.46%、被動元件 4.28%。
+<b>今天的集中度是順風而不是逆風</b>——昨天這 45% 內部是分裂的，今天五檔對照股全漲、內部完全一致；代價是沒有分散可言，這條鏈開高走低組合就會一起走低。
+<b>結構盲點：</b>12 檔全在電子。今天美股的強勢正好覆蓋這塊，所以「壓電子會跑輸」的風險明顯降低；但油價觸發的塑化、以及盤中續強的玻璃陶瓷，你都是零曝險。
+<b>條件判斷：</b>若今天帶頭的是 AI 伺服器與半導體，組合跑贏指數；若帶頭的是塑化、傳產與金融補漲，組合跑輸。撐盤族群未確定前不給百分點數字。
+千金股（股價四位數）共 7 檔、佔組合 59.03%，反彈日彈性較差、去槓桿日跌得更快。
+<b>無多頭偏誤聲明：</b>今天 6 檔給「強」不是因為樂觀，是因為 30 檔對照股 27 漲 3 跌、六個族群通過門檻；0 檔給「弱」同樣不是樂觀，是沒有任何族群的對照股同向下跌。真正要警惕的是，連動法在普漲日會系統性地把所有持股都判成強——這本身就是一種偏誤。以上均為主觀推估，不構成投資建議。
+</div>
+
+<h2>起漲點追蹤（規則掃描）</h2>
+<table>
+<thead><tr><th>代號名稱</th><th>主題</th><th>狀態</th><th class="n">收盤</th><th class="n">突破價</th><th class="n">停損參考</th><th class="n">排序分</th><th>一句話</th></tr></thead>
+<tbody>
+<tr><td>2379 瑞昱</td><td>IC設計/ASIC</td><td class="dir m">蓄勢</td><td class="n">792.0</td><td class="n">794.0</td><td class="n">715.0</td><td class="n">59.1</td><td>距突破僅 0.25%、量比 1.13、20MA 乖離 4.14%、外資連買 1 日；與持股 3661 世芯同屬 IC 設計／ASIC 這條線</td></tr>
+<tr><td>2002 中鋼</td><td>鋼鐵工業</td><td class="dir m">潛伏</td><td class="n">19.6</td><td class="n">19.65</td><td class="n">18.6</td><td class="n">62.6</td><td>距突破 0.26%、<b>外資連買 9 日、投信連買 5 日</b>是表內最長的法人連買；與現有持股無直接關聯</td></tr>
+<tr><td>5880 合庫金</td><td>金融保險</td><td class="dir m">潛伏</td><td class="n">28.0</td><td class="n">28.3</td><td class="n">25.65</td><td class="n">67.0</td><td>距突破 1.07%、投信連買 7 日、5 日漲幅 3.13%、20MA 乖離 4.3%；與現有持股無直接關聯</td></tr>
+<tr><td>2357 華碩</td><td>消費電子零組件</td><td class="dir m">蓄勢</td><td class="n">982.0</td><td class="n">1,010.0</td><td class="n">942.0</td><td class="n">64.3</td><td>距突破 2.85%、外資連買 2 日、20MA 乖離僅 0.84% 未過熱；與持股 2376 技嘉同屬 PC／AI 伺服器相關</td></tr>
+<tr><td>1101 台泥</td><td>傳產與其他</td><td class="dir m">潛伏</td><td class="n">26.8</td><td class="n">27.7</td><td class="n">24.05</td><td class="n">61.7</td><td>距突破 3.36%、投信連買 3 日、20MA 乖離 3.33%、量比偏低 0.59；與現有持股無直接關聯</td></tr>
+</tbody>
+</table>
+<p class="sm">觀察池 176 檔／起漲 1／觀察中 46／已發動 14，資料日 2026-10-21（＝前一交易日）。今日唯一判定「起漲」的是 <b>3231 緯創</b>（收 195.0 突破前 20 日高 194.5、量比 1.94、ETF 參與 5 檔、外資與投信各連買 2 日、停損參考 192.0），但其「高分訊號」為否，依取樣規則不列入表內，改以觀察池中距突破最近的五檔遞補。掃描檔警告：觀察池為 ETF 池 90 檔與核心名單 150 檔的聯集、其中 51 檔為既有追蹤標的；1 檔（6223）查不到主題或產業別；資料日與上次相同，本次不應產生新轉換。已發動名單中<b>沒有</b>你的持股。</p>
+<p class="sm">這是規則掃描的結果，不是選股推薦；回測顯示中位數約 0、勝率約五成、報酬右偏（少數大贏拉高平均），且 2026Q4 樣本為負。只當觀察清單用。</p>
+
+<h2>今日紀律提醒</h2>
+<ul>
+<li><b>開盤後 15 分鐘看買盤，不是看賣壓。</b>過去兩日都是「開盤即全日最低、買盤開盤後才進場」，今天實際開盤 46,942.75 又低於估計下緣、09:15 時仍是全日最低——這已是連續第三日。沒量的止跌是假的，承接量出不來，這波就只是夜盤的空頭回補。</li>
+<li><b>關鍵價位。</b>大盤壓力 47,254.93（昨日高）→ 47,357（盤中高估下緣）；支撐 46,887.77（前收，多空分界）→ 46,454.33（昨日開盤兼全日低）。台積電多空分界 <b>2,420</b>，壓力 2,465，支撐 2,405。盤中高參考區間 47,357–47,591。</li>
+<li><b>今日非結算日</b>，不套用結算收斂假設。昨日尾盤自高點回落 367 點是 10 月結算賣壓所致，屬一次性事件——<b>不得推論今天也會有同樣的尾盤壓力</b>。近月已換為 11 月合約，未平倉 114,962 口，轉倉完成。</li>
+<li><b>了結壓力。</b>技嘉與緯創是全組合了結壓力最大的兩檔，兩檔都因為連漲兩日而不給方向。漲多股的出貨檢查線：3037 欣興觸及 1,135、2449 京元電子觸及 298 之後，若回落超過當日漲幅的一半，視為出貨、不續追。緯創的掃描停損參考價為 192.0。</li>
+<li><b>未來 5 個交易日。</b>今日 Meta Q3 財報已公布（營收年增 26%），是 AI capex 的市場焦點，盤中留意台廠 AI 伺服器鏈的反應；10/23 穩懋法說會，屬 GaN／SiC 這條線，與 2308、6412 同源；TPCA Show 今日為展期最後一天。<b>未來 5 個交易日的除權息清單中沒有你的任何一檔持股</b>，股東會部分 10/28 雄順（櫃）亦非持股。</li>
+</ul>
+
+<div class="ft">
+<h3>資料時點</h3>
+<p>美股與 ADR 為 2026/10/21 收盤（Yahoo Finance，4:00PM EDT）；台指期夜盤為期交所 futDailyMarketReport 2026/10/21 15:00–次日 05:00 盤後時段，並與 Yahoo 期權頁交叉驗證一致；台股籌碼與大盤數據為 2026/10/21 官方值（Goodinfo 大盤頁、期交所 futContractsDate）；持股 12 檔收盤為 2026/10/21，並以 Notion 已回填的 4 檔交叉驗證全部一致。起漲點掃描資料日 2026-10-21。本報告產出於 2026/10/22 09:35（台北），<b>排程延遲約 1 小時 40 分</b>，所有估值僅用開盤前資料推導。</p>
+<h3>本次未取得的項目</h3>
+<p>一、台積電個股期貨夜盤終盤：<b>連續第五次查不到</b>，期交所「股票期貨－依證券代號排序」需表單互動、Yahoo 期權頁無個股期區塊，<b>已用 Chrome 嘗試</b>；主錨權重由 70% 降為 0，改由 ADR 主導（權重 45%）並明記，結論可靠度相應下降。二、亞洲同業（太陽誘電／村田／三星電機）本次未查，惟依既有修正該項本就只寫警語、不得用於修改數字，對估值無實質影響。三、台股產業新聞僅取得鉅亨盤前要聞與類股速報，<b>未完整掃過 10/21 全天列表</b>（時間預算因排程延遲而優先用於籌碼三項與持股收盤）。四、證交所股票口徑成交金額未取得，成交金額一律以 Goodinfo 全市場口徑表示並註明。</p>
+<h3>資料來源</h3>
+<p>臺灣期貨交易所（期貨每日交易行情查詢、三大法人未平倉）、Goodinfo 台灣股市資訊網（大盤市況總覽）、Yahoo Finance（美股、ADR、台股個股、期權）、Anue 鉅亨網（台股盤前要聞與類股速報）、本機起漲點掃描程式輸出。</p>
+<h3>免責聲明</h3>
+<p>本報告由 AI 整理，僅供研究參考，不構成投資建議。所有開盤價、區間與方向判斷均為主觀推估，依據與不確定性已逐條列明。產業歸因屬市場共識性推論，非唯一定論。投資決策請自行判斷並承擔風險。</p>
+</div>
+
+</div>
+</body>
+</html>
