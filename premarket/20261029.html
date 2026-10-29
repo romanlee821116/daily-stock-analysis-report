@@ -51,8 +51,18 @@ table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card
 th{font-size:12px;color:var(--text2);text-align:left;font-weight:600;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:none}
-.n{text-align:right}
-.dir{font-weight:700}
+.n{text-align:right;white-space:nowrap}
+.dir{font-weight:700;white-space:nowrap}
+/* 區塊 7：8 欄寬表，固定窄欄不換行、文字欄吃剩餘寬度 */
+.t7{table-layout:fixed}
+.t7 th:nth-child(1),.t7 td:nth-child(1){width:108px;white-space:nowrap}
+.t7 th:nth-child(2),.t7 td:nth-child(2){width:92px}
+.t7 th:nth-child(3),.t7 td:nth-child(3){width:54px}
+.t7 th:nth-child(4),.t7 td:nth-child(4),
+.t7 th:nth-child(5),.t7 td:nth-child(5),
+.t7 th:nth-child(6),.t7 td:nth-child(6){width:72px}
+.t7 th:nth-child(7),.t7 td:nth-child(7){width:56px}
+.t7 th:nth-child(8),.t7 td:nth-child(8){width:auto}
 /* event cards */
 .ev{background:var(--card);border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:13px}
 .ev.strong{border-left:4px solid var(--up)}
@@ -79,6 +89,9 @@ li:last-child{margin-bottom:0}
 .foot h3{font-size:12px;color:var(--text2);font-weight:600;margin:0 0 4px}
 .foot p{font-size:12px;color:var(--text2);margin:0 0 12px;line-height:1.6}
 @media (max-width:640px){
+.t7{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap}
+.t7 th:nth-child(8),.t7 td:nth-child(8){width:260px;white-space:normal}
+.t7 th:nth-child(2),.t7 td:nth-child(2){white-space:normal}
 .tiles{grid-template-columns:repeat(2,1fr)}
 .leadgrid{grid-template-columns:1fr}
 .verdict{grid-template-columns:1fr}
@@ -242,7 +255,7 @@ th,td{padding:7px 8px}
 </div>
 
 <h2>起漲點追蹤</h2>
-<table>
+<table class="t7">
 <tr><th>代號名稱</th><th>主題</th><th>狀態</th><th class="n">收盤</th><th class="n">突破價</th><th class="n">停損參考</th><th class="n">排序分</th><th>一句話</th></tr>
 <tr><td>6415 矽力*-KY</td><td>半導體業</td><td class="dir up">起漲</td><td class="n">525.0</td><td class="n">513.0</td><td class="n">495.0</td><td class="n">61.8</td><td>量比 1.56、5 日漲幅 13.51%、20MA 乖離 14.92%；類比 IC 與電源管理，與你的台達電、群電同屬供電鏈但非同一標的。</td></tr>
 <tr><td>3406 玉晶光</td><td>面板光學LED</td><td class="dir up">起漲</td><td class="n">1,330.0</td><td class="n">1,245.0</td><td class="n">1,240.0</td><td class="n">55.4</td><td>5 日漲幅 27.88%、20MA 乖離 23.59%、ETF 參與 4 檔、投信連買 3 日；乖離已大。與現有持股無直接關聯。</td></tr>
