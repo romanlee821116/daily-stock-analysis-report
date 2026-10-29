@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>台股盤後回顧 2026/10/29</title>
+<style>
+:root{
+  --bg:#f4f4f1; --card:#fcfcfb; --fg:#0b0b0b; --muted:#52514e; --line:#e2e1dc;
+  --up:#d03b3b; --down:#0ca30c; --accent:#8a6d2f; --chip:#efeee9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#131312; --card:#1a1a19; --fg:#ffffff; --muted:#c3c2b7; --line:#33332f;
+    --up:#e66767; --down:#3cbf3c; --accent:#d8be85; --chip:#23231f;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  line-height:1.7; font-size:15px;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 72px}
+.num,table,.kpi-v{font-variant-numeric:tabular-nums}
+h1{font-size:26px;line-height:1.35;margin:0 0 6px}
+h2{font-size:19px;margin:34px 0 12px;padding-left:11px;border-left:4px solid var(--accent);line-height:1.4}
+h3{font-size:16px;margin:20px 0 8px}
+p{margin:0 0 12px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px;margin:0 0 16px}
+.verdict{border-left:5px solid var(--down)}
+.lead{font-size:17px;font-weight:700;line-height:1.6;margin:0 0 14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px}
+.kpi{background:var(--chip);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+.kpi-k{font-size:12px;color:var(--muted);margin-bottom:3px}
+.kpi-v{font-size:19px;font-weight:700;line-height:1.3}
+.kpi-s{font-size:12px;color:var(--muted);margin-top:2px}
+.up{color:var(--up)} .down{color:var(--down)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0 10px}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}
+th{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+td.r,th.r{text-align:right}
+tbody tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.t-hit{color:var(--up);border-color:var(--up)}
+.t-part{color:#b8860b;border-color:#b8860b}
+@media (prefers-color-scheme: dark){.t-part{color:#d8be85;border-color:#d8be85}}
+.t-miss{color:var(--down);border-color:var(--down)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+ul,ol{margin:0 0 12px;padding-left:20px}
+li{margin:0 0 7px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.note{font-size:13px;color:var(--muted)}
+.hl{font-weight:700}
+.boxwarn{background:var(--chip);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+footer a{color:var(--muted)}
+@media (max-width:640px){
+  .wrap{padding:20px 16px 56px}
+  h1{font-size:21px}
+  h2{font-size:17px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .two{grid-template-columns:1fr}
+  table{font-size:13px}
+  th,td{padding:8px 6px}
+  .lead{font-size:15.5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>台股盤後回顧　2026/10/29（四）</h1>
+<p class="sub">晨報預估 vs 今日實際對帳　·　撰寫時間 15:20（Asia/Taipei）　·　AI 整理，僅供研究參考，不構成投資建議</p>
+
+<!-- 1 總評卡 -->
+<div class="card verdict">
+  <p class="lead">開盤估準到 12 點之內，方向與幅度全錯——今日大盤<span class="down">收 46,368.33 點、跌 667.25 點（−1.42%）</span>，盤中一度殺 980.51 點、失守季線；晨報「震盪」定調與三情境收盤區間（最低下緣 46,400）<span class="hl">全部落空</span>，<span class="hl">唯一真正致命的錯誤是行事曆漏列 Alphabet 10/28 美股盤後財報</span>（盤後重挫逾 10%，引爆全球 AI 鏈賣壓）。</p>
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-k">加權指數</div><div class="kpi-v down">46,368.33</div><div class="kpi-s down">−667.25（−1.42%）</div></div>
+    <div class="kpi"><div class="kpi-k">台積電 2330</div><div class="kpi-v down">2,415</div><div class="kpi-s down">−10（−0.41%）全場最抗跌權值</div></div>
+    <div class="kpi"><div class="kpi-k">外資買賣超</div><div class="kpi-v">查不到</div><div class="kpi-s">15:10 查 TWSE 仍未發布</div></div>
+    <div class="kpi"><div class="kpi-k">我的持股</div><div class="kpi-v down">−3.67%</div><div class="kpi-s down">12 檔全跌，跑輸大盤 2.26pp</div></div>
+  </div>
+</div>
+
+<!-- 2 對照表 -->
+<h2>一、晨報估計 vs 今日實際・逐項對照</h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr><th>項目</th><th>晨報預估（08:05 寫入，逐字引用）</th><th>今日實際</th><th>判定</th></tr></thead>
+<tbody>
+<tr>
+  <td>定調</td>
+  <td>震盪（「這不是看空：方向不明而不是向下」）</td>
+  <td>單邊走低、開盤即最高，收 −1.42%</td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+<tr>
+  <td>加權開盤</td>
+  <td>47,000 ~ 47,150（約 −0.08% ~ +0.24%）</td>
+  <td class="num">47,014.87（−20.71）</td>
+  <td><span class="tag t-hit">命中</span></td>
+</tr>
+<tr>
+  <td>盤中上緣</td>
+  <td>47,250 ~ 47,400（保守取值）</td>
+  <td class="num">47,015.45（僅高於開盤 0.58 點）</td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+<tr>
+  <td>加權收盤</td>
+  <td>情境二基準 46,800~47,200（42%）／情境一 47,200~47,600（33%）／情境三保守 46,400~46,800（25%）</td>
+  <td class="num">46,368.33　<span class="hl">低於全部三個情境的下緣</span></td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+<tr>
+  <td>台積電開盤</td>
+  <td>2,430 ~ 2,450</td>
+  <td class="num">2,420（低於下緣 10 元）</td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+<tr>
+  <td>台積電收盤方向</td>
+  <td>「平」——不給強也不給弱</td>
+  <td class="num">2,415、−0.41%，全場最抗跌權值股</td>
+  <td><span class="tag t-hit">命中</span></td>
+</tr>
+<tr>
+  <td>外資</td>
+  <td>情境觸發條件之一：外資現貨續買超逾 100 億</td>
+  <td>查不到（15:10 查 TWSE BFI82U 回傳空白）</td>
+  <td><span class="tag t-part">無法驗收</span></td>
+</tr>
+<tr>
+  <td>族群判斷</td>
+  <td>封測「偏強」（唯一正向分級）；9 檔「不給方向」</td>
+  <td>京元電 −2.88%；9 檔<span class="hl">全數下跌</span>，平均 −3.43%</td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+<tr>
+  <td>核心警語</td>
+  <td>「夜盤看過全部利多仍不追價，當最後一個看過全部資訊的市場選擇不追價，那是更該採信的訊號」</td>
+  <td>方向完全正確，且事後證明夜盤尾段已在反映 Alphabet 財報</td>
+  <td><span class="tag t-hit">命中</span></td>
+</tr>
+<tr>
+  <td>三法裁決</td>
+  <td>取夜盤法（47,004~47,023）、棄費半法（47,159~47,241）</td>
+  <td>實際開 47,014.87，夜盤法幾乎完全命中</td>
+  <td><span class="tag t-hit">命中</span></td>
+</tr>
+<tr>
+  <td>一日行情回吐條款</td>
+  <td>對 3661、2368、2454、2383 四檔觸發</td>
+  <td>四檔全部下跌：−3.16%／−5.91%／−4.49%／−0.30%</td>
+  <td><span class="tag t-hit">命中</span></td>
+</tr>
+<tr>
+  <td>外生風險四檢查</td>
+  <td>天氣／連假／亞太／美股期貨<span class="hl">四項全部不成立</span></td>
+  <td>檢查清單<span class="hl">沒有「前一夜美股盤後財報」與「地緣／油價」兩欄</span></td>
+  <td><span class="tag t-miss">落差</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="note">預估值全部來自 Notion「每日預估追蹤」2026/10/29 列（晨報 08:05 寫入），非事後重建。</p>
+</div>
+
+<!-- 3 劇本 -->
+<h2>二、今日完整劇本</h2>
+<div class="card">
+<h3>走勢路徑</h3>
+<ul>
+<li><span class="hl">09:00 開盤 47,014.87</span>（−20.71），幾乎平開，落在晨報開盤估區間內。</li>
+<li><span class="hl">09:00 後隨即是全日最高 47,015.45</span>——比開盤只高 0.58 點。今天是標準的「開盤即最高」。</li>
+<li>09:26 跌幅擴大逾 400 點、退守 46,600；10:49 暫報 46,303.67（−731.91、−1.56%），<span class="hl">扣除台積電後跌幅達 1.96%</span>。</li>
+<li><span class="hl">盤中最低 46,055.07</span>，距前收 −980.51 點，一度逼近千點。</li>
+<li>尾盤權值股（台積電）拉抬，<span class="hl">終場收 46,368.33、−667.25（−1.42%）</span>，自低點回升 313 點，但<span class="hl">未能收復季線（約 46,505），失守 136.67 點、乖離 −0.29%</span>。</li>
+<li>成交金額 7,891.52 億元（高於昨日 7,221 億的同口徑數字，<span class="hl">是放量下跌</span>）。漲跌家數：上漲 236／下跌 747／平盤 120（中央社，集中市場口徑）。</li>
+</ul>
+
+<h3>漲跌歸因（分析師與媒體的事後解讀，非唯一定論）</h3>
+<ol>
+<li><span class="hl">Alphabet（Google）10/28 美股盤後財報不如預期，盤後重挫逾 10%。</span>營收與核心搜尋略低於預期、第三季自由現金流為負 90.7 億美元、並上修 2027 年資本支出預告，引發「AI 投資回報」疑慮。這是今日台股、韓股（盤中重挫約 3%）同步下殺的直接觸媒。</li>
+<li><span class="hl">Fed 十月 FOMC 已於台北時間 10/29 凌晨公布</span>：維持利率 3.75~4.00% 不變，但<span class="hl">兩位委員投下反對票並主張升息</span>，聲明強調力抗通膨，偏鷹。中時引述市場預估 12 月升息機率逾 80%。</li>
+<li><span class="hl">地緣與油價。</span>媒體報導沙烏地阿拉伯油廠遇襲、國際油價跳升，通膨隱憂與鷹派聲明疊加。（晨報當時用的是 10/28「油價下跌」的資料。）</li>
+<li><span class="hl">本地籌碼：昨日 939 點大漲是融資追價。</span>10/28 融資單日大增 89.13 億元至 6,323 億（+1.43%）、融券減 2.47 萬張。今日殺多，新台幣同步由升轉貶（11:00 暫報 32.517、貶 9.9 分），股匯雙跌。</li>
+<li><span class="hl">個股利空加成。</span>聯電（2303）法說會宣布追加 32 億美元資本支出後，市場擔憂折舊與原料成本壓抑毛利率，今日<span class="down">跌停收 115.5 元（−9.76%）</span>，是權值股中最慘的一檔，也直接重擊成熟製程與測試族群的評價。</li>
+<li><span class="hl">避險資金流向傳產與內需。</span>金融類股逆勢 +1.05%、生技 +1.09%、水泥 +0.46%；光電 −5.18%、玻璃陶瓷 −5.15%、油電燃氣 −3.84%、電腦週邊 −3.27%、電子零組件 −3.05% 領跌。</li>
+</ol>
+
+<div class="boxwarn">
+<span class="hl">最該記住的一句：今天不是「模型參數調錯」，是「輸入資料缺了一塊」。</span>三法裁決、開盤估、夜盤解讀、台積電給「平」四項都對，錯在行事曆沒有「前一夜美股盤後財報」這一欄。
+</div>
+</div>
+
+<!-- 4 持股 -->
+<h2>三、我的持股：晨報估 vs 今日實際</h2>
+<div class="card">
+<div class="scroll">
+<table>
+<thead><tr>
+<th>標的</th><th class="r">前收</th><th>晨報開盤估／收盤方向</th><th class="r">實際開</th><th class="r">實際收</th><th class="r">漲跌%</th><th>判定</th><th>一句話說明</th>
+</tr></thead>
+<tbody>
+<tr><td>2308 台達電</td><td class="r num">1,550</td><td class="num">1,535~1,565／不給方向</td><td class="r num">1,525</td><td class="r num">1,480</td><td class="r num down">−4.52</td><td><span class="tag t-miss">落差</span></td><td>核心對照股 VRT 前夜 +16.48%（訂單翻倍）仍救不了它；盤中最低 1,430 貼近 7 月股災低點 1,425，市值一度失守 4 兆。晨報「電源熱度沒外溢到組裝端」判斷對，但低估了 AI capex 疑慮會把電源端一起殺。</td></tr>
+<tr><td>3661 世芯-KY</td><td class="r num">3,800</td><td class="num">3,780~3,900／平</td><td class="r num">3,775</td><td class="r num">3,680</td><td class="r num down">−3.16</td><td><span class="tag t-miss">落差</span></td><td>開盤只差估計下緣 5 元。一日回吐條款觸發正確；同族群創意 3443 收 7,640、−6.49%，高價 ASIC 雙雄同步殺盤。</td></tr>
+<tr><td>2449 京元電子</td><td class="r num">277.5</td><td class="num">280~286／<span class="hl">偏強</span></td><td class="r num">276.5</td><td class="r num">269.5</td><td class="r num down">−2.88</td><td><span class="tag t-miss">落差</span></td><td><span class="hl">今日最大的方法論教訓。</span>封測是 30 檔對照股中唯一乾淨通過、訊號品質最高的族群（AMKR +5.68%、ASX +4.42%），結果在 beta 衝擊下完全無效，且開盤即最高（276.5）。族群 alpha 門檻擋不住市場 beta。</td></tr>
+<tr><td>2376 技嘉</td><td class="r num">362.5</td><td class="num">359~367／不給方向</td><td class="r num">351.0</td><td class="r num">343.0</td><td class="r num down">−5.38</td><td><span class="tag t-miss">落差</span></td><td><span class="hl">晨報完全沒掌握的個股事件：</span>10/28 公告 GDR 定價每單位 21.05 美元、<span class="hl">折合每股約新台幣 341.09 元</span>（較 362.5 折價 5.9%、股權稀釋 6.95%、11/2 發行）。今日收 343.0 幾乎貼合定價——GDR 定價形成了短線錨點。</td></tr>
+<tr><td>3231 緯創</td><td class="r num">194.5</td><td class="num">192~197／不給方向</td><td class="r num">193.5</td><td class="r num">188.5</td><td class="r num down">−3.08</td><td><span class="tag t-hit">開盤命中</span></td><td>開盤準。AI 伺服器組裝端跟著 DELL 前夜 −1.63% 的方向走弱。</td></tr>
+<tr><td>2368 金像電</td><td class="r num">1,185</td><td class="num">1,160~1,200／不給方向</td><td class="r num">1,180</td><td class="r num">1,115</td><td class="r num down">−5.91</td><td><span class="tag t-hit">開盤命中</span></td><td>12 檔中收盤最差。一日行情回吐條款完全應驗（前日漲停 +9.72% → 今日 −5.91%）。</td></tr>
+<tr><td>2454 聯發科</td><td class="r num">4,235</td><td class="num">4,190~4,280／不給方向</td><td class="r num">4,205</td><td class="r num">4,045</td><td class="r num down">−4.49</td><td><span class="tag t-hit">開盤命中</span></td><td>TPU 題材兩日內完整吐回——而吐回的觸媒正是 TPU 東家 Google 自己的財報。回吐條款應驗（前日 +6.94%）。</td></tr>
+<tr><td>2330 台積電</td><td class="r num">2,425</td><td class="num">2,430~2,450／平</td><td class="r num">2,420</td><td class="r num">2,415</td><td class="r num down">−0.41</td><td><span class="tag t-part">部分</span></td><td>開盤低於估計 10 元，但<span class="hl">收盤方向「平」命中</span>。盤中低 2,390，尾盤有拉抬。晨報「ADR 明確弱於費半 1.15pp、台積電是落後者」的判斷，今日反而成了保護——沒漲到的就沒得跌。</td></tr>
+<tr><td>2327 國巨</td><td class="r num">547</td><td class="num">542~555／不給方向</td><td class="r num">544</td><td class="r num">543</td><td class="r num down">−0.73</td><td><span class="tag t-hit">開盤命中</span></td><td>被動元件族群被媒體稱「淪災區」，但國巨本身僅跌 0.73%，是 12 檔第二抗跌——套牢最深的部位今日反而最穩，因為它不在 AI capex 敘事的正中心。</td></tr>
+<tr><td>3037 欣興</td><td class="r num">1,100</td><td class="num">1,085~1,120／不給方向</td><td class="r num">1,110</td><td class="r num">1,040</td><td class="r num down">−5.45</td><td><span class="tag t-hit">開盤命中</span></td><td><span class="hl">「開高走低」連續第四次</span>（10/22、10/27、10/28、10/29）。依修正#⑥ 兩條件版，今日<span class="hl">判定為出貨</span>，並據此裁決 10/28 亦應判為出貨。</td></tr>
+<tr><td>2383 台光電</td><td class="r num">5,025</td><td class="num">4,960~5,090／不給方向</td><td class="r num">5,200</td><td class="r num">5,010</td><td class="r num down">−0.30</td><td><span class="tag t-miss">落差</span></td><td>12 檔中<span class="hl">唯一開高</span>（高於估計上緣 110 元），也是<span class="hl">收盤最抗跌</span>的一檔，但全日自 +3.48% 吐到 −0.30%，振幅超過 190 元。回吐條款應驗（前日 +5.79%）。</td></tr>
+<tr><td>6412 群電</td><td class="r num">69.6</td><td class="num">69.0~70.8／不給方向</td><td class="r num">70.0</td><td class="r num">68.9</td><td class="r num down">−1.01</td><td><span class="tag t-hit">開盤命中</span></td><td>盤中曾逆勢翻紅（+0.29%），收盤轉跌。成交量 757 張仍極度萎縮——「流動性差到吃不到行情」的假說今日反向成立：也吃不到跌勢。</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>組合層級檢討</h3>
+<ul>
+<li><span class="hl">組合單日 −96,965 元、−3.67%，跑輸大盤 2.26pp</span>（python 驗算）。總現值由 2,639,470 元降至 2,542,505 元；未實現由 −17,943 元（−0.68%）擴大至 <span class="down">−114,908 元（−4.32%）</span>。<span class="hl">12 檔全數下跌，無一例外。</span></li>
+<li><span class="hl">開盤估 6/12 命中</span>（3231、2368、2454、2327、3037、6412）。落差的 6 檔中有 <span class="hl">5 檔是「實際開得比估計低」</span>（2308 低 10 元、2330 低 10 元、2376 低 8 元、3661 低 5 元、2449 低 3.5 元），唯一例外是 2383 開太高。<span class="hl">這是系統性偏誤</span>：夜盤偏弱日，個股開盤估整體偏高，主因是「下緣不得低於前收 −1.5%」那條地板把估值撐高了。</li>
+<li><span class="hl">收盤方向只命中 1 檔</span>（2330「平」）。2449「偏強」落差、3661「平」落差。</li>
+<li><span class="hl">9 檔「不給方向」的驗收結果，與晨報預想的相反。</span>晨報問：「這 9 檔的收盤是否散得很開？」答案是：<span class="hl">跨度確實很開（5.61pp，從 −0.30% 到 −5.91%），但方向完全一致——全部下跌，平均 −3.43%</span>。族群分歧門檻在單一權值股暴跌引發的全市場重新定價中，只是把一致的方向藏了起來。</li>
+<li><span class="hl">風險集中再次兌現。</span>AI 伺服器／散熱電源佔組合 44.44%（2308、2376、3231、6412），四檔平均 −3.50%，是跑輸大盤的主因。晨報已明寫「若帶頭的是 AI 伺服器組裝端的回檔，組合會跑輸，因為他有 44.44% 在那裡」——這句是對的。</li>
+<li><span class="hl">連續兩日的系統性偏誤方向相反：</span>10/28 低估 AI 伺服器電源的熱度，10/29 高估它的韌性。共同根因都是「用單一對照股（VRT）的極端值去推論整個族群」。</li>
+</ul>
+</div>
+
+<!-- 5 檢討 -->
+<h2>四、檢討</h2>
+<div class="two">
+<div class="card">
+<h3 class="up">估對的（可留用）</h3>
+<ul>
+<li><span class="hl">技術面｜三法裁決。</span>「取夜盤、棄費半」完全正確：夜盤法 47,004~47,023 vs 實際開 47,014.87；費半法 47,159~47,241 完全錯。權重設計不要動。</li>
+<li><span class="hl">技術面｜夜盤訊號的方向。</span>「夜盤看過全部利多仍不追價」是今日最有價值的判斷，而且事後知道夜盤尾段已經看到 Alphabet 財報。</li>
+<li><span class="hl">籌碼面｜定調保守收一格。</span>因季線與融資兩項未取得而由「震盪偏多」降為「震盪」，這一格救了半條命（若給偏多，落差會更大）。</li>
+<li><span class="hl">族群｜一日行情回吐條款。</span>4/4 全中（2368、2454、3661、2383），目前準確率最高的一條規則。</li>
+<li><span class="hl">持股｜台積電給「平」。</span>修正#4 三條件的判定（條件 (ii) 連漲 2 日不成立 → 不給強；三錨非同向偏弱 → 不給弱）正確。</li>
+<li><span class="hl">持股｜3037 開高走低型態。</span>晨報已標記「連續三次應驗」，今日成第四次，並由修正#⑥ 兩條件版正式判為出貨。</li>
+<li><span class="hl">組合｜風險集中警語。</span>「44.44% 在 AI 伺服器，若組裝端回檔會跑輸」逐字應驗。</li>
+</ul>
+</div>
+<div class="card">
+<h3 class="down">估錯的（要修正）</h3>
+<ul>
+<li><span class="hl">資料品質｜行事曆漏列前一夜美股盤後財報。</span>唯一致命錯誤。晨報行事曆只列了 10/29 的 STM、Carrier 與 10/30 的 AMZN、INTC，<span class="hl">完全沒有 10/28 盤後公布的 MSFT 與 GOOGL</span>——而這兩家正是 AI capex 最核心的指標股。</li>
+<li><span class="hl">資料品質｜FOMC 日期誤植。</span>晨報寫「今晚 FOMC（台北 10/30 凌晨）」，實際已於台北 10/29 凌晨公布。把已發生的事件當成未來風險，等於把觀望額度費在錯的地方。</li>
+<li><span class="hl">方法論｜族群門檻沒有 beta 例外。</span>9 檔「不給方向」全數下跌。當外生衝擊是全市場重新定價時，族群分歧門檻完全失效。</li>
+<li><span class="hl">技術面｜盤中上緣估沒有上限。</span>估 47,250~47,400，實際最高 47,015.45（開盤即最高）。夜盤收在區間下緣時，上緣估不該放那麼遠。</li>
+<li><span class="hl">持股｜開盤估下緣的「−1.5% 地板」。</span>在夜盤偏弱日把估值整體撐高，造成 5 檔「實際開得比估計低」。</li>
+<li><span class="hl">持股｜個股融資類事件未納入。</span>2376 技嘉 GDR 定價 341.09 元（折價 5.9%、稀釋 6.95%）晨報完全沒提，而今日收盤 343.0 幾乎貼合定價。</li>
+<li><span class="hl">籌碼面｜三大法人與外資期貨再次整組拿不到。</span>15:10 查 TWSE BFI82U 回傳空白（官方通常 15:30 後才上線）。這是<span class="hl">排程時間問題，不是查詢能力問題</span>。</li>
+<li><span class="hl">外生風險四檢查清單不完整。</span>天氣／連假／亞太／美股期貨四項都查了，但清單裡<span class="hl">沒有「前一夜美股盤後財報」與「地緣政治／油價跳升」</span>兩欄。</li>
+</ul>
+</div>
+</div>
+
+<!-- 6 修正 -->
+<h2>五、帶進下一份晨報的修正（已寫入 Notion）</h2>
+<div class="card">
+<ol>
+<li><span class="hl">修正#78・最高優先｜行事曆必須先寫「前一夜已發布」再寫「未來將發布」。</span>第一行固定是「前一交易日美股收盤後（台北 04:00~06:00）已公布的財報」。必查清單：MSFT、GOOGL、AMZN、META、AAPL、NVDA、AVGO、MU、INTC、DELL、SMCI、VRT。<span class="hl">驗收句：明日晨報若沒有這一行，視為未執行。</span></li>
+<li><span class="hl">修正#79｜夜盤「收在下緣」不得再寫成「方向不明」。</span>觸發條件：夜盤終盤落在全場區間下緣（&lt;30%）且正價差收斂 ≥100 點 → 必須回查夜盤最後一小時（台北 04:00~05:00）有無美股盤後財報或重大消息；若有，夜盤訊號<span class="hl">升格為「偏空」</span>。</li>
+<li><span class="hl">修正#80｜beta 衝擊例外條款（推翻族群門檻）。</span>觸發條件：美股盤後或盤中有單一大型權值股跌幅 ≥10%，且題材為 AI capex → <span class="hl">族群分歧門檻與集中度門檻全部作廢，所有持股一律給「偏弱」</span>。驗收證據：今日 9 檔「不給方向」全數下跌、平均 −3.43%、跨度 5.61pp。</li>
+<li><span class="hl">修正#81｜個股開盤估在夜盤偏弱日整體下移，廢除「−1.5% 地板」。</span>夜盤收黑且收在區間下緣時，個股開盤估區間整體下移 0.5%~1.0%，且不得再套用「下緣不得低於前收 −1.5%」。</li>
+<li><span class="hl">修正#82｜盤中上緣估上限。</span>夜盤收在區間下緣時，盤中上緣估不得高於「開盤估上緣 +0.3%」。</li>
+<li><span class="hl">修正#83｜總經事件日期必須單獨查證。</span>FOMC／CPI／非農的台北時間每次重新查一次，不得沿用前一日推算。</li>
+<li><span class="hl">修正#84｜盤後回顧排程時間要改。</span>建議改排 <span class="hl">15:45</span>，或拆兩段（14:40 寫價格對帳、16:00 補籌碼）。否則「外資買賣超」與「外資期貨未平倉」兩欄將永遠是空的。</li>
+<li><span class="hl">修正#85｜3037 欣興直接標註「開高出貨型態連四」。</span>並裁決：修正#⑥ 兩條件版成立，10/28 與 10/29 皆判為出貨。</li>
+<li><span class="hl">修正#86｜持股的 GDR／ECB／現增定價事件要列入晨報。</span>若持股在五個交易日內有定價或發行日，必須在該檔摘要寫出定價與稀釋比，因為定價會成為短線錨點（今日 2376 即是）。</li>
+</ol>
+<p class="note"><span class="hl">明確不要改的：</span>三法權重（夜盤 &gt; 費半）、ADR40/費半60 權重、一日行情回吐條款——這三項今日全部驗證有效。</p>
+</div>
+
+<!-- 7 來源 -->
+<h2>六、資料時點與來源</h2>
+<div class="card">
+<ul>
+<li><span class="hl">指數開高低收與漲跌家數</span>：中央社 202610290155（開 47,014.87／高 47,015.45／低 46,055.07／收 46,368.33／漲 236・跌 747・平 120）＋中時 20261029002691（上漲 246・下跌 823、漲停 7・跌停 3）交叉驗證。指數四數字兩源完全一致；<span class="hl">漲跌家數口徑不同</span>（中央社為集中市場、中時含漲跌停統計），已標明。</li>
+<li><span class="hl">成交金額 7,891.52 億元</span>：中央社、中時、FTNN 三源一致。</li>
+<li><span class="hl">季線約 46,505</span>：中央社 202610290146。失守 136.67 點、乖離 −0.29% 為 python 驗算。</li>
+<li><span class="hl">個股收盤</span>：Yahoo 股市即時行情頁（資料時點 2026/10/29 14:30，逐檔以瀏覽器實際讀取，非快取），並與中時、FTNN、中央社新聞稿交叉驗證：台積電 2,415、聯發科 4,045、台達電 1,480、欣興 −5.45%、聯電跌停 115.5 四項皆雙源一致。</li>
+<li><span class="hl">融資融券（10/28）</span>：Newtalk 1068079。<span class="hl">10/29 當日融資變化未發布。</span></li>
+<li><span class="hl">Alphabet 財報</span>：ETtoday 3262562、民視 2026A29W0057、Newtalk 1068079。<span class="hl">FOMC</span>：聯合報 9843610／9843760、風傳媒 11176732。</li>
+<li><span class="hl">技嘉 GDR</span>：財訊快報、MoneyDJ（10/28 公告，公開資訊觀測站）。</li>
+<li><span class="hl">資料缺口（誠實標記）</span>：三大法人（外資／投信／自營）、外資台指期未平倉、10/29 當日融資增減——15:10 查詢時官方尚未發布，本報<span class="hl">一律標為「查不到」，未以任何方式推估或冒充</span>。</li>
+</ul>
+<p class="note">所有漲跌幅、組合市值與乖離均以 python 驗算，未以心算產生。歸因段落為分析師與媒體的事後解讀，屬市場共識性推論，非唯一定論。</p>
+</div>
+
+<footer>
+<span class="hl">免責聲明</span>：本報告由 AI 自動彙整，資料時點為 2026/10/29 15:20（Asia/Taipei）。內容僅供研究與紀錄參考，<span class="hl">不構成任何投資建議或買賣要約</span>。市場數據以臺灣證券交易所、臺灣期貨交易所及各原始媒體公告為準。投資有風險，請自行判斷並承擔結果。
+</footer>
+
+</div>
+</body>
+</html>
