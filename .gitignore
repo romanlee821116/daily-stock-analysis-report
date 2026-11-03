@@ -3,3 +3,7 @@
 
 # macOS
 .DS_Store
+
+# 本機預抓的 ETF 原始 JSON 與執行紀錄,只給雲端排程讀,不公開
+data/etf-raw/
+.prefetch.log

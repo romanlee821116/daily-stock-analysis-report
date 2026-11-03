@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>              <string>com.roman.prefetch</string>
+  <key>WorkingDirectory</key>   <string>/Users/roman/project/daily-stock-analysis-report</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>tools/prefetch.sh</string>
+  </array>
+  <!-- 週一到週五 05:50(Mac 05:45 自動喚醒,雲端排程 06:xx 開跑) -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>5</integer><key>Minute</key><integer>50</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>5</integer><key>Minute</key><integer>50</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>5</integer><key>Minute</key><integer>50</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>5</integer><key>Minute</key><integer>50</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>5</integer><key>Minute</key><integer>50</integer></dict>
+  </array>
+  <key>StandardOutPath</key>    <string>/Users/roman/project/daily-stock-analysis-report/.prefetch.log</string>
+  <key>StandardErrorPath</key>  <string>/Users/roman/project/daily-stock-analysis-report/.prefetch.log</string>
+  <key>RunAtLoad</key>          <false/>
+</dict>
+</plist>
